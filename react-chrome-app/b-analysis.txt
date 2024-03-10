@@ -1,0 +1,8 @@
+Target element not found for DIV means 0 DONE
+ROE is divided by 100 DONE
+Double space between buttons DONE
+Refactoring: SeekingAlphaParser DONE
+SeekingAlphaParser injected and old code removed DONE
+Fields symbol, sector, industry are commented out DONE
+Improve rounding DONE
+New project npv-ext
