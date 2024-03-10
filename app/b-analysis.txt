@@ -1,3 +1,4 @@
 extension -> ext; react-chrome-app -> app
 upload, test
-div frequency
+div frequency - display only
+Date
