@@ -15,13 +15,11 @@ function App() {
       {
         (() => {
           if (shared.localHostOrInvesting()) {
-            alert('Investing');
             return <Investing></Investing>
           }
           else if (shared.localHostOrSeekingAlpha()) {
-            alert('SeekingAlpha');
             return <SeekingAlpha></SeekingAlpha>
-          } 
+          }
           else {
             return <>
               {console.log(`Not implemented for ${window.location.href}`)}
