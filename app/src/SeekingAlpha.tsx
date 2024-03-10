@@ -35,14 +35,20 @@ const SeekingAlpha = () => {
         return floatResult.toLocaleString('de', { minimumFractionDigits: decimalPlaces });
     }
 
+    function currentDate(): React.ReactNode {
+        var date = new Date();
+        return date.toLocaleDateString('de');
+    }
+
     return (
         < dialog ref={modalRef} >
             <h1>NPV</h1>
             <hr />
-            <div>EPS DIV ROE Beta</div>
+            <div>EPS DIV ROE Beta Date</div>
             <hr id="dataStart" />
             <table id='dataTable'><tr>
                 {parser.getDataRow()?.toString().split(',').map((e) => <td>{formatString(e, 2)}</td>)}
+                <td>{currentDate()}</td>
             </tr></table>
             <hr id="dataEnd" />
             <button id="close" type="reset" onClick={closeModal}>Close</button>&nbsp;&nbsp;
