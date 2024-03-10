@@ -1,5 +1,5 @@
-Move 3 SeekingAlpha classes in new SeekingAlpha folder
-Check SeekingAlpha functionality
+Move 3 SeekingAlpha classes in new SeekingAlpha folder DONE
+Check SeekingAlpha functionality DONE
 Component Investing.tsx implemented in new Investing folder 
 Component Investing.tsx displayed only on Investing page (App.tsx)
 InvestingParser class and interface in Investing folder

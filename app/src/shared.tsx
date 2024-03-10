@@ -5,6 +5,11 @@ export const localHostOrSeekingAlpha = () => {
         || window.location.href.indexOf('seekingalpha.com') >= 0;
 }
 
+export const localHostOrInvesting = () => {
+    return window.location.href.indexOf('localhost') >= 0
+        || window.location.href.indexOf('investing.com') >= 0;
+}
+
 export function dataFromHtmlViaCommonParent(
     innerHTML: string,
     targetElementName: string,
@@ -47,4 +52,8 @@ export interface IValueWithError<T> {
     error: string|null;
 }
 
-export default { localHostOrSeekingAlpha, dataFromHtmlViaCommonParent, dataFromHtmlViaParent};
+export default { 
+    localHostOrSeekingAlpha, 
+    localHostOrInvesting,
+    dataFromHtmlViaCommonParent, 
+    dataFromHtmlViaParent};

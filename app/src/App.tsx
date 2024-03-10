@@ -1,6 +1,7 @@
 import React from 'react';
 import SeekingAlpha from './SeekingAlpha/SeekingAlpha';
 import shared from './shared'
+import Investing from './Investing/Investing';
 
 function App() {
 
@@ -13,9 +14,15 @@ function App() {
     <>
       {
         (() => {
-          if (shared.localHostOrSeekingAlpha()) {
+          if (shared.localHostOrInvesting()) {
+            alert('Investing');
+            return <Investing></Investing>
+          }
+          else if (shared.localHostOrSeekingAlpha()) {
+            alert('SeekingAlpha');
             return <SeekingAlpha></SeekingAlpha>
-          } else {
+          } 
+          else {
             return <>
               {console.log(`Not implemented for ${window.location.href}`)}
             </>
