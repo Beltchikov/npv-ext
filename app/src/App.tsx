@@ -1,5 +1,5 @@
 import React from 'react';
-import SeekingAlpha from './SeekingAlpha';
+import SeekingAlpha from './SeekingAlpha/SeekingAlpha';
 import shared from './shared'
 
 function App() {

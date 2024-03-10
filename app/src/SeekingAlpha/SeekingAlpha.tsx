@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useRef } from 'react';
-import shared from './shared'
+import shared from '../shared'
 import {ISeekingAlphaParser} from './ISeekingAlphaParser';
 import {SeekingAlphaParser} from './SeekingAlphaParser';
 

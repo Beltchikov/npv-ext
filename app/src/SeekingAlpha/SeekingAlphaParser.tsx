@@ -1,4 +1,4 @@
-import shared from "./shared";
+import shared from "../shared";
 import { ISeekingAlphaParser } from './ISeekingAlphaParser';
 import { ReactNode } from "react";
 
