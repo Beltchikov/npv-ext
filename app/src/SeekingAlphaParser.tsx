@@ -90,7 +90,7 @@ export class SeekingAlphaParser implements ISeekingAlphaParser {
     }
 
     divFrequency(): ReactNode {
-        return 'TODO';
+        return this.getDataViaCommonParentCardItem('Frequency');
     }
 
 }
