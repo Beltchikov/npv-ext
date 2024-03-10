@@ -1,4 +1,18 @@
-extension -> ext; react-chrome-app -> app
-upload, test
-div frequency - display only
-Date
+Move 3 SeekingAlpha classes in new SeekingAlpha folder
+Check SeekingAlpha functionality
+Component Investing.tsx implemented in new Investing folder 
+Component Investing.tsx displayed only on Investing page (App.tsx)
+InvestingParser class and interface in Investing folder
+Fesability: opening tabs and finding something in different tabs
+
+Input for symbols implemented
+Button Go implemented
+Button Go click implemented
+    new tabs for every symbols
+    Message if more than 20(100?) tabs
+    Implement InvestingParser 
+        find div[class^='analyst-price-target_gaugeView__yP3BV']
+        find within div:not([class^='analyst-price-target'])
+Table Symbol | TA displayed after click on Go
+
+New b-analysis for saving in cookie and comparisson with prev. day
