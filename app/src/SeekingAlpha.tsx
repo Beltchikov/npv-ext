@@ -40,10 +40,6 @@ const SeekingAlpha = () => {
         return date.toLocaleDateString('de');
     }
 
-    function divFrequency(): React.ReactNode {
-        return 'TODO';
-    }
-
     return (
         < dialog ref={modalRef} >
             <h1>NPV</h1>
@@ -54,7 +50,7 @@ const SeekingAlpha = () => {
                 {parser.getDataRow()?.toString().split(',').map((e) => <td>{formatString(e, 2)}</td>)}
                 <td>{currentDate()}</td>
             </tr></table>
-            <div>Dividend Frequency: {divFrequency()}</div>
+            <div>Dividend Frequency: {parser.divFrequency()}</div>
             <hr id="dataEnd" />
             <button id="close" type="reset" onClick={closeModal}>Close</button>&nbsp;&nbsp;
             <button id="copy" onClick={copyToClipboard}>Copy</button>&nbsp;&nbsp;

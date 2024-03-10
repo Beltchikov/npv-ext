@@ -7,4 +7,5 @@ export interface ISeekingAlphaParser
     getDividends(targetElementText: string): string;
     getRoe(targetElementText: string): string;
     getDataRow(): React.ReactNode;
+    divFrequency(): React.ReactNode;
 }

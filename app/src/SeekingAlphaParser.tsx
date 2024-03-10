@@ -1,5 +1,6 @@
 import shared from "./shared";
 import { ISeekingAlphaParser } from './ISeekingAlphaParser';
+import { ReactNode } from "react";
 
 export class SeekingAlphaParser implements ISeekingAlphaParser {
     getDataViaCommonParentCardItem(targetElementText: string): string {
@@ -86,6 +87,10 @@ export class SeekingAlphaParser implements ISeekingAlphaParser {
 
         //return [symbol, sector, industry, eps, div, roe, beta];  // TODO evtl. for later
         return [eps, div, roe, beta];
+    }
+
+    divFrequency(): ReactNode {
+        return 'TODO';
     }
 
 }
