@@ -2,7 +2,7 @@ Move 3 SeekingAlpha classes in new SeekingAlpha folder DONE
 Check SeekingAlpha functionality DONE
 Component Investing.tsx implemented in new Investing folder DONE
 Component Investing.tsx displayed only on Investing page (App.tsx) DONE
-Fesability: opening tabs and finding something in different tabs
+Fesability: find smth for 3 symbols. If does not work, then try in different tabs
 InvestingParser class and interface in Investing folder
 
 Input for symbols implemented
