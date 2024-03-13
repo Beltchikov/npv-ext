@@ -3,7 +3,7 @@ Check SeekingAlpha functionality DONE
 Component Investing.tsx implemented in new Investing folder DONE
 Component Investing.tsx displayed only on Investing page (App.tsx) DONE
 
-Stash importing selenium from react component. Preserve b-analysis.txt
+Stash importing selenium from react component. Preserve b-analysis.txt DONE
 Fesability: find TA for 3 symbols given 3 tabs with symbol data opened.
 InvestingParser class and interface in Investing folder
 
