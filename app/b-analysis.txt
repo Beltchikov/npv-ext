@@ -2,17 +2,18 @@ Move 3 SeekingAlpha classes in new SeekingAlpha folder DONE
 Check SeekingAlpha functionality DONE
 Component Investing.tsx implemented in new Investing folder DONE
 Component Investing.tsx displayed only on Investing page (App.tsx) DONE
-Fesability: find smth for 3 symbols. If does not work, then try in different tabs
+
+Stash importing selenium from react component. Preserve b-analysis.txt
+Fesability: find TA for 3 symbols given 3 tabs with symbol data opened.
 InvestingParser class and interface in Investing folder
 
 Input for symbols implemented
 Button Go implemented
 Button Go click implemented
-    new tabs for every symbols
     Message if more than 20(100?) tabs
     Implement InvestingParser 
         find div[class^='analyst-price-target_gaugeView__yP3BV']
         find within div:not([class^='analyst-price-target'])
-Table Symbol | TA displayed after click on Go
+Table Symbol | TA | Earn | displayed after click on Go
 
 New b-analysis for saving in cookie and comparisson with prev. day
