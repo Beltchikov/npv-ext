@@ -5,15 +5,15 @@ Component Investing.tsx displayed only on Investing page (App.tsx) DONE
 
 Stash importing selenium from react component. Preserve b-analysis.txt DONE
 Fesability: find TA for 3 symbols given 3 tabs with symbol data opened.
+    Implement InvestingParser 
+        find div[class^='analyst-price-target_gaugeView__yP3BV']
+        find within div:not([class^='analyst-price-target'])
 InvestingParser class and interface in Investing folder
 
 Input for symbols implemented
 Button Go implemented
 Button Go click implemented
     Message if more than 20(100?) tabs
-    Implement InvestingParser 
-        find div[class^='analyst-price-target_gaugeView__yP3BV']
-        find within div:not([class^='analyst-price-target'])
 Table Symbol | TA | Earn | displayed after click on Go
 
 New b-analysis for saving in cookie and comparisson with prev. day
