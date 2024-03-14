@@ -4,11 +4,14 @@ Component Investing.tsx implemented in new Investing folder DONE
 Component Investing.tsx displayed only on Investing page (App.tsx) DONE
 
 Stash importing selenium from react component. Preserve b-analysis.txt DONE
-Fesability: find TA for 3 symbols given 3 tabs with symbol data opened.
+Fesability: find TA for 3 symbols given 3 tabs with symbol data opened. DONE
     Implement InvestingParser 
         find div[class^='analyst-price-target_gaugeView']
         find within div:not([class^='analyst-price-target'])
-InvestingParser class and interface in Investing folder
+    InvestingParser class and interface in Investing folder. DONE
+    Messaging service worker - content script
+        sendMessage get tabs
+        sendMessage get HTML of the tab
 
 Input for symbols implemented
 Button Go implemented
