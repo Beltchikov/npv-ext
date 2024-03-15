@@ -11,7 +11,7 @@ Fesability: find TA for 3 symbols given 3 tabs with symbol data opened. DONE
     InvestingParser class and interface in Investing folder. DONE
     Messaging service worker - content script
         sendMessage get tabs DONE
-        sendMessage get HTML of the tabs
+        execute func for every tab and fill modal
 
 Input for symbols implemented
 Button Go implemented

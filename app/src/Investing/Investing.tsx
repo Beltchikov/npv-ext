@@ -15,8 +15,13 @@ const Investing = () => {
             chrome.runtime.sendMessage('get-tabs-info', async (response: ITabsInfoResponse) => {
                 //console.log('received tabs info: ', response.data);
                 response.data.forEach((tab) => {
+                    console.log(tab);
                     // TODO
-                    console.log(tab)});
+                    // chrome.scripting.executeScript({
+                    //     target: { tabId: tab.id },
+                    //     func : newFunc
+                    // });
+                });
             });
             // show modal
             const modalElement = modalRef.current;
