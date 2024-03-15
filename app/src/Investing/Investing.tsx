@@ -10,14 +10,10 @@ const Investing = () => {
 
     useEffect(() => {
         if (shared.localHostOrInvesting()) {
-            
-            // 1. Send a message to the service worker requesting the user's data
-        chrome.runtime.sendMessage('get-user-data', (response) => {
-            // 3. Got an asynchronous response with the data from the service worker
-            console.log('received user data', response);
-            //initializeUI(response);
-        });
-            
+            chrome.runtime.sendMessage('get-user-data', async (response) => {
+                console.log('received user data', response);
+            });
+
             const modalElement = modalRef.current;
             modalElement.showModal();
         }

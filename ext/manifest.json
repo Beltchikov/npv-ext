@@ -5,7 +5,7 @@
   "action": {
     "default_icon": "npv-ext.png"
   },
-  "permissions": ["activeTab", "scripting", "tabs", "tabGroups"],
+  "permissions": ["tabs", "tabGroups", "activeTab", "scripting"],
   "host_permissions": ["<all_urls>"],
   "background": {
     "service_worker": "background.js"
