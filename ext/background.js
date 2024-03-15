@@ -31,47 +31,12 @@ chrome.action.onClicked.addListener(async (currentTab) => {
   });
 });
 
-//Example of a simple user data object
-const user = {
-  username: 'demo-user'
-};
-
-
-
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message === 'get-user-data') {
-
-    //var tabs = [];
-    // var tabArray = new Array();
     chrome.tabs.query({ active: false, lastFocusedWindow: true })
-      .then((r)=>sendResponse({ok: r}))
-      .catch(e => sendResponse({err: e.message}));
-    
-      // for (const tab of tabs) {
-    //   tabArray.push(tab.url);
-    // };
-
+      .then((r) => sendResponse({ ok: r }))
+      .catch(e => sendResponse({ err: e.message }));
     return true;
-    //sendResponse(['HHH', 'GGG']);
-    //sendResponse(tabs);
-
-    // sendResponse((async() => {
-
-    //   var tabs = [];
-    //   var tabArray = new Array();
-    //   tabs = await chrome.tabs.query({ active: false, lastFocusedWindow: true });
-    //   for (const tab of tabs) {
-    //     tabArray.push(tab.url);
-    //   };
-
-    //   return tabArray;
-
-    //   //return { data: ['HHH', 'GGG'] };
-    //   //return 'H1';
-
-
-    // })());
-
   }
 });
 
