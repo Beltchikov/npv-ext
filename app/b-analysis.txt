@@ -10,8 +10,8 @@ Fesability: find TA for 3 symbols given 3 tabs with symbol data opened. DONE
         find within div:not([class^='analyst-price-target'])
     InvestingParser class and interface in Investing folder. DONE
     Messaging service worker - content script
-        sendMessage get tabs
-        sendMessage get HTML of the tab
+        sendMessage get tabs DONE
+        sendMessage get HTML of the tabs
 
 Input for symbols implemented
 Button Go implemented

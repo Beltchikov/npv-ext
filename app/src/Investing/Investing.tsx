@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import shared from '../shared';
 import { IInvestingParser } from './IInvestingParser';
 import { InvestingParser } from './InvestingParser';
+import { ITabsInfoResponse } from './ITabsInfoResponse';
 
 const Investing = () => {
     var dialog = document.createElement('dialog');
@@ -10,9 +11,12 @@ const Investing = () => {
 
     useEffect(() => {
         if (shared.localHostOrInvesting()) {
-            // message to other tabs
-            chrome.runtime.sendMessage('get-tabs-info', async (response) => {
-                console.log('received tabs info: ', response);
+            // messages to other tabs
+            chrome.runtime.sendMessage('get-tabs-info', async (response: ITabsInfoResponse) => {
+                //console.log('received tabs info: ', response.data);
+                response.data.forEach((tab) => {
+                    // TODO
+                    console.log(tab)});
             });
             // show modal
             const modalElement = modalRef.current;
