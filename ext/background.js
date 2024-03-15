@@ -32,7 +32,7 @@ chrome.action.onClicked.addListener(async (currentTab) => {
 });
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message === 'get-user-data') {
+  if (message === 'get-tabs-info') {
     chrome.tabs.query({ active: false, lastFocusedWindow: true })
       .then((r) => sendResponse({ ok: r }))
       .catch(e => sendResponse({ err: e.message }));

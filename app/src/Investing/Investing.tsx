@@ -10,10 +10,11 @@ const Investing = () => {
 
     useEffect(() => {
         if (shared.localHostOrInvesting()) {
-            chrome.runtime.sendMessage('get-user-data', async (response) => {
-                console.log('received user data', response);
+            // message to other tabs
+            chrome.runtime.sendMessage('get-tabs-info', async (response) => {
+                console.log('received tabs info: ', response);
             });
-
+            // show modal
             const modalElement = modalRef.current;
             modalElement.showModal();
         }
