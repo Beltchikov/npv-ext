@@ -13,6 +13,8 @@ Fesability: find TA for 3 symbols given 3 tabs with symbol data opened. DONE
         sendMessage get tabs DONE
         execute func for every tab and fill modal
 
+Multiply div x 4 if quarterly. Test annualy. Exception otherwise
+
 Input for symbols implemented
 Button Go implemented
 Button Go click implemented
