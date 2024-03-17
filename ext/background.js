@@ -16,24 +16,18 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       .then(tabs => {
         // TODO get data from each tab (code block below)
 
-        var response = [];
         for (var i = 0; i < tabs.length; i++) {
-          
           chrome.scripting.executeScript({
             target: { tabId: tabs[i].id },
             func: () => 'faked data'
           })
             .then(r => {
-              //response.push(r);
               sendResponse(r);
             })
             .catch((err) => response.push(err));
-
-          //response.push(tabs[i]);
         }
-        
+
         return true;
-        sendResponse(response);
       })
       .catch(e => sendResponse({ err: e.message }));
     return true;
