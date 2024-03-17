@@ -16,16 +16,21 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       .then(tabs => {
         // TODO get data from each tab (code block below)
 
+        var promises = [];
         for (var i = 0; i < tabs.length; i++) {
-          chrome.scripting.executeScript({
+          
+          var promise = chrome.scripting.executeScript({
             target: { tabId: tabs[i].id },
             func: () => 'faked data'
-          })
-            .then(r => {
-              sendResponse(r);
-            })
-            .catch((err) => response.push(err));
+          });
+          promises.push(promise);
         }
+        
+        Promise.all(promises)
+        .then((values) => {
+          sendResponse(values);
+        })
+        .catch((e) => sendResponse({err: e}));
 
         return true;
       })
