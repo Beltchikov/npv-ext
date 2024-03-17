@@ -1,5 +1,8 @@
 // service worker
 
+// todo replace with parse function later
+import {poc} from './shared.js'
+
 chrome.action.onClicked.addListener(async (currentTab) => {
   chrome.scripting.executeScript({
     target: { tabId: currentTab.id },
@@ -7,8 +10,7 @@ chrome.action.onClicked.addListener(async (currentTab) => {
   });
 });
 
-//const fakedData = () => 'faked data';
-function getTitle() { return document.title; }
+
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message === 'get-tabs-info') {
@@ -18,19 +20,19 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
         var promises = [];
         for (var i = 0; i < tabs.length; i++) {
-          
+
           var promise = chrome.scripting.executeScript({
             target: { tabId: tabs[i].id },
             func: () => 'faked data'
           });
           promises.push(promise);
         }
-        
+
         Promise.all(promises)
-        .then((values) => {
-          sendResponse(values);
-        })
-        .catch((e) => sendResponse({err: e}));
+          .then((values) => {
+            sendResponse({ poc: poc(), data: values });
+          })
+          .catch((e) => sendResponse({ err: e }));
 
         return true;
       })
