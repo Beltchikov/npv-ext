@@ -3,6 +3,7 @@ import shared from '../shared';
 import { IInvestingParser } from './IInvestingParser';
 import { InvestingParser } from './InvestingParser';
 import { ITabsInfoResponse } from './ITabsInfoResponse';
+import { error } from 'console';
 
 const Investing = () => {
     var dialog = document.createElement('dialog');
@@ -13,15 +14,10 @@ const Investing = () => {
         if (shared.localHostOrInvesting()) {
             // messages to other tabs
             chrome.runtime.sendMessage('get-tabs-info', async (response: ITabsInfoResponse) => {
-                //console.log('received tabs info: ', response.data);
-                response.data.forEach((tab) => {
-                    console.log(tab);
-                    // TODO
-                    // chrome.scripting.executeScript({
-                    //     target: { tabId: tab.id },
-                    //     func : newFunc
-                    // });
-                });
+                console.log('received response: ', response);
+                // response.data.forEach((tab) => {
+                //     console.log(tab);
+                // });
             });
             // show modal
             const modalElement = modalRef.current;
