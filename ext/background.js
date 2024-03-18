@@ -4,6 +4,7 @@
 import {poc} from './shared.js'
 //import * as shared from './shared.js'
 import * as investingParser from './investingParser.bundle.js'
+import * as seekingAlphaParser from './seekingAlphaParser.bundle.js'
 
 chrome.action.onClicked.addListener(async (currentTab) => {
   chrome.scripting.executeScript({
