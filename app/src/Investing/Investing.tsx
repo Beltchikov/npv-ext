@@ -1,15 +1,12 @@
 import { useEffect, useRef } from 'react';
 import shared from '../shared';
-import { IInvestingParser } from './IInvestingParser';
-import { InvestingParser } from './InvestingParser';
+import * as parser from './InvestingParser';
 import { ITabsInfoResponse } from './ITabsInfoResponse';
-import { error } from 'console';
 
 const Investing = () => {
     var dialog = document.createElement('dialog');
     const modalRef = useRef<HTMLDialogElement>(dialog);
-    const parser: IInvestingParser = new InvestingParser();
-
+    
     useEffect(() => {
         if (shared.localHostOrInvesting()) {
             // messages to other tabs
