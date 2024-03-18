@@ -1,5 +1,4 @@
 import shared from "../shared";
-import { ReactNode } from "react";
 
 export function getDataRow(): Array<string> {
     var symbol: string = getSymbol();
@@ -14,7 +13,7 @@ export function getDataRow(): Array<string> {
     return ([eps, div, roe, beta]).toString().split(',');
 }
 
-export function divFrequency(): ReactNode {
+export function divFrequency(): string {
     return getDataViaCommonParentCardItem('Frequency');
 }
 
