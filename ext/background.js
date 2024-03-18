@@ -11,7 +11,10 @@ chrome.action.onClicked.addListener(async (currentTab) => {
   });
 });
 
-
+function investingParser_getDataRow()
+{
+  return investingParser.getDataRow;
+}
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message === 'get-tabs-info') {
@@ -24,16 +27,18 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
           var promise = chrome.scripting.executeScript({
             target: { tabId: tabs[i].id },
-            func: () => 'faked data'
+            func: investingParser_getDataRow
           });
           promises.push(promise);
         }
 
         Promise.all(promises)
           .then((values) => {
-            sendResponse({ data: values });
+            sendResponse({ type: 'data', data: values });
           })
-          .catch((e) => sendResponse({ data: e }));
+          .catch((reason) => {
+            sendResponse({ type: 'error', data: reason.message });
+          });
 
         return true;
       })
