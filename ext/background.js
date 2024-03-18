@@ -1,8 +1,5 @@
 // service worker
 
-// todo replace with parse function later
-import {poc} from './shared.js'
-//import * as shared from './shared.js'
 import * as investingParser from './investingParser.bundle.js'
 import * as seekingAlphaParser from './seekingAlphaParser.bundle.js'
 import * as shared from './shared.bundle.js'
@@ -34,9 +31,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
         Promise.all(promises)
           .then((values) => {
-            sendResponse({ poc: poc(), data: values });
+            sendResponse({ data: values });
           })
-          .catch((e) => sendResponse({ err: e }));
+          .catch((e) => sendResponse({ data: e }));
 
         return true;
       })
@@ -44,15 +41,3 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   }
 });
-
-// if (tab.id !== undefined) {
-//   chrome.scripting.executeScript({
-//       target: { tabId: tab.id },
-//       func: parser.getDataRow
-//   })
-//   .then(r => {
-//       console.log(r);
-//   })
-//   .catch((err)=> console.log(err));
-// }
-// else throw new Error('Unexpected! tab.id is undefined');

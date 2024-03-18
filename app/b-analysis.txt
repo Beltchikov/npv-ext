@@ -13,7 +13,7 @@ Fesability: find TA for 3 symbols given 3 tabs with symbol data opened. DONE
         sendMessage get tabs DONE
         execute func for every tab and fill modal
             POC call exported JS function from service worker DONE
-            Plan for webpack code splitting
+            Plan for webpack code splitting DONE
 
 Multiply div x 4 if quarterly. Test annualy. Exception otherwise
 
