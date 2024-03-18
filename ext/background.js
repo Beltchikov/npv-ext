@@ -2,6 +2,7 @@
 
 // todo replace with parse function later
 import {poc} from './shared.js'
+//import * as shared from './shared.js'
 
 chrome.action.onClicked.addListener(async (currentTab) => {
   chrome.scripting.executeScript({
