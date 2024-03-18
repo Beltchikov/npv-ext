@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import shared from "../shared";
 
 function getTa(targetElementText: string): string {
@@ -13,13 +12,13 @@ function getTa(targetElementText: string): string {
     return result.replace(',', '').replace('$', '');
 }
 
-export function getDataRow(): ReactNode {
+export function getDataRow(): Array<string> {
     const symbol = 'symbol';
     const taBefore = 'taBefore';
     const ta = getTa('TODO');
     const earnBefore = 'earnBefore';
     const earn = 'earn';
 
-    return [symbol, taBefore, ta, earnBefore, earn];
+    return ([symbol, taBefore, ta, earnBefore, earn]).toString().split(',');
 }
 

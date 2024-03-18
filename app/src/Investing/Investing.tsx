@@ -46,7 +46,7 @@ const Investing = () => {
                 <hr />
                 <hr id="dataStart" />
                 <table id='dataTable'><tr>
-                    {parser.getDataRow()?.toString().split(',').map((e) => <td>{formatString(e, 2)}</td>)}
+                    {parser.getDataRow().map((e) => <td>{formatString(e, 2)}</td>)}
                     <td>{currentDate()}</td>
                 </tr></table>
                 <hr id="dataEnd" />
