@@ -1,14 +1,12 @@
 import React from 'react';
 import { useEffect, useRef } from 'react';
 import shared from '../shared'
-import {ISeekingAlphaParser} from './ISeekingAlphaParser';
-import {SeekingAlphaParser} from './SeekingAlphaParser';
+import * as parser from './SeekingAlphaParser';
 
 const SeekingAlpha = () => {
     var dialog = document.createElement('dialog');
     const modalRef = useRef<HTMLDialogElement>(dialog);
-    const parser : ISeekingAlphaParser = new SeekingAlphaParser();
-
+    
     useEffect(() => {
         if (shared.localHostOrSeekingAlpha()) {
             const modalElement = modalRef.current;

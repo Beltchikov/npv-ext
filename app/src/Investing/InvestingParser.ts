@@ -11,15 +11,15 @@ function getTa(targetElementText: string): string {
     else if (divStringWithError.value == null) alert('UNEXPECTED: both value and error are null')
     else result = divStringWithError.value;
     return result.replace(',', '').replace('$', '');
-}    
+}
 
 export function getDataRow(): ReactNode {
-        const symbol = 'symbol';
-        const taBefore = 'taBefore';
-        const ta = getTa('TODO');
-        const earnBefore = 'earnBefore';
-        const earn = 'earn';
-        
-        return [symbol, taBefore, ta, earnBefore, earn];
-    }
-   
+    const symbol = 'symbol';
+    const taBefore = 'taBefore';
+    const ta = getTa('TODO');
+    const earnBefore = 'earnBefore';
+    const earn = 'earn';
+
+    return [symbol, taBefore, ta, earnBefore, earn];
+}
+
