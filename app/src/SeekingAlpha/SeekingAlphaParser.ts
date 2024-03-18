@@ -1,7 +1,7 @@
 import shared from "../shared";
 import { ReactNode } from "react";
 
-export function getDataRow(): React.ReactNode {
+export function getDataRow(): Array<string> {
     var symbol: string = getSymbol();
     var sector: string = getDataViaCommonParentCompanyProfileSector('Sector');
     var industry: string = getDataViaCommonParentCompanyProfileIndustry('Industry');
@@ -11,7 +11,7 @@ export function getDataRow(): React.ReactNode {
     var beta: string = getDataViaCommonParentCardItem('24M Beta');
 
     //return [symbol, sector, industry, eps, div, roe, beta];  // TODO evtl. for later
-    return [eps, div, roe, beta];
+    return ([eps, div, roe, beta]).toString().split(',');
 }
 
 export function divFrequency(): ReactNode {

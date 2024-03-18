@@ -45,7 +45,7 @@ const SeekingAlpha = () => {
             <div>EPS DIV ROE Beta Date</div>
             <hr id="dataStart" />
             <table id='dataTable'><tr>
-                {parser.getDataRow()?.toString().split(',').map((e) => <td>{formatString(e, 2)}</td>)}
+                {parser.getDataRow().map((e) => <td>{formatString(e, 2)}</td>)}
                 <td>{currentDate()}</td>
             </tr></table>
             <div>Dividend Frequency: {parser.divFrequency()}</div>
