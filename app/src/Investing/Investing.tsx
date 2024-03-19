@@ -6,15 +6,18 @@ import { ITabsInfoResponse } from './ITabsInfoResponse';
 const Investing = () => {
     var dialog = document.createElement('dialog');
     const modalRef = useRef<HTMLDialogElement>(dialog);
-    
+
     useEffect(() => {
         if (shared.localHostOrInvesting()) {
             // messages to other tabs
             chrome.runtime.sendMessage('get-tabs-info', async (response: ITabsInfoResponse) => {
                 console.log('received response: ', response);
-                // response.data.forEach((tab) => {
-                //     console.log(tab);
-                // });
+                for (var i = 0; i < response.data.length; i++) {
+                    {
+                        const tab: chrome.tabs.Tab = response.data[i];
+                        console.log('tabId: ', tab.id);
+                    }
+                }
             });
             // show modal
             const modalElement = modalRef.current;
