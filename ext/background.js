@@ -17,32 +17,41 @@ function investingParser_getDataRow()
 }
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  
+  // if (message === 'get-tabs-info') {
+  //   chrome.tabs.query({ active: false, lastFocusedWindow: true })
+  //     .then(tabs => {
+  //       // TODO get data from each tab (code block below)
+
+  //       var promises = [];
+  //       for (var i = 0; i < tabs.length; i++) {
+
+  //         var promise = chrome.scripting.executeScript({
+  //           target: { tabId: tabs[i].id },
+  //           func: investingParser_getDataRow
+  //         });
+  //         promises.push(promise);
+  //       }
+
+  //       Promise.all(promises)
+  //         .then((values) => {
+  //           sendResponse({ type: 'data', data: values });
+  //         })
+  //         .catch((reason) => {
+  //           sendResponse({ type: 'error', data: reason.message });
+  //         });
+
+  //       return true;
+  //     })
+  //     .catch(e => sendResponse({ err: e.message }));
+  //   return true;
+  // }
+
   if (message === 'get-tabs-info') {
     chrome.tabs.query({ active: false, lastFocusedWindow: true })
-      .then(tabs => {
-        // TODO get data from each tab (code block below)
-
-        var promises = [];
-        for (var i = 0; i < tabs.length; i++) {
-
-          var promise = chrome.scripting.executeScript({
-            target: { tabId: tabs[i].id },
-            func: investingParser_getDataRow
-          });
-          promises.push(promise);
-        }
-
-        Promise.all(promises)
-          .then((values) => {
-            sendResponse({ type: 'data', data: values });
-          })
-          .catch((reason) => {
-            sendResponse({ type: 'error', data: reason.message });
-          });
-
-        return true;
-      })
+      .then((r) => sendResponse({ ok: r }))
       .catch(e => sendResponse({ err: e.message }));
     return true;
   }
+
 });
