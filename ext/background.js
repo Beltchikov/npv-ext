@@ -11,6 +11,20 @@ chrome.action.onClicked.addListener(async (currentTab) => {
       for (var i = 0; i < tabs.length; i++) {
         var tabId = tabs[i].id;
         debugger;
+
+        // Execute parser.js content script
+        chrome.scripting
+          .executeScript({
+            target: { tabId: tabId},
+            files: ['investingParser.bundle.js']
+          })
+          .then(injectionResults => {
+            debugger;
+          })
+          .catch((err)=>{
+            debugger;
+          });
+
       }
     })
     .catch(e => sendResponse({ err: e.message }));
