@@ -10,8 +10,7 @@ chrome.action.onClicked.addListener(async (currentTab) => {
     .then(tabs => {
       for (var i = 0; i < tabs.length; i++) {
         var tabId = tabs[i].id;
-        debugger;
-
+      
         // Execute parser.js content script
         chrome.scripting
           .executeScript({
@@ -19,10 +18,10 @@ chrome.action.onClicked.addListener(async (currentTab) => {
             files: ['investingParser.bundle.js']
           })
           .then(injectionResults => {
-            debugger;
+            //debugger;
           })
           .catch((err)=>{
-            debugger;
+            //debugger;
           });
 
       }
@@ -75,6 +74,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       .then((r) => sendResponse({ data: r }))
       .catch(e => sendResponse({ err: e.message }));
     return true;
+  }
+
+  if (message.type === 'dataRows') {
+    if(console) console.log('dataRows: ' + message.data);
+    // todo
   }
 
 });

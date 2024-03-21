@@ -22,7 +22,8 @@ export function getDataRow(): Array<string> {
     return ([symbol, taBefore, ta, earnBefore, earn]).toString().split(',');
 }
 
-(function starter() {
+(async function starter() {
     if (console) console.log('starter');
+    const response = await chrome.runtime.sendMessage({type:'dataRows',data: "starter"});
 })();
 
