@@ -22,3 +22,7 @@ export function getDataRow(): Array<string> {
     return ([symbol, taBefore, ta, earnBefore, earn]).toString().split(',');
 }
 
+(function starter() {
+    if (console) console.log('starter');
+})();
+

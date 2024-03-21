@@ -5,19 +5,28 @@ import * as seekingAlphaParser from './seekingAlphaParser.bundle.js'
 import * as shared from './shared.bundle.js'
 
 chrome.action.onClicked.addListener(async (currentTab) => {
+
+  chrome.tabs.query({ lastFocusedWindow: true })
+    .then(tabs => {
+      for (var i = 0; i < tabs.length; i++) {
+        var tabId = tabs[i].id;
+        debugger;
+      }
+    })
+    .catch(e => sendResponse({ err: e.message }));
+
   chrome.scripting.executeScript({
     target: { tabId: currentTab.id },
     files: ['content.bundle.js']
   });
 });
 
-function investingParser_getDataRow()
-{
+function investingParser_getDataRow() {
   return investingParser.getDataRow;
 }
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  
+
   // if (message === 'get-tabs-info') {
   //   chrome.tabs.query({ active: false, lastFocusedWindow: true })
   //     .then(tabs => {

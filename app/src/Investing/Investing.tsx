@@ -19,6 +19,7 @@ const Investing = () => {
                     }
                 }
             });
+
             // show modal
             const modalElement = modalRef.current;
             modalElement.showModal();

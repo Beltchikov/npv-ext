@@ -5,10 +5,21 @@
   "action": {
     "default_icon": "npv-ext.png"
   },
-  "permissions": ["tabs", "tabGroups", "activeTab", "scripting"],
+  "permissions": ["tabs", "tabGroups", "activeTab", "scripting","storage"],
   "host_permissions": ["<all_urls>"],
   "background": {
     "service_worker": "background.js",
     "type": "module"
-  }
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "investingParser.bundle.js"
+      ],
+      "matches": [
+        "https://www.investing.com//*"
+      ],
+      "run_at": "document_end"
+    }
+  ]
 }
