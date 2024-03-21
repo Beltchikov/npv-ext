@@ -23,7 +23,21 @@ export function getDataRow(): Array<string> {
 }
 
 (async function starter() {
-    if (console) console.log('starter');
-    const response = await chrome.runtime.sendMessage({type:'dataRows',data: "starter"});
+
+    if (location.protocol == 'chrome-extension:') {
+        if (console) console.log('chrome-extension ');
+    }
+    else {
+        if (console) console.log('content script ');
+    }
+
+    try {
+        var dataRow = getDataRow();
+        //var dataRow = 'test data row';
+        if (console) console.log('dataRow: ' + dataRow);
+
+        const response = await chrome.runtime.sendMessage({ type: 'dataRows', data: dataRow });
+    }
+    catch (e) { }
 })();
 
