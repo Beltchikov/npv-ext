@@ -37,8 +37,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
   // message.type === 'dataRows'
   if (message.type === 'dataRows') {
+    if (console) console.log('active tab: ' + sender.tab.active);
     if (console) console.log('dataRows: ' + message.data);
     // todo call dialog.js
+    // On active tab
   }
 });
 
