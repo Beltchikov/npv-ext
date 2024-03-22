@@ -12,7 +12,7 @@ chrome.action.onClicked.addListener(async (currentTab) => {
         chrome.scripting
           .executeScript({
             target: { tabId: tabId },
-            files: ['investingParser.bundle.js']
+            files: ['parser.bundle.js']
           });
       }
     })

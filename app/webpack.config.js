@@ -4,6 +4,7 @@ module.exports = {
   entry: {
     content: './src/index.tsx',
     investingParser: './src/Investing/InvestingParser.ts',
+    parser: './src/Parser.ts',
     seekingAlphaParser: './src/SeekingAlpha/SeekingAlphaParser.ts',
     shared: './src/shared.ts',
   },
