@@ -45,12 +45,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (console) console.log('active tab: ' + sender.tab.active);
     if (console) console.log('dataRows: ' + message.data);
     
-    
+    tabsWaitingForData = tabsWaitingForData.filter((t)=> t.id==sender.tab.id)
+    if (console) console.log('removing ' + sender.tab.id);
 
     if(tabsWaitingForData.length === 0)
     {
       // todo call dialog.js
       // On active tab
+      if (console) console.log('call dialog');
     }
 
   }
