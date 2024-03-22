@@ -22,17 +22,6 @@ export function getDataRow(): Array<string> {
     return ([symbol, taBefore, ta, earnBefore, earn]).toString().split(',');
 }
 
-(async function starter() {
-
-    // TODO remove try catch 
-    try {
-        var dataRow = getDataRow();
-        if (console) console.log('dataRow: ' + dataRow);
-        await chrome.runtime.sendMessage({ type: 'dataRows', data: dataRow });
-    }
-    catch (e) { }
-})();
-
 // Example execution context
 // if (location.protocol == 'chrome-extension:') {
 //     if (console) console.log('chrome-extension ');
