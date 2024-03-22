@@ -24,20 +24,20 @@ export function getDataRow(): Array<string> {
 
 (async function starter() {
 
-    if (location.protocol == 'chrome-extension:') {
-        if (console) console.log('chrome-extension ');
-    }
-    else {
-        if (console) console.log('content script ');
-    }
-
+    // TODO remove try catch 
     try {
         var dataRow = getDataRow();
-        //var dataRow = 'test data row';
         if (console) console.log('dataRow: ' + dataRow);
-
-        const response = await chrome.runtime.sendMessage({ type: 'dataRows', data: dataRow });
+        await chrome.runtime.sendMessage({ type: 'dataRows', data: dataRow });
     }
     catch (e) { }
 })();
+
+// Example execution context
+// if (location.protocol == 'chrome-extension:') {
+//     if (console) console.log('chrome-extension ');
+// }
+// else {
+//     if (console) console.log('content script ');
+// }
 

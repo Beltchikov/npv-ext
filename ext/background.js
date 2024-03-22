@@ -42,7 +42,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 });
 
-// Promise.all example
+// Example Promise.all 
 // if (message === 'get-tabs-info') {
 //   chrome.tabs.query({ active: false, lastFocusedWindow: true })
 //     .then(tabs => {
