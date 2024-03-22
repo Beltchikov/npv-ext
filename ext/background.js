@@ -7,7 +7,7 @@ chrome.action.onClicked.addListener(async (currentTab) => {
 
   chrome.tabs.query({ lastFocusedWindow: true })
     .then(tabs => {
-      tabsWaitingForData.push(tabs.map((t)=> t.id));
+      tabsWaitingForData.push({tabId:tabs.map((t)=> t.id), data:null});
       if (console) console.log({tabsWaitingForData: tabsWaitingForData});
 
       for (var i = 0; i < tabs.length; i++) {
