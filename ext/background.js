@@ -1,13 +1,18 @@
 // service worker
 
+var tabsWaitingForData = [];
+
 // entry point
 chrome.action.onClicked.addListener(async (currentTab) => {
 
   chrome.tabs.query({ lastFocusedWindow: true })
     .then(tabs => {
+      tabsWaitingForData.push(tabs.map((t)=> t.id));
+      if (console) console.log({tabsWaitingForData: tabsWaitingForData});
+
       for (var i = 0; i < tabs.length; i++) {
         var tabId = tabs[i].id;
-
+        
         // Execute parser.js content script
         chrome.scripting
           .executeScript({
@@ -39,8 +44,15 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'dataRows') {
     if (console) console.log('active tab: ' + sender.tab.active);
     if (console) console.log('dataRows: ' + message.data);
-    // todo call dialog.js
-    // On active tab
+    
+    
+
+    if(tabsWaitingForData.length === 0)
+    {
+      // todo call dialog.js
+      // On active tab
+    }
+
   }
 });
 
