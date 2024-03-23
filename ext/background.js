@@ -7,14 +7,15 @@ chrome.action.onClicked.addListener(async (currentTab) => {
 
   chrome.tabs.query({ lastFocusedWindow: true })
     .then(tabs => {
-      tabs.map((t)=> {
-        tabsWaitingForData.push({tabId:t.id, activeTab: t.active, data: undefined})
+      tabsWaitingForData = [];
+      tabs.map((t) => {
+        tabsWaitingForData.push({ tabId: t.id, activeTab: t.active, data: undefined })
       });
-      if (console) console.log({tabsWaitingForData: tabsWaitingForData});
+      if (console) console.log({ tabsWaitingForData: tabsWaitingForData });
 
       for (var i = 0; i < tabs.length; i++) {
         var tabId = tabs[i].id;
-        
+
         // Execute parser.js content script
         chrome.scripting
           .executeScript({
@@ -44,31 +45,29 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
   // message.type === 'dataRows'
   if (message.type === 'dataRows') {
-    if (console) console.log('dataRows: ' + message.data);
+    if (console) console.log('dataRow: ' + message.data);
     if (console) console.log('active tab: ' + sender.tab.active);
 
     if (console) console.log('adding data: ' + message.data);
-    tabsWaitingForData = tabsWaitingForData.map((t)=>t.tabId===sender.tab.id ? {...t,...{data: message.data}} : t);
-    if (console) console.log({data_added:  tabsWaitingForData});
+    tabsWaitingForData = tabsWaitingForData.map((t) => t.tabId === sender.tab.id ? { ...t, ...{ data: message.data } } : t);
+    if (console) console.log({ data_added: tabsWaitingForData });
 
-    var noDataObjects = tabsWaitingForData.filter((t)=> t.data == undefined);
-    if (console) console.log({noDataObjects: noDataObjects});
+    var noDataObjects = tabsWaitingForData.filter((t) => t.data == undefined);
+    if (console) console.log({ noDataObjects: noDataObjects });
 
-    if(noDataObjects.length === 0)
-    {
+    if (noDataObjects.length === 0) {
       // todo call dialog.js
       // On active tab
       if (console) console.log('call dialog');
-      var activeTabData = tabsWaitingForData.filter((t)=> t.activeTab)[0];
+      var activeTabData = tabsWaitingForData.filter((t) => t.activeTab)[0];
       if (console) console.log('activeTabId: ' + activeTabData.tabId);
-      //const response = await chrome.tabs.sendMessage(sender.tab.id, {greeting: "hello"});
-
+      //const response = await chrome.tabs.sendMessage(activeTabData.tabId, { type: 'dataRows2', data: tabsWaitingForData, sender: 'background' });
     }
 
   }
 });
 
-// Example Promise.all 
+// Example Promise.all
 // if (message === 'get-tabs-info') {
 //   chrome.tabs.query({ active: false, lastFocusedWindow: true })
 //     .then(tabs => {

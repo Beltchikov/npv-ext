@@ -9,12 +9,14 @@ const Dialog = () => {
 
     useEffect(() => {
         if (shared.localHostOrInvesting()) {
-            
-            chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-                  console.log('recieved in parser: ' + request);
+
+            chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+                if (message.type === 'dataRows') {
+                    console.log('recieved in dialog: ' + message.data);
                 }
-              );
-            
+            }
+            );
+
             // show modal
             const modalElement = modalRef.current;
             modalElement.showModal();
