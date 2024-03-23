@@ -8,7 +8,7 @@ chrome.action.onClicked.addListener(async (currentTab) => {
   chrome.tabs.query({ lastFocusedWindow: true })
     .then(tabs => {
       tabs.map((t)=> {
-        tabsWaitingForData.push({tabId:t.id, data: undefined})
+        tabsWaitingForData.push({tabId:t.id, activeTab: t.active, data: undefined})
       });
       if (console) console.log({tabsWaitingForData: tabsWaitingForData});
 
@@ -44,9 +44,9 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
   // message.type === 'dataRows'
   if (message.type === 'dataRows') {
-    if (console) console.log('active tab: ' + sender.tab.active);
     if (console) console.log('dataRows: ' + message.data);
-    
+    if (console) console.log('active tab: ' + sender.tab.active);
+
     if (console) console.log('adding data: ' + message.data);
     tabsWaitingForData = tabsWaitingForData.map((t)=>t.tabId===sender.tab.id ? {...t,...{data: message.data}} : t);
     if (console) console.log({data_added:  tabsWaitingForData});
@@ -59,6 +59,8 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
       // todo call dialog.js
       // On active tab
       if (console) console.log('call dialog');
+      var activeTabData = tabsWaitingForData.filter((t)=> t.activeTab)[0];
+      if (console) console.log('activeTabId: ' + activeTabData.tabId);
       //const response = await chrome.tabs.sendMessage(sender.tab.id, {greeting: "hello"});
 
     }
