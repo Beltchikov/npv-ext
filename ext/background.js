@@ -43,8 +43,8 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     return true;
   }
 
-  // message.type === 'dataRows'
-  if (message.type === 'dataRows') {
+  // message.type === 'dataRow'
+  if (message.type === 'dataRow') {
     if (console) console.log('dataRow: ' + message.data);
     if (console) console.log('active tab: ' + sender.tab.active);
 
