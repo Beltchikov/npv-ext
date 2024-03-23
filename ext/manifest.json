@@ -10,15 +10,5 @@
   "background": {
     "service_worker": "background.js",
     "type": "module"
-  },
-  "content_scripts": [
-    {
-      "js": [
-        "dialog.bundle.js"
-      ],
-      "matches": [
-        "https://www.investing.com//*"
-      ]
-    }
-  ]
+  }
 }

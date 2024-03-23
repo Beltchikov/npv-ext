@@ -9,14 +9,6 @@ const Dialog = () => {
 
     useEffect(() => {
         if (shared.localHostOrInvesting()) {
-
-            chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-                if (message.type === 'dataRows') {
-                    console.log('recieved in dialog: ' + message.data);
-                }
-            }
-            );
-
             // show modal
             const modalElement = modalRef.current;
             modalElement.showModal();
@@ -59,5 +51,25 @@ const Dialog = () => {
         </>
     )
 }
+
+(async function starter() {
+    if (shared.localHostOrInvesting()) {
+        
+        //Dialog();
+
+        chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+            console.log('Dialog : starter');
+            console.log({data:message.data});
+            if (message.type === 'dataRows') {
+                sendResponse(true);
+            }
+            return true;
+        }
+        );
+    }
+    else {
+        if (console) console.log('Dialog : starter NOT IMPLEMENTED');
+    }
+})();
 
 export default Dialog;

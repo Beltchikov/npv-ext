@@ -10,6 +10,12 @@ chrome.action.onClicked.addListener(async (currentTab) => {
       tabsWaitingForData = [];
       tabs.map((t) => {
         tabsWaitingForData.push({ tabId: t.id, activeTab: t.active, data: undefined })
+
+        if(t.active) chrome.scripting
+        .executeScript({
+          target: { tabId: t.id },
+          files: ['dialog.bundle.js']
+        });
       });
       if (console) console.log({ tabsWaitingForData: tabsWaitingForData });
 
@@ -61,7 +67,11 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
       if (console) console.log('call dialog');
       var activeTabData = tabsWaitingForData.filter((t) => t.activeTab)[0];
       if (console) console.log('activeTabId: ' + activeTabData.tabId);
-      //const response = await chrome.tabs.sendMessage(activeTabData.tabId, { type: 'dataRows2', data: tabsWaitingForData, sender: 'background' });
+      
+      const response = await chrome.tabs.sendMessage(activeTabData.tabId, { type: 'dataRows', data: tabsWaitingForData, sender: 'background' });
+      //const response = await chrome.tabs.sendMessage(tab.id, message);
+      if(response) if (console) console.log('Response true received')
+      else if (console) console.log('Response false received')
     }
 
   }
