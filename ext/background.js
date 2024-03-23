@@ -7,7 +7,10 @@ chrome.action.onClicked.addListener(async (currentTab) => {
 
   chrome.tabs.query({ lastFocusedWindow: true })
     .then(tabs => {
-      tabsWaitingForData.push({tabId:tabs.map((t)=> t.id), data:null});
+      //tabsWaitingForData.push({tabId:tabs.map((t)=> t.id), data:undefined});
+      tabs.map((t)=> {
+        tabsWaitingForData.push({tabId:t.id, data: undefined})
+      });
       if (console) console.log({tabsWaitingForData: tabsWaitingForData});
 
       for (var i = 0; i < tabs.length; i++) {
@@ -31,7 +34,7 @@ chrome.action.onClicked.addListener(async (currentTab) => {
 });
 
 // message listener
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
   // TODO remove later
   if (message === 'get-tabs-info') {
     chrome.tabs.query({ active: false, lastFocusedWindow: true })
@@ -45,14 +48,20 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (console) console.log('active tab: ' + sender.tab.active);
     if (console) console.log('dataRows: ' + message.data);
     
-    tabsWaitingForData = tabsWaitingForData.filter((t)=> t.id==sender.tab.id)
-    if (console) console.log('removing ' + sender.tab.id);
+    if (console) console.log('adding data: ' + message.data);
+    tabsWaitingForData = tabsWaitingForData.map((t)=>t.tabId===sender.tab.id ? {...t,...{data: message.data}} : t);
+    if (console) console.log({data_added:  tabsWaitingForData});
 
-    if(tabsWaitingForData.length === 0)
+    var noDataObjects = tabsWaitingForData.filter((t)=> t.data == undefined);
+    if (console) console.log({noDataObjects: noDataObjects});
+
+    if(noDataObjects.length === 0)
     {
       // todo call dialog.js
       // On active tab
       if (console) console.log('call dialog');
+      //const response = await chrome.tabs.sendMessage(sender.tab.id, {greeting: "hello"});
+
     }
 
   }

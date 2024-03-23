@@ -5,6 +5,7 @@ module.exports = {
     content: './src/index.tsx',
     investingParser: './src/Investing/InvestingParser.ts',
     parser: './src/Parser.ts',
+    dialog: './src/Dialog.tsx',
     seekingAlphaParser: './src/SeekingAlpha/SeekingAlphaParser.ts',
     shared: './src/shared.ts',
   },
