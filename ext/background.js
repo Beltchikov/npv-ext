@@ -56,7 +56,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
     if (noDataObjects.length === 0) {
       var activeTabData = tabsWaitingForData.filter((t) => t.activeTab)[0];
-      if (console) console.log('calling dialog on tab id ${activeTabData.tabId)}');
+      if (console) console.log(`calling dialog on tab id ${activeTabData.tabId}`);
       
       const response = await chrome.tabs.sendMessage(activeTabData.tabId, { type: 'dataRows', data: tabsWaitingForData, sender: 'background' });
       if(response) if (console) console.log('Response true received')
