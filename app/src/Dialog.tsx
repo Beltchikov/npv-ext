@@ -3,6 +3,8 @@ import shared from './shared';
 import * as parser from './Investing/InvestingParser';
 import { ITabsInfoResponse } from './Investing/ITabsInfoResponse';
 
+const npvDialogId = 'npvDialog';
+
 const Dialog = () => {
     var dialog = document.createElement('dialog');
     console.log('document.createElement();');
@@ -54,7 +56,7 @@ const Dialog = () => {
 }
 
 const closeModal = () => {
-    //document.getElementById('collector').close();
+    //document?.getElementById(npvDialogId)?.close();
 }
 
 (function starter() {
@@ -71,6 +73,7 @@ const closeModal = () => {
                 console.log(collector);
                 
                 var dialog = document.createElement('dialog');
+                dialog.setAttribute("id", npvDialogId);
                 dialog.innerHTML = '<button id="close" type="reset" onClick={closeModal}>Close</button>&nbsp;&nbsp;';
 
                 collector?.appendChild(dialog);
