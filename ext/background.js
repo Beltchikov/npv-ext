@@ -17,7 +17,6 @@ chrome.action.onClicked.addListener(async (currentTab) => {
           files: ['dialog.bundle.js']
         });
       });
-      if (console) console.log({ tabsWaitingForData: tabsWaitingForData });
 
       for (var i = 0; i < tabs.length; i++) {
         var tabId = tabs[i].id;

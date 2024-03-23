@@ -55,7 +55,7 @@ const Dialog = () => {
 (function starter() {
     if (shared.localHostOrInvesting()) {
         chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-            console.log(`Dialog.starter ${sender}`);
+            console.log({ info: "Dialog.starter", sender: sender });
             if (message.type === 'dataRows') {
                 console.log(message.data);
                 sendResponse(true);
