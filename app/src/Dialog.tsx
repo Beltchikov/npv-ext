@@ -55,11 +55,15 @@ const Dialog = () => {
     )
 }
 
-const closeModal = () => {
-    //document?.getElementById(npvDialogId)?.close();
-}
 
-(function starter() {
+
+const dialogLogic = () =>
+{
+    const closeModal = () => {
+        const dialog = document.querySelector("dialog");
+        dialog?.close();
+    }
+    
     if (shared.localHostOrInvesting()) {
         chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
             console.log({ info: "Dialog.starter", sender: sender });
@@ -74,7 +78,7 @@ const closeModal = () => {
                 
                 var dialog = document.createElement('dialog');
                 dialog.setAttribute("id", npvDialogId);
-                dialog.innerHTML = '<button id="close" type="reset" onClick={closeModal}>Close</button>&nbsp;&nbsp;';
+                dialog.innerHTML = '<button id="close" type="reset" onClick="closeModal">Close</button>&nbsp;&nbsp;';
 
                 collector?.appendChild(dialog);
                 dialog.showModal();
@@ -85,6 +89,10 @@ const closeModal = () => {
     else {
         if (console) console.log('Dialog : starter NOT IMPLEMENTED');
     }
+}
+
+(function starter() {
+    dialogLogic();
 
     
 })();
