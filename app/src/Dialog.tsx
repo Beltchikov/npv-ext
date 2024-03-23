@@ -5,6 +5,7 @@ import { ITabsInfoResponse } from './Investing/ITabsInfoResponse';
 
 const Dialog = () => {
     var dialog = document.createElement('dialog');
+    console.log('document.createElement();');
     const modalRef = useRef<HTMLDialogElement>(dialog);
 
     useEffect(() => {
@@ -52,6 +53,10 @@ const Dialog = () => {
     )
 }
 
+const closeModal = () => {
+    //document.getElementById('collector').close();
+}
+
 (function starter() {
     if (shared.localHostOrInvesting()) {
         chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
@@ -59,6 +64,17 @@ const Dialog = () => {
             if (message.type === 'dataRows') {
                 console.log(message.data);
                 sendResponse(true);
+                
+                //Dialog();
+
+                var collector = document.getElementById('collector');
+                console.log(collector);
+                
+                var dialog = document.createElement('dialog');
+                dialog.innerHTML = '<button id="close" type="reset" onClick={closeModal}>Close</button>&nbsp;&nbsp;';
+
+                collector?.appendChild(dialog);
+                dialog.showModal();
             }
             return true;
         });
@@ -66,6 +82,8 @@ const Dialog = () => {
     else {
         if (console) console.log('Dialog : starter NOT IMPLEMENTED');
     }
+
+    
 })();
 
 export default Dialog;

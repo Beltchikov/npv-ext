@@ -5,6 +5,12 @@ var tabsWaitingForData = [];
 // entry point
 chrome.action.onClicked.addListener(async (currentTab) => {
 
+   // Startet React app
+  chrome.scripting.executeScript({
+    target: { tabId: currentTab.id },
+    files: ['content.bundle.js']
+  });
+  
   chrome.tabs.query({ lastFocusedWindow: true })
     .then(tabs => {
       tabsWaitingForData = [];
@@ -31,11 +37,7 @@ chrome.action.onClicked.addListener(async (currentTab) => {
     })
     .catch(e => console.log({ err: e.message }));
 
-  // TODO remove later
-  chrome.scripting.executeScript({
-    target: { tabId: currentTab.id },
-    files: ['content.bundle.js']
-  });
+ 
 });
 
 // message listener

@@ -15,7 +15,7 @@ function App() {
       {
         (() => {
           if (shared.localHostOrInvesting()) {
-            return <Investing></Investing>
+            return <></>
           }
           else if (shared.localHostOrSeekingAlpha()) {
             return <SeekingAlpha></SeekingAlpha>
