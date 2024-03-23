@@ -51,25 +51,14 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
   // message.type === 'dataRow'
   if (message.type === 'dataRow') {
-    if (console) console.log('dataRow: ' + message.data);
-    if (console) console.log('active tab: ' + sender.tab.active);
-
-    if (console) console.log('adding data: ' + message.data);
-    tabsWaitingForData = tabsWaitingForData.map((t) => t.tabId === sender.tab.id ? { ...t, ...{ data: message.data } } : t);
-    if (console) console.log({ data_added: tabsWaitingForData });
-
-    var noDataObjects = tabsWaitingForData.filter((t) => t.data == undefined);
-    if (console) console.log({ noDataObjects: noDataObjects });
+     tabsWaitingForData = tabsWaitingForData.map((t) => t.tabId === sender.tab.id ? { ...t, ...{ data: message.data } } : t);
+     var noDataObjects = tabsWaitingForData.filter((t) => t.data == undefined);
 
     if (noDataObjects.length === 0) {
-      // todo call dialog.js
-      // On active tab
-      if (console) console.log('call dialog');
       var activeTabData = tabsWaitingForData.filter((t) => t.activeTab)[0];
-      if (console) console.log('activeTabId: ' + activeTabData.tabId);
+      if (console) console.log('calling dialog on tab id ${activeTabData.tabId)}');
       
       const response = await chrome.tabs.sendMessage(activeTabData.tabId, { type: 'dataRows', data: tabsWaitingForData, sender: 'background' });
-      //const response = await chrome.tabs.sendMessage(tab.id, message);
       if(response) if (console) console.log('Response true received')
       else if (console) console.log('Response false received')
     }

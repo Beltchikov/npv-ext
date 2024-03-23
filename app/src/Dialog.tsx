@@ -52,20 +52,16 @@ const Dialog = () => {
     )
 }
 
-(async function starter() {
+(function starter() {
     if (shared.localHostOrInvesting()) {
-        
-        //Dialog();
-
         chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-            console.log('Dialog : starter');
-            console.log({data:message.data});
+            console.log('Dialog.starter ${sender}');
             if (message.type === 'dataRows') {
+                console.log(message.data);
                 sendResponse(true);
             }
             return true;
-        }
-        );
+        });
     }
     else {
         if (console) console.log('Dialog : starter NOT IMPLEMENTED');
