@@ -2,6 +2,8 @@ import { useEffect, useRef } from 'react';
 import shared from './shared';
 import * as parser from './Investing/InvestingParser';
 import { ITabsInfoResponse } from './Investing/ITabsInfoResponse';
+import * as index from './index';
+import React from 'react';
 
 const npvDialogId = 'npvDialog';
 
@@ -73,15 +75,22 @@ const dialogLogic = () =>
                 
                 //Dialog();
 
-                var collector = document.getElementById('collector');
-                console.log(collector);
-                
-                var dialog = document.createElement('dialog');
-                dialog.setAttribute("id", npvDialogId);
-                dialog.innerHTML = '<button id="close" type="reset" onClick="closeModal">Close</button>&nbsp;&nbsp;';
+                // var collector = document.getElementById('collector');
+                // console.log(collector);
 
-                collector?.appendChild(dialog);
-                dialog.showModal();
+                //console.log(collector);
+               
+                // var dialog = document.createElement('dialog');
+                // dialog.setAttribute("id", npvDialogId);
+                // dialog.innerHTML = '<button id="close" type="reset" onClick="closeModal">Close</button>&nbsp;&nbsp;';
+
+                // collector?.appendChild(dialog);
+                // dialog.showModal();
+
+                index.collector.render(
+                    <React.StrictMode>
+                      <Dialog />
+                    </React.StrictMode>);
             }
             return true;
         });
@@ -92,7 +101,11 @@ const dialogLogic = () =>
 }
 
 (function starter() {
+    
     dialogLogic();
+
+    // console.log('collector');
+    // console.log(index.collector);
 
     
 })();
