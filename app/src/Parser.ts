@@ -5,9 +5,9 @@ import * as investingParser from "./Investing/InvestingParser"
     if (shared.localHostOrInvesting()) {
         var dataRow = investingParser.getDataRow();
         if (console) console.log('dataRow parser : ' + dataRow);
-        await chrome.runtime.sendMessage({ type: 'dataRow', data: dataRow, sender: 'parser' });
+        await chrome.runtime.sendMessage({ context:'Investing' ,type: 'dataRow', data: dataRow, sender: 'parser' });
     }
     else {
-        await chrome.runtime.sendMessage({ type: 'dataRow', data: "NOT IMPLEMENTED", sender: 'parser' });
+        await chrome.runtime.sendMessage({ context:'Unknown', type: 'dataRow', data: "NOT IMPLEMENTED", sender: 'parser' });
     }
 })();

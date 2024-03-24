@@ -1,7 +1,11 @@
 @startuml interactions
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+SW -> Chrome.scripting: execute content.bundle.js (start react app)
+SW -> Chrome.tabs: get tabs
+Chrome.tabs --> SW: tabs
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: Another authentication Response
+SW -> Chrome.scripting: [for active tab] execute dialog.bundle.js
+
+SW -> Parser: [for all tabs] execute
+Parser -> SW: sendMessage context = Investing | SeekingAlpha | ...
+
 @enduml
