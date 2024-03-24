@@ -54,29 +54,32 @@ const Dialog = () => {
     )
 }
 
-const investingLogic = () => {
-    chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-        console.log({ info: "Dialog.starter investingLogic", sender: sender });
-        if (message.type === 'dataRows') {
-            console.log(message.data);
-            sendResponse(true);
+const investingLogic = (message:any, sender:any, sendResponse:any) => {
 
-            index.collector.render(
-                <React.StrictMode>
-                    <Dialog />
-                </React.StrictMode>);
-        }
-        return true;
-    });
+    console.log({ info: "Dialog.starter investingLogic", sender: sender });
+    if (message.type === 'dataRows') {
+        console.log(message.data);
+        sendResponse(true);
+
+        index.collector.render(
+            <React.StrictMode>
+                <Dialog />
+            </React.StrictMode>);
+    }
+    return true;
+
 }
 
 (function starter() {
-    if (shared.localHostOrInvesting()) {
-        investingLogic();
-    }
-    else {
-        if (console) console.log('Dialog : starter NOT IMPLEMENTED');
-    }
+    chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+        if (shared.localHostOrInvesting()) {
+            investingLogic(message, sender, sendResponse);
+        }
+        else {
+            if (console) console.log('Dialog : starter NOT IMPLEMENTED');
+        }
+    });
+
 })();
 
 export default Dialog;
