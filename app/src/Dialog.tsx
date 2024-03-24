@@ -1,11 +1,8 @@
 import { useEffect, useRef } from 'react';
 import shared from './shared';
 import * as parser from './Investing/InvestingParser';
-import { ITabsInfoResponse } from './Investing/ITabsInfoResponse';
 import * as index from './index';
 import React from 'react';
-
-const npvDialogId = 'npvDialog';
 
 const Dialog = () => {
     var dialog = document.createElement('dialog');
@@ -57,57 +54,29 @@ const Dialog = () => {
     )
 }
 
+const investingLogic = () => {
+    chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+        console.log({ info: "Dialog.starter investingLogic", sender: sender });
+        if (message.type === 'dataRows') {
+            console.log(message.data);
+            sendResponse(true);
 
+            index.collector.render(
+                <React.StrictMode>
+                    <Dialog />
+                </React.StrictMode>);
+        }
+        return true;
+    });
+}
 
-const dialogLogic = () =>
-{
-    const closeModal = () => {
-        const dialog = document.querySelector("dialog");
-        dialog?.close();
-    }
-    
+(function starter() {
     if (shared.localHostOrInvesting()) {
-        chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-            console.log({ info: "Dialog.starter", sender: sender });
-            if (message.type === 'dataRows') {
-                console.log(message.data);
-                sendResponse(true);
-                
-                //Dialog();
-
-                // var collector = document.getElementById('collector');
-                // console.log(collector);
-
-                //console.log(collector);
-               
-                // var dialog = document.createElement('dialog');
-                // dialog.setAttribute("id", npvDialogId);
-                // dialog.innerHTML = '<button id="close" type="reset" onClick="closeModal">Close</button>&nbsp;&nbsp;';
-
-                // collector?.appendChild(dialog);
-                // dialog.showModal();
-
-                index.collector.render(
-                    <React.StrictMode>
-                      <Dialog />
-                    </React.StrictMode>);
-            }
-            return true;
-        });
+        investingLogic();
     }
     else {
         if (console) console.log('Dialog : starter NOT IMPLEMENTED');
     }
-}
-
-(function starter() {
-    
-    dialogLogic();
-
-    // console.log('collector');
-    // console.log(index.collector);
-
-    
 })();
 
 export default Dialog;
