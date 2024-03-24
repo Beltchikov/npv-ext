@@ -10,6 +10,12 @@ chrome.action.onClicked.addListener(async (currentTab) => {
     files: ['content.bundle.js']
   });
 
+  // message broker script
+  chrome.scripting.executeScript({
+    target: { tabId: currentTab.id },
+    files: ['messageBroker.bundle.js']
+  });
+
   // query tabs
   chrome.tabs.query({ lastFocusedWindow: true })
     .then(tabs => {
@@ -18,11 +24,13 @@ chrome.action.onClicked.addListener(async (currentTab) => {
         tabsWaitingForData.push({ tabId: t.id, activeTab: t.active, data: undefined })
 
         // load dialog content script
-        if (t.active) chrome.scripting
-          .executeScript({
-            target: { tabId: t.id },
-            files: ['dialog.bundle.js']
-          });
+        if (t.active) {
+          chrome.scripting
+            .executeScript({
+              target: { tabId: t.id },
+              files: ['dialog.bundle.js']
+            });
+        }
       });
 
       // execute parser.js for every tab
@@ -50,11 +58,13 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
         var activeTabData = tabsWaitingForData.filter((t) => t.activeTab)[0];
         if (console) console.log(`calling dialog on tab id ${activeTabData.tabId}`);
 
-        const response = await chrome.tabs.sendMessage(activeTabData.tabId, { type: 'dataRows', data: tabsWaitingForData, sender: 'background' });
+        const response = await chrome.tabs.sendMessage(
+         activeTabData.tabId, { type: 'dataRows', data: tabsWaitingForData, sender: 'background' });
+        //const response = sendMessageAsync(tab, context, type, data, sender);
+        
         if (response) if (console) console.log('Response true received')
-        else if (console) console.log('Response false received')
+          else if (console) console.log('Response false received')
       }
-
     }
     else {
       console.log(`Not implemented for message.type ${message.type}`);

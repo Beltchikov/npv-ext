@@ -1,0 +1,1 @@
+(()=>{"use strict";chrome.runtime.onMessage.addListener((function(e,s,o){console.log("messageBroker")}))})();

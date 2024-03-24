@@ -8,4 +8,6 @@ SW -> Chrome.scripting: [for active tab] execute dialog.bundle.js
 SW -> Parser: [for all tabs] execute
 Parser -> SW: sendMessage context = Investing | SeekingAlpha | ...
 
+SW -> MessageBroker: message.context, message.type
+
 @enduml

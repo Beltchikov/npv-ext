@@ -8,6 +8,7 @@ module.exports = {
     dialog: './src/Dialog.tsx',
     seekingAlphaParser: './src/SeekingAlpha/SeekingAlphaParser.ts',
     shared: './src/shared.ts',
+    messageBroker: './src/messageBroker.ts',
   },
   mode: "production",
   module: {
