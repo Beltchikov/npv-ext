@@ -72,6 +72,11 @@ const investingLogic = (message:any, sender:any, sendResponse:any) => {
 
 (function starter() {
     chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+        if(message.target !== 'dialog') return;
+
+        console.log('Dialog. Message received.');
+        console.log(message);
+        
         if (shared.localHostOrInvesting()) {
             investingLogic(message, sender, sendResponse);
         }

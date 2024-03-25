@@ -56,4 +56,5 @@ export default {
     localHostOrSeekingAlpha, 
     localHostOrInvesting,
     dataFromHtmlViaCommonParent, 
-    dataFromHtmlViaParent};
+    dataFromHtmlViaParent
+};

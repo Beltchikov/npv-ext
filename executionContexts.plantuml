@@ -1,0 +1,13 @@
+@startuml executionContexts
+SW -> tab0: load react app
+SW -> tab0: load Dialog
+SW -> tab0: load Parser
+SW -> tab1: load Parser
+SW -> tabN: load Parser
+tab0 -> SW: dataRow
+tab1 -> SW: dataRow
+tabN -> SW: dataRow
+SW -> tab0: message to Dialog
+
+
+@enduml
