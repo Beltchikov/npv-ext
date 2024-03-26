@@ -10,6 +10,7 @@ const SeekingAlpha = () => {
     useEffect(() => {
         if (shared.localHostOrSeekingAlpha()) {
             const modalElement = modalRef.current;
+            console.log('SEEKING ALPHA');
             modalElement.showModal();
         }
     });
