@@ -21,8 +21,7 @@ function attachDialog() {
     <table id='dataTable'>`;
 
     innerHtml += `</table>
-    <hr id="dataEnd" />
-    <button id=${idCloseButton} type="reset" onClick=${() => dialog.close()}>Close</button>&nbsp;&nbsp;`
+    <hr id="dataEnd" /><button id=${idCloseButton} type="reset">Close</button>&nbsp;&nbsp;`
 
     dialog.innerHTML = innerHtml;
     rootElement.appendChild(dialog);
