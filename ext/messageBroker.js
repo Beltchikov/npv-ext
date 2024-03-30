@@ -27,18 +27,25 @@ async function SeekingAlpha(message) {
     }
 }
 
-export function handleMessage(message) {
+export async function handleMessage(message) {
     activeTabId = message.data[1];
     console.log(`messageBroker on the tab ${activeTabId}`);
 
-    switch (message.context) {
-        case 'Investing':
-            Investing(message);
-            break;
-        case 'SeekingAlpha':
-            SeekingAlpha(message);
-            break;
-        default:
-            console.log(`Not implemented for message.context ${message.context}`);
-    }
+    var data2dArray = message.data[0].map((e)=> e.data);
+    console.log(data2dArray);
+
+    // switch (message.context) {
+    //     case 'Investing':
+    //         Investing(message);
+    //         break;
+    //     case 'SeekingAlpha':
+    //         SeekingAlpha(message);
+    //         break;
+    //     default:
+    //         console.log(`Not implemented for message.context ${message.context}`);
+    // }
+
+    const response = await chrome.tabs.sendMessage(activeTabId,
+        { target: 'dialog', type: message.type, context: message.context, data: data2dArray, sender: message.sender });
+    console.log(`messageBroker: Response ${response} received`)
 };
