@@ -1,13 +1,19 @@
 @startuml interactions
-SW -> Chrome.scripting: execute content.bundle.js (start react app)
+SW -> Chrome.scripting: executeScript content.bundle.js (start react app)
+SW -> Chrome.scripting: executeScript dialog.bundle.js 
 SW -> Chrome.tabs: get tabs
 Chrome.tabs --> SW: tabs
 
-SW -> Chrome.scripting: [for active tab] execute dialog.bundle.js
+SW -> Chrome.scripting: [for active tab] executeScript parser.bundle.js
 
 SW -> Parser: [for all tabs] execute
-Parser -> SW: sendMessage context = Investing | SeekingAlpha | ...
+Parser -> SW: [for all tabs] sendMessage {target: ,context: ,type: ,data: ,sender: }
+note right
+  data format: Array<Array<string>>
+end note
 
-SW -> MessageBroker: message.context, message.type
+SW -> SW: collect messages
+
+SW -> MessageBroker: DO WE NEED message broker? message.context, message.type
 
 @enduml
