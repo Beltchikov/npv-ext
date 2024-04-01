@@ -29,7 +29,8 @@ function attachDialog() {
 
     // add functions
     // TODO refactor getButtonByTagAndId
-    var closeButtonElement: HTMLButtonElement = Array.from(document.getElementsByTagName('button')).filter((e) => e.id === idCloseButton)[0];
+    //var closeButtonElement: HTMLButtonElement = Array.from(document.getElementsByTagName('button')).filter((e) => e.id === idCloseButton)[0];
+    var closeButtonElement: HTMLButtonElement = shared.getElementByIdTyped('button', idCloseButton);
     closeButtonElement.onclick = closeModal;
 
     // show
@@ -90,6 +91,8 @@ function addData(dialogElement: HTMLDialogElement, data: Array<Array<string>>) {
     });
 
 })();
+
+
 
 
 

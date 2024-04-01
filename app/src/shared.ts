@@ -52,9 +52,15 @@ export interface IValueWithError<T> {
     error: string|null;
 }
 
+export function getElementByIdTyped(tag: string, id: string): any {
+    return Array.from(document.getElementsByTagName(tag)).filter((e) => e.id === id)[0];
+   
+}
+
 export default { 
     localHostOrSeekingAlpha, 
     localHostOrInvesting,
     dataFromHtmlViaCommonParent, 
-    dataFromHtmlViaParent
+    dataFromHtmlViaParent,
+    getElementByIdTyped
 };
