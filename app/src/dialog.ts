@@ -42,28 +42,13 @@ function addData(dialogElement: HTMLDialogElement, data: Array<Array<string>>) {
     const idNpvCol = 'npvCol';
 
     var tableContainer: HTMLDivElement = shared.getElementByTagAndId('div', idTableContainer);
-    var npvTable: HTMLTableElement = shared.getElementByTagAndId('table', idNpvTable);
-    if (!npvTable) { // TODO refactor
-        npvTable = document.createElement('table');
-        npvTable.id = idNpvTable;
-    }
+    var npvTable: HTMLTableElement = shared.getElementByTagAndIdOrCreate('table', idNpvTable);
 
     data.forEach((row, ri) => {
-        var npvRow: HTMLTableRowElement = shared.getElementByTagAndId('tr', idNpvRow + ri);
-        if (!npvRow) { // TODO refactor
-            npvRow = document.createElement('tr');
-            npvRow.id = idNpvRow + ri;
-        }
-
+        var npvRow: HTMLTableRowElement = shared.getElementByTagAndIdOrCreate('tr', idNpvRow + ri);
         row.forEach((col, ci) => {
-            //var npvCol = Array.from(document.getElementsByTagName('td')).filter((e) => e.id === idNpvCol + ci)[0];
-            var npvCol: HTMLTableCellElement = shared.getElementByTagAndId('td', idNpvCol + ci);
-            if (!npvCol) {// TODO refactor
-                npvCol = document.createElement('td');
-                npvCol.id = idNpvCol + ci;
-                npvCol.innerHTML = col;
-            }
-
+            var npvCol: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + ci);
+            npvCol.innerHTML = col;
             npvRow.appendChild(npvCol);
         });
 
