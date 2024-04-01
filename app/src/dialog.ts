@@ -36,7 +36,7 @@ function attachDialog() {
     return dialog;
 }
 
-function addData(dialogElement: HTMLDialogElement, data: Array<Array<string>>) {
+function addData(data: Array<Array<string>>) {
     const idNpvTable = 'npvTable';
     const idNpvRow = 'npvRow';
     const idNpvCol = 'npvCol';
@@ -62,14 +62,14 @@ function addData(dialogElement: HTMLDialogElement, data: Array<Array<string>>) {
     chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         if (message.target !== 'dialog') return;
 
-        console.log('Dialog. Message received.');
-        console.log(message);
+        console.log(`dialog.ts: message:${message} sender:${sender}`);
 
         var dialogElement: HTMLDialogElement = Array.from(document.getElementsByTagName('dialog')).filter((e) => e.id === idDialog)[0];
         if (!dialogElement) {
             dialogElement = attachDialog();
         }
-        addData(dialogElement, message.data)
+        addData(message.data)
+        sendResponse(true);
     });
 })();
 
