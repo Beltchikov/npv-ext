@@ -54,6 +54,7 @@ export interface IValueWithError<T> {
 
 export function getElementByTagAndId(tag: string, id: string): any {
     return Array.from(document.getElementsByTagName(tag)).filter((e) => e.id === id)[0];
+
 }
 
 export default { 
@@ -61,5 +62,5 @@ export default {
     localHostOrInvesting,
     dataFromHtmlViaCommonParent, 
     dataFromHtmlViaParent,
-    getElementByIdTyped: getElementByTagAndId
+    getElementByTagAndId
 };

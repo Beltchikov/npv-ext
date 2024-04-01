@@ -7,7 +7,7 @@ function attachDialog() {
     const idCollector = 'collector';
     const idCloseButton = 'npvButtonClose';
 
-    var rootElement: HTMLDivElement = shared.getElementByIdTyped('div', idCollector);
+    var rootElement: HTMLDivElement = shared.getElementByTagAndId('div', idCollector);
     const dialog = document.createElement('dialog');
     dialog.id = idDialog;
 
@@ -28,7 +28,7 @@ function attachDialog() {
     rootElement.appendChild(dialog);
 
     // add functions
-    var closeButtonElement: HTMLButtonElement = shared.getElementByIdTyped('button', idCloseButton);
+    var closeButtonElement: HTMLButtonElement = shared.getElementByTagAndId('button', idCloseButton);
     closeButtonElement.onclick = closeModal;
 
     // show
@@ -41,15 +41,15 @@ function addData(dialogElement: HTMLDialogElement, data: Array<Array<string>>) {
     const idNpvRow = 'npvRow';
     const idNpvCol = 'npvCol';
 
-    var tableContainer: HTMLDivElement = shared.getElementByIdTyped('div', idTableContainer);
-    var npvTable: HTMLTableElement = shared.getElementByIdTyped('table', idNpvTable);
+    var tableContainer: HTMLDivElement = shared.getElementByTagAndId('div', idTableContainer);
+    var npvTable: HTMLTableElement = shared.getElementByTagAndId('table', idNpvTable);
     if (!npvTable) { // TODO refactor
         npvTable = document.createElement('table');
         npvTable.id = idNpvTable;
     }
 
     data.forEach((row, ri) => {
-        var npvRow: HTMLTableRowElement = shared.getElementByIdTyped('tr', idNpvRow + ri);
+        var npvRow: HTMLTableRowElement = shared.getElementByTagAndId('tr', idNpvRow + ri);
         if (!npvRow) { // TODO refactor
             npvRow = document.createElement('tr');
             npvRow.id = idNpvRow + ri;
@@ -57,7 +57,7 @@ function addData(dialogElement: HTMLDialogElement, data: Array<Array<string>>) {
 
         row.forEach((col, ci) => {
             //var npvCol = Array.from(document.getElementsByTagName('td')).filter((e) => e.id === idNpvCol + ci)[0];
-            var npvCol: HTMLTableCellElement = shared.getElementByIdTyped('td', idNpvCol + ci);
+            var npvCol: HTMLTableCellElement = shared.getElementByTagAndId('td', idNpvCol + ci);
             if (!npvCol) {// TODO refactor
                 npvCol = document.createElement('td');
                 npvCol.id = idNpvCol + ci;
