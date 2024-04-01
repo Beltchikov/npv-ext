@@ -7,7 +7,7 @@ function attachDialog() {
     const idCollector = 'collector';
     const idCloseButton = 'npvButtonClose';
 
-    var rootElement: HTMLDivElement = Array.from(document.getElementsByTagName('div')).filter((e) => e.id === idCollector)[0];
+    var rootElement: HTMLDivElement = shared.getElementByIdTyped('div', idCollector);
     const dialog = document.createElement('dialog');
     dialog.id = idDialog;
 
@@ -28,8 +28,6 @@ function attachDialog() {
     rootElement.appendChild(dialog);
 
     // add functions
-    // TODO refactor getButtonByTagAndId
-    //var closeButtonElement: HTMLButtonElement = Array.from(document.getElementsByTagName('button')).filter((e) => e.id === idCloseButton)[0];
     var closeButtonElement: HTMLButtonElement = shared.getElementByIdTyped('button', idCloseButton);
     closeButtonElement.onclick = closeModal;
 
@@ -43,24 +41,23 @@ function addData(dialogElement: HTMLDialogElement, data: Array<Array<string>>) {
     const idNpvRow = 'npvRow';
     const idNpvCol = 'npvCol';
 
-    var tableContainer: HTMLDivElement = Array.from(dialogElement.getElementsByTagName('div'))
-        .filter((e) => e.id === idTableContainer)[0];
-
-    var npvTable = Array.from(document.getElementsByTagName('table')).filter((e) => e.id === idNpvTable)[0];
+    var tableContainer: HTMLDivElement = shared.getElementByIdTyped('div', idTableContainer);
+    var npvTable: HTMLTableElement = shared.getElementByIdTyped('table', idNpvTable);
     if (!npvTable) { // TODO refactor
         npvTable = document.createElement('table');
         npvTable.id = idNpvTable;
     }
 
     data.forEach((row, ri) => {
-        var npvRow = Array.from(document.getElementsByTagName('tr')).filter((e) => e.id === idNpvRow + ri)[0];
+        var npvRow: HTMLTableRowElement = shared.getElementByIdTyped('tr', idNpvRow + ri);
         if (!npvRow) { // TODO refactor
             npvRow = document.createElement('tr');
             npvRow.id = idNpvRow + ri;
         }
 
         row.forEach((col, ci) => {
-            var npvCol = Array.from(document.getElementsByTagName('td')).filter((e) => e.id === idNpvCol + ci)[0];
+            //var npvCol = Array.from(document.getElementsByTagName('td')).filter((e) => e.id === idNpvCol + ci)[0];
+            var npvCol: HTMLTableCellElement = shared.getElementByIdTyped('td', idNpvCol + ci);
             if (!npvCol) {// TODO refactor
                 npvCol = document.createElement('td');
                 npvCol.id = idNpvCol + ci;
@@ -89,7 +86,6 @@ function addData(dialogElement: HTMLDialogElement, data: Array<Array<string>>) {
         }
         addData(dialogElement, message.data)
     });
-
 })();
 
 
