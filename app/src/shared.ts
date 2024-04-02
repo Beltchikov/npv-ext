@@ -47,7 +47,11 @@ export function dataFromHtmlViaParent(
     return { 'value': relatedElement.text(), error: null };
 }
 
-export function dataFromHtmlByTagAndTextContains(innerHTML: string, tag: string, ...textsToSearch: string[]) {
+export function dataFromHtmlByTagAndTextContains(
+    innerHTML: string, 
+    tag: string, 
+    ...textsToSearch: string[]) : IValueWithError<string>{
+
     const $ = cheerio.load(innerHTML);
 
     console.log('dataFromHtmlByTagAndTextContains');
@@ -63,6 +67,11 @@ export function dataFromHtmlByTagAndTextContains(innerHTML: string, tag: string,
 
     console.log(result.length);
     console.log(result[0]);
+
+    if(result.length > 1) return { 'value': null, error: 'more than 1 element found' }
+    else if(result.length < 1) return { 'value': null, error: 'element not found' }
+    else return { 'value': result[0].toString(), error: null }
+
 }
 
 export interface IValueWithError<T> {

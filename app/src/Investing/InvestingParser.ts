@@ -16,22 +16,25 @@ function getSymbol(): string {
     // <h1 class="mb-2.5 text-left text-xl font-bold leading-7 text-[#232526] md:mb-2 md:text-3xl md:leading-8 rtl:soft-ltr">
     //                                     Amazon.com Inc (AMZN)</h1>
 
-   
-        // const divStringWithError = shared.dataFromHtmlViaCommonParent(
-        //     document.body.innerHTML,
-        //     'div',
-        //     targetElementText,
-        //     'div[data-test='main-header']',,
-        //     'div[data-test-id="value-title"]');
 
-        const h1StringWithError = shared.dataFromHtmlByTagAndTextContains(
-            document.body.innerHTML,
-            "h1",
-            "(",
-            ")");
-   
-    
-    return result.replace(',', '').replace('$', '');
+    // const divStringWithError = shared.dataFromHtmlViaCommonParent(
+    //     document.body.innerHTML,
+    //     'div',
+    //     targetElementText,
+    //     'div[data-test='main-header']',,
+    //     'div[data-test-id="value-title"]');
+
+    const h1StringWithError = shared.dataFromHtmlByTagAndTextContains(
+        document.body.innerHTML,
+        "h1",
+        "(",
+        ")");
+
+    if (h1StringWithError.error !== null) result = h1StringWithError.error
+    else if (h1StringWithError.value == null) alert('UNEXPECTED: both value and error are null')
+    else result = h1StringWithError.value;
+    //return result.replace(',', '').replace('$', '');
+    return result;
 }
 
 function getTa(targetElementText: string): string {
@@ -40,6 +43,7 @@ function getTa(targetElementText: string): string {
         document.body.innerHTML,
         "div[class*='analyst-price-target_gaugeView']",
         "div:not([class*='analyst-price-target'])");
+
     if (divStringWithError.error !== null) result = divStringWithError.error
     else if (divStringWithError.value == null) alert('UNEXPECTED: both value and error are null')
     else result = divStringWithError.value;
