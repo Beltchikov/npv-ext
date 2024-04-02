@@ -47,11 +47,26 @@ export function dataFromHtmlViaParent(
     return { 'value': relatedElement.text(), error: null };
 }
 
-export function dataFromHtmlByTagAndTextContains(innerHTML: string, tag: string, ...textToSearch: string[]) {
+export function dataFromHtmlByTagAndTextContains(innerHTML: string, tag: string, ...textsToSearch: string[]) {
     const $ = cheerio.load(innerHTML);
-    const result = $(tag);
-    console.log('tag');
-    console.log(tag);
+    
+    console.log('dataFromHtmlByTagAndTextContains');
+    
+    const result = $(tag).filter(function () {
+        var containsAllTexts = true;
+        textsToSearch.forEach((textToSearch, i, arr) => {
+            containsAllTexts = $(this).text().indexOf(textToSearch) > 0;
+            console.log($(this).text());
+            if(!containsAllTexts) return false;
+
+        });
+        return true;
+
+        //return $(this).text().indexOf(textToSearch[0]) > 0;
+    });
+    
+    console.log(result.length);
+    console.log(result[0]);
 }
 
 export interface IValueWithError<T> {
