@@ -49,29 +49,18 @@ export function dataFromHtmlViaParent(
 
 export function dataFromHtmlByTagAndTextContains(innerHTML: string, tag: string, ...textsToSearch: string[]) {
     const $ = cheerio.load(innerHTML);
-    
+
     console.log('dataFromHtmlByTagAndTextContains');
 
-    // var broadcom ="Broadcom Inc (AVGO)";
-    // var broadcomHasBracket = broadcom.indexOf(textToSearch) > 0;
-
-    // var npv ="NPV";
-
-
-    
     const result = $(tag).filter(function () {
         var containsAllTexts = true;
-        textsToSearch.forEach((textToSearch, i, arr) => {
+        textsToSearch.forEach((textToSearch) => {
             containsAllTexts = $(this).text().indexOf(textToSearch) > 0;
-            console.log($(this).text());
-            if(!containsAllTexts) return false;
-
+            if (!containsAllTexts) return false;
         });
         return containsAllTexts;
-
-        //return $(this).text().indexOf(textToSearch[0]) > 0;
     });
-    
+
     console.log(result.length);
     console.log(result[0]);
 }
