@@ -51,6 +51,13 @@ export function dataFromHtmlByTagAndTextContains(innerHTML: string, tag: string,
     const $ = cheerio.load(innerHTML);
     
     console.log('dataFromHtmlByTagAndTextContains');
+
+    // var broadcom ="Broadcom Inc (AVGO)";
+    // var broadcomHasBracket = broadcom.indexOf(textToSearch) > 0;
+
+    // var npv ="NPV";
+
+
     
     const result = $(tag).filter(function () {
         var containsAllTexts = true;
@@ -60,7 +67,7 @@ export function dataFromHtmlByTagAndTextContains(innerHTML: string, tag: string,
             if(!containsAllTexts) return false;
 
         });
-        return true;
+        return containsAllTexts;
 
         //return $(this).text().indexOf(textToSearch[0]) > 0;
     });
