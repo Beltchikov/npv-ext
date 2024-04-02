@@ -1,5 +1,39 @@
 import shared from "../shared";
 
+export function getDataRow(): Array<string> {
+    const symbol = getSymbol();
+    const taBefore = 'taBefore';
+    const ta = getTa('TODO');
+    const earnBefore = 'earnBefore';
+    const earn = 'earn';
+
+    return ([symbol, taBefore, ta, earnBefore, earn]).toString().split(',');
+}
+
+function getSymbol(): string {
+    var result: string = 'SYMBOL';
+
+    // <h1 class="mb-2.5 text-left text-xl font-bold leading-7 text-[#232526] md:mb-2 md:text-3xl md:leading-8 rtl:soft-ltr">
+    //                                     Amazon.com Inc (AMZN)</h1>
+
+   
+        // const divStringWithError = shared.dataFromHtmlViaCommonParent(
+        //     document.body.innerHTML,
+        //     'div',
+        //     targetElementText,
+        //     'div[data-test='main-header']',,
+        //     'div[data-test-id="value-title"]');
+
+        const h1StringWithError = shared.dataFromHtmlByTagAndTextContains(
+            document.body.innerHTML,
+            "h1",
+            "(",
+            ")");
+   
+    
+    return result.replace(',', '').replace('$', '');
+}
+
 function getTa(targetElementText: string): string {
     var result: string = '';
     const divStringWithError = shared.dataFromHtmlViaParent(
@@ -12,15 +46,6 @@ function getTa(targetElementText: string): string {
     return result.replace(',', '').replace('$', '');
 }
 
-export function getDataRow(): Array<string> {
-    const symbol = 'symbol';
-    const taBefore = 'taBefore';
-    const ta = getTa('TODO');
-    const earnBefore = 'earnBefore';
-    const earn = 'earn';
-
-    return ([symbol, taBefore, ta, earnBefore, earn]).toString().split(',');
-}
 
 // Example execution context
 // if (location.protocol == 'chrome-extension:') {

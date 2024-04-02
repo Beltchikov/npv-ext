@@ -47,6 +47,13 @@ export function dataFromHtmlViaParent(
     return { 'value': relatedElement.text(), error: null };
 }
 
+export function dataFromHtmlByTagAndTextContains(innerHTML: string, tag: string, ...textToSearch: string[]) {
+    const $ = cheerio.load(innerHTML);
+    const result = $(tag);
+    console.log('tag');
+    console.log(tag);
+}
+
 export interface IValueWithError<T> {
     value: T | null;
     error: string | null;
@@ -70,6 +77,7 @@ export default {
     localHostOrInvesting,
     dataFromHtmlViaCommonParent,
     dataFromHtmlViaParent,
+    dataFromHtmlByTagAndTextContains,
     getElementByTagAndId,
     getElementByTagAndIdOrCreate
 };
