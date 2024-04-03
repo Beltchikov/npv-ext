@@ -47,7 +47,7 @@ export function dataFromHtmlViaParent(
     return { 'value': relatedElement.text(), error: null };
 }
 
-export function dataFromHtmlByTagAndTextContains(
+export function dataFromHtmlByTag(
     innerHTML: string, 
     tag: string, 
     ...textsToSearch: string[]) : IValueWithError<string>{
@@ -56,21 +56,21 @@ export function dataFromHtmlByTagAndTextContains(
 
     console.log('dataFromHtmlByTagAndTextContains');
 
-    const result = $(tag).filter(function () {
-        var containsAllTexts = true;
-        textsToSearch.forEach((textToSearch) => {
-            containsAllTexts = $(this).text().indexOf(textToSearch) > 0;
-            if (!containsAllTexts) return false;
-        });
-        return containsAllTexts;
-    });
+    // const result = $(tag).filter(function () {
+    //     var containsAllTexts = true;
+    //     textsToSearch.forEach((textToSearch) => {
+    //         containsAllTexts = $(this).text().indexOf(textToSearch) > 0;
+    //         if (!containsAllTexts) return false;
+    //     });
+    //     return containsAllTexts;
+    // });
+    const result = $(tag).text();
 
     console.log(result.length);
     console.log(result[0]);
 
-    if(result.length > 1) return { 'value': null, error: 'more than 1 element found' }
-    else if(result.length < 1) return { 'value': null, error: 'element not found' }
-    else return { 'value': result[0].toString(), error: null }
+    if(result.length < 1) return { 'value': null, error: 'elements not found' }
+    else return { 'value': result, error: null }
 
 }
 
@@ -97,7 +97,7 @@ export default {
     localHostOrInvesting,
     dataFromHtmlViaCommonParent,
     dataFromHtmlViaParent,
-    dataFromHtmlByTagAndTextContains,
+    dataFromHtmlByTagAndTextContains: dataFromHtmlByTag,
     getElementByTagAndId,
     getElementByTagAndIdOrCreate
 };

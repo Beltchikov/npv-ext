@@ -34,7 +34,7 @@ function getSymbol(): string {
     else if (h1StringWithError.value == null) alert('UNEXPECTED: both value and error are null')
     else result = h1StringWithError.value;
     //return result.replace(',', '').replace('$', '');
-    return result;
+    return result.substring(0,20);
 }
 
 function getTa(targetElementText: string): string {
