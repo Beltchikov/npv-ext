@@ -48,30 +48,14 @@ export function dataFromHtmlViaParent(
 }
 
 export function dataFromHtmlByTag(
-    innerHTML: string, 
-    tag: string, 
-    ...textsToSearch: string[]) : IValueWithError<string>{
+    innerHTML: string,
+    tag: string): IValueWithError<string> {
 
     const $ = cheerio.load(innerHTML);
-
-    console.log('dataFromHtmlByTagAndTextContains');
-
-    // const result = $(tag).filter(function () {
-    //     var containsAllTexts = true;
-    //     textsToSearch.forEach((textToSearch) => {
-    //         containsAllTexts = $(this).text().indexOf(textToSearch) > 0;
-    //         if (!containsAllTexts) return false;
-    //     });
-    //     return containsAllTexts;
-    // });
     const result = $(tag).text();
 
-    console.log(result.length);
-    console.log(result[0]);
-
-    if(result.length < 1) return { 'value': null, error: 'elements not found' }
+    if (result.length < 1) return { 'value': null, error: 'elements not found' }
     else return { 'value': result, error: null }
-
 }
 
 export interface IValueWithError<T> {

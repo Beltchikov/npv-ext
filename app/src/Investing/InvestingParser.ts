@@ -26,9 +26,7 @@ function getSymbol(): string {
 
     const h1StringWithError = shared.dataFromHtmlByTagAndTextContains(
         document.body.innerHTML,
-        "h1",
-        "(",
-        ")");
+        "h1");
 
     if (h1StringWithError.error !== null) result = h1StringWithError.error
     else if (h1StringWithError.value == null) alert('UNEXPECTED: both value and error are null')
