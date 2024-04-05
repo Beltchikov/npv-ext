@@ -21,13 +21,10 @@ function getSymbol(): string {
     else if (h1StringWithError.value == null) alert('UNEXPECTED: both value and error are null')
     else result = h1StringWithError.value;
 
-    var resultRegEx = result.match(/(\()(\w+)/g);
-    console.log(resultRegEx);
+    const re = new RegExp("(?:\\()(\\w+)");
+    var resultRegEx = re.exec(result);
     if (resultRegEx === null) return "getSymbol: RegExpMatchArray is null"
-    else return resultRegEx[0];
-   
-
-    //return result.substring(0,20);
+    else return resultRegEx[1];
 }
 
 function getTa(targetElementText: string): string {
