@@ -51,35 +51,10 @@ chrome.action.onClicked.addListener(async (currentTab) => {
 // message listener
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
-  // if (message.context === 'Investing') {
-  //   if (message.type === 'dataRow') {
-  //     tabsWaitingForData = tabsWaitingForData.map((t) => t.tabId === sender.tab.id ? { ...t, ...{ data: message.data } } : t);
-  //     var noDataObjects = tabsWaitingForData.filter((t) => t.data == undefined);
-
-  //     if (noDataObjects.length === 0) {
-  //       var activeTabData = tabsWaitingForData.filter((t) => t.activeTab)[0];
-  //       if (console) console.log(`calling dialog on tab id ${activeTabData.tabId}`);
-
-  //       const response = await chrome.tabs.sendMessage(
-  //        activeTabData.tabId, { target:'messageBroker', context:'Investing', type: 'dataRows', data: tabsWaitingForData, sender: 'background' });
-
-  //       if (response) if (console) console.log('Response true received')
-  //         else if (console) console.log('Response false received')
-  //     }
-  //   }
-  //   else {
-  //     console.log(`Not implemented for message.type ${message.type}`);
-  //   }
-  // }
-  // else if (message.context === 'SeekingAlpha') {
-  //   console.log(`Not implemented for context ${message.context}`);
-  // }
-  // else {
-  //   console.log(`Not implemented for context ${message.context}`);
-  // }
-
   if (message.target !== 'background') return;
 
+  if(message.type === 'dataRow')
+{
   tabsWaitingForData = tabsWaitingForData.map((t) => t.tabId === sender.tab.id ? { ...t, ...{ data: message.data } } : t);
   var noDataObjects = tabsWaitingForData.filter((t) => t.data == undefined);
 
@@ -94,22 +69,12 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
       data: [tabsWaitingForData, activeTabData.tabId],
       sender: 'background'
     });
-    
-    // const response = await chrome.tabs.sendMessage(
-    //   activeTabData.tabId,
-    //   {
-    //     target: 'messageBroker',
-    //     context: 'Investing',
-    //     type: 'dataRows',
-    //     data: [tabsWaitingForData, activeTabData.tabId],
-    //     sender: 'background'
-    //   });
-
-    // if (response) if (console) console.log('Response true received')
-    // else if (console) console.log('Response false received')
   }
-
-
+}
+else
+{
+  console.log(`Not implemented for message type ${message.type}`);
+}
 
   sendResponse(true);
 });
