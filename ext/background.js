@@ -1,31 +1,13 @@
 import { handleMessage } from './messageBroker.js'
+import { loadScripts } from './loader.js';
 
 // service worker
 var tabsWaitingForData = [];
 
 // entry point
 chrome.action.onClicked.addListener(async (currentTab) => {
-
-  // start react app
-  chrome.scripting.executeScript({
-    target: { tabId: currentTab.id },
-    files: ['content.bundle.js']
-  });
-
-  // execute dialog.bundle.js
-  chrome.scripting.executeScript({
-    target: { tabId: currentTab.id },
-    files: ['dialog.bundle.js']
-  }) .then(_r=>console.log('Script dialog.bundle.js executed'))
-  .catch(e=>`Error executing script dialog.bundle.js. Reason: ${e}`);
-
-  // execute header.bundle.js
-  chrome.scripting.executeScript({
-    target: { tabId: currentTab.id },
-    files: ['header.bundle.js']
-  })
-  .then(_r=>console.log('Script header.bundle.js executed'))
-  .catch(e=>`Error executing script header.bundle.js. Reason: ${e}`);
+  
+  loadScripts(currentTab);
 
   // query tabs
   chrome.tabs.query({ lastFocusedWindow: true })
@@ -53,28 +35,26 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
   if (message.target !== 'background') return;
 
-  if(message.type === 'dataRow')
-{
-  tabsWaitingForData = tabsWaitingForData.map((t) => t.tabId === sender.tab.id ? { ...t, ...{ data: message.data } } : t);
-  var noDataObjects = tabsWaitingForData.filter((t) => t.data == undefined);
+  if (message.type === 'dataRow') {
+    tabsWaitingForData = tabsWaitingForData.map((t) => t.tabId === sender.tab.id ? { ...t, ...{ data: message.data } } : t);
+    var noDataObjects = tabsWaitingForData.filter((t) => t.data == undefined);
 
-  if (noDataObjects.length === 0) {
-    var activeTabData = tabsWaitingForData.filter((t) => t.activeTab)[0];
-    if (console) console.log(`calling dialog on tab id ${activeTabData.tabId}`);
+    if (noDataObjects.length === 0) {
+      var activeTabData = tabsWaitingForData.filter((t) => t.activeTab)[0];
+      if (console) console.log(`calling dialog on tab id ${activeTabData.tabId}`);
 
-    handleMessage({
-      target: 'dialog',
-      context: 'Investing',
-      type: 'dataRows',
-      data: [tabsWaitingForData, activeTabData.tabId],
-      sender: 'background'
-    });
+      handleMessage({
+        target: 'dialog',
+        context: 'Investing',
+        type: 'dataRows',
+        data: [tabsWaitingForData, activeTabData.tabId],
+        sender: 'background'
+      });
+    }
   }
-}
-else
-{
-  console.log(`Not implemented for message type ${message.type}`);
-}
+  else {
+    console.log(`Not implemented for message type ${message.type}`);
+  }
 
   sendResponse(true);
 });
