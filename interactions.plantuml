@@ -5,6 +5,7 @@ SW -> Chrome.tabs: get tabs
 Chrome.tabs --> SW: tabs
 
 SW -> Chrome.scripting: [for active tab] executeScript parser.bundle.js
+SW -> Chrome.scripting: [for active tab] executeScript header.bundle.js
 
 SW -> Parser: [for all tabs] execute
 Parser -> SW: [for all tabs] sendMessage {target: ,context: ,type: ,data: ,sender: }

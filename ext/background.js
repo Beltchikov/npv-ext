@@ -12,11 +12,19 @@ chrome.action.onClicked.addListener(async (currentTab) => {
     files: ['content.bundle.js']
   });
 
-  // load dialog content script
+  // execute dialog.bundle.js
   chrome.scripting.executeScript({
     target: { tabId: currentTab.id },
     files: ['dialog.bundle.js']
   });
+
+  // execute header.bundle.js
+  chrome.scripting.executeScript({
+    target: { tabId: currentTab.id },
+    files: ['header.bundle.js']
+  })
+  .then(_r=>console.log('Script header.bundle.js executed'))
+  .catch(e=>`Error executing script header.bundle.js. Reason: ${e}`);
 
   // query tabs
   chrome.tabs.query({ lastFocusedWindow: true })
