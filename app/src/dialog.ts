@@ -2,18 +2,26 @@ import shared from './shared';
 
 const idDialog = 'npvDialog';
 const idTableContainer = 'npvTableContainer';
+const idNpvTable = 'npvTable';
 
 function attachDialog() {
     const idCollector = 'collector';
     const idCloseButton = 'npvButtonClose';
     const idCopyButton = 'npvButtonCopy';
-
+    
     var rootElement: HTMLDivElement = shared.getElementByTagAndId('div', idCollector);
     const dialog = document.createElement('dialog');
     dialog.id = idDialog;
 
     const closeModal = () => {
         dialog.close();
+    }
+
+    function copyToClipboard(): void {
+        var element = document.getElementById(idNpvTable);
+        navigator.clipboard.writeText(element?.outerHTML === undefined
+            ? 'undefined'
+            : element?.outerHTML);
     }
 
     // inner html
@@ -23,8 +31,9 @@ function attachDialog() {
     <div id=${idTableContainer}>`;
 
     innerHtml += `</div>
-    <hr id="dataEnd" /><button id=${idCloseButton} type="reset">Close</button>&nbsp;&nbsp;
-    <button id=${idCopyButton} onClick={copyToClipboard}>Copy</button>&nbsp;&nbsp;`
+    <hr id="dataEnd" />
+    <button id=${idCloseButton} type="reset">Close</button>&nbsp;&nbsp;
+    <button id=${idCopyButton}>Copy</button>&nbsp;&nbsp;`
 
     dialog.innerHTML = innerHtml;
     rootElement.appendChild(dialog);
@@ -32,6 +41,8 @@ function attachDialog() {
     // add functions
     var closeButtonElement: HTMLButtonElement = shared.getElementByTagAndId('button', idCloseButton);
     closeButtonElement.onclick = closeModal;
+    var copyButtonElement: HTMLButtonElement = shared.getElementByTagAndId('button', idCopyButton);
+    copyButtonElement.onclick = copyToClipboard;
 
     // show
     dialog.showModal();
@@ -39,7 +50,6 @@ function attachDialog() {
 }
 
 function addData(data: Array<Array<string>>) {
-    const idNpvTable = 'npvTable';
     const idNpvRow = 'npvRow';
     const idNpvCol = 'npvCol';
 
