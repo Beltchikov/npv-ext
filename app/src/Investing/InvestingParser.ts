@@ -7,7 +7,8 @@ export function getDataRow(): Array<string> {
     const earnBefore = 'earnBefore';
     const earn = 'earn';
 
-    return ([symbol, taBefore, ta, earnBefore, earn]).toString().split(',');
+    //return ([symbol, taBefore, ta, earnBefore, earn]).toString().split(',');
+    return ([symbol, ta]).toString().split(',');
 }
 
 function getSymbol(): string {
