@@ -6,6 +6,7 @@ const idTableContainer = 'npvTableContainer';
 function attachDialog() {
     const idCollector = 'collector';
     const idCloseButton = 'npvButtonClose';
+    const idCopyButton = 'npvButtonCopy';
 
     var rootElement: HTMLDivElement = shared.getElementByTagAndId('div', idCollector);
     const dialog = document.createElement('dialog');
@@ -22,7 +23,8 @@ function attachDialog() {
     <div id=${idTableContainer}>`;
 
     innerHtml += `</div>
-    <hr id="dataEnd" /><button id=${idCloseButton} type="reset">Close</button>&nbsp;&nbsp;`
+    <hr id="dataEnd" /><button id=${idCloseButton} type="reset">Close</button>&nbsp;&nbsp;
+    <button id=${idCopyButton} onClick={copyToClipboard}>Copy</button>&nbsp;&nbsp;`
 
     dialog.innerHTML = innerHtml;
     rootElement.appendChild(dialog);
