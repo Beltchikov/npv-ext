@@ -1,4 +1,3 @@
-import { handleMessage } from './messageBroker.js'
 import { loadScripts } from './loader.js';
 
 // service worker

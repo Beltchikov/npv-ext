@@ -9,7 +9,6 @@ module.exports = {
     header: './src/header.ts',
     seekingAlphaParser: './src/SeekingAlpha/SeekingAlphaParser.ts',
     shared: './src/shared.ts',
-    messageBroker: './src/messageBroker.ts',
   },
   mode: "production",
   module: {
