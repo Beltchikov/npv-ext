@@ -6,7 +6,7 @@ var tabsWaitingForData = [];
 
 // entry point
 chrome.action.onClicked.addListener(async (currentTab) => {
-  
+
   loadScripts(currentTab);
 
   // query tabs
@@ -41,15 +41,19 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
     if (noDataObjects.length === 0) {
       var activeTabData = tabsWaitingForData.filter((t) => t.activeTab)[0];
-      if (console) console.log(`calling dialog on tab id ${activeTabData.tabId}`);
 
-      handleMessage({
-        target: 'dialog',
-        context: 'Investing',
-        type: 'dataRows',
-        data: [tabsWaitingForData, activeTabData.tabId],
-        sender: 'background'
-      });
+      console.log(`Sending message to dialog on tab id ${activeTabData.tabId}`);
+      var data2dArray = tabsWaitingForData.map((e)=> e.data);
+      const response = await chrome.tabs.sendMessage(activeTabData.tabId,
+        {
+          target: 'dialog',
+          type: message.type,
+          context: message.context,
+          data: data2dArray,
+          sender: message.sender
+        });
+      if (response) console.log(`Message to dialog on tab id ${activeTabData.tabId} successfully sent.`)
+      else console.log(`Error sending message to dialog on tab id ${activeTabData.tabId}.`)
     }
   }
   else {
