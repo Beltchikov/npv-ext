@@ -16,7 +16,8 @@ chrome.action.onClicked.addListener(async (currentTab) => {
   chrome.scripting.executeScript({
     target: { tabId: currentTab.id },
     files: ['dialog.bundle.js']
-  });
+  }) .then(_r=>console.log('Script dialog.bundle.js executed'))
+  .catch(e=>`Error executing script dialog.bundle.js. Reason: ${e}`);
 
   // execute header.bundle.js
   chrome.scripting.executeScript({
