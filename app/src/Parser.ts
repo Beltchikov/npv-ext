@@ -1,22 +1,31 @@
 import shared from "./shared";
 import * as investingParser from "./Investing/InvestingParser"
 import * as seekingAlphaParser from "./SeekingAlpha/SeekingAlphaParser"
+import { hostname } from "os";
 
 (async function starter() {
     var dataRow = [];
     var context = "Unknown";
-    
+
+    var hostMap = [
+        {name: "www.investing.com", parser: investingParser},
+        {name: "seekingalpha.com", parser: seekingAlphaParser},
+    ];
+
+
     if (shared.localHostOrInvesting()) {
         dataRow = investingParser.getDataRow();
         context = "Investing";
-       
+        console.log(window.location.hostname);
     }
     else if (shared.localHostOrSeekingAlpha()) {
         dataRow = seekingAlphaParser.getDataRow();
         context = "SeekingAlpha";
+        console.log(window.location.hostname);
     }
     else {
-        dataRow = ["NOT IMPLEMENTED!"];
+        console.log(window.location.hostname);
+        dataRow = [`NOT IMPLEMENTED! for ${window.location.hostname}`];
     }
 
     await chrome.runtime.sendMessage({
