@@ -3,6 +3,10 @@ import * as investingParser from "./Investing/InvestingParser"
 import * as seekingAlphaParser from "./SeekingAlpha/SeekingAlphaParser"
 import { hostname } from "os";
 
+// To update the extension for a nes hostname:
+//  1. Write new Parser
+//  2. Update hostMap.ts
+
 (async function starter() {
     var dataRow = [];
     
