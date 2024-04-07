@@ -8,25 +8,15 @@ import { hostname } from "os";
     var context = "Unknown";
 
     var hostMap = [
-        {name: "www.investing.com", parser: investingParser},
-        {name: "seekingalpha.com", parser: seekingAlphaParser},
+        { name: "www.investing.com", parser: investingParser },
+        { name: "seekingalpha.com", parser: seekingAlphaParser },
     ];
 
+    var hostMapEntry = hostMap.filter((e) => e.name === window.location.hostname);
+    if (hostMapEntry.length !== 1) throw new Error(`hostMapEntry is not proper defined for ${window.location.hostname}`);
 
-    if (shared.localHostOrInvesting()) {
-        dataRow = investingParser.getDataRow();
-        context = "www.investing.com";
-        console.log(window.location.hostname);
-    }
-    else if (shared.localHostOrSeekingAlpha()) {
-        dataRow = seekingAlphaParser.getDataRow();
-        context = "seekingalpha.com";
-        console.log(window.location.hostname);
-    }
-    else {
-        console.log(window.location.hostname);
-        dataRow = [`NOT IMPLEMENTED! for ${window.location.hostname}`];
-    }
+    var parser = hostMapEntry[0].parser;
+    dataRow = parser.getDataRow();
 
     await chrome.runtime.sendMessage({
         target: 'background',
