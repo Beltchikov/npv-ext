@@ -5,8 +5,7 @@ import { hostname } from "os";
 
 (async function starter() {
     var dataRow = [];
-    var context = "Unknown";
-
+    
     var hostMap = [
         { name: "www.investing.com", parser: investingParser },
         { name: "seekingalpha.com", parser: seekingAlphaParser },
@@ -20,7 +19,7 @@ import { hostname } from "os";
 
     await chrome.runtime.sendMessage({
         target: 'background',
-        context: context,
+        context: window.location.hostname,
         type: 'dataRow',
         data: dataRow,
         sender: 'parser'
