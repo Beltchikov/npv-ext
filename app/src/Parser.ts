@@ -1,21 +1,20 @@
-import shared from "./shared";
 import * as investingParser from "./Parsers/InvestingParser"
 import * as seekingAlphaParser from "./Parsers/SeekingAlphaParser"
-import { hostname } from "os";
 
 // To update the extension for a nes hostname:
-//  1. Write new Parser
-//  2. Update hostMap.ts
+//  1. Write new parser
+//  2. import new parser from Parser.ts
+//  3. Update parserMap.ts
 
 (async function starter() {
     var dataRow = [];
     
-    var hostMap = [
-        { name: "www.investing.com", parser: investingParser },
-        { name: "seekingalpha.com", parser: seekingAlphaParser },
+    var parserMap = [
+        { hostname: "www.investing.com", parser: investingParser },
+        { hostname: "seekingalpha.com", parser: seekingAlphaParser },
     ];
 
-    var hostMapEntry = hostMap.filter((e) => e.name === window.location.hostname);
+    var hostMapEntry = parserMap.filter((e) => e.hostname === window.location.hostname);
     if (hostMapEntry.length !== 1) throw new Error(`hostMapEntry is not proper defined for ${window.location.hostname}`);
 
     var parser = hostMapEntry[0].parser;
