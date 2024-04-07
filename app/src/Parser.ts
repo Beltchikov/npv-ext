@@ -8,7 +8,8 @@ import { parserMap } from "./Parsers/parserMap";
     var dataRow = [];
     
     var hostMapEntry = parserMap.filter((e) => e.hostname === window.location.hostname);
-    if (hostMapEntry.length !== 1) throw new Error(`hostMapEntry is not proper defined for ${window.location.hostname}`);
+    if (hostMapEntry.length !== 1) 
+        throw new Error(`hostMapEntry is not proper defined for ${window.location.hostname}`);
 
     var parser = hostMapEntry[0].parser;
     dataRow = parser.getDataRow();
