@@ -3,12 +3,12 @@ const path = require("path");
 module.exports = {
   entry: {
     content: './src/index.tsx',
-    investingParser: './src/Investing/InvestingParser.ts',
-    parser: './src/Parser.ts',
     dialog: './src/dialog.ts',
     header: './src/header.ts',
-    seekingAlphaParser: './src/SeekingAlpha/SeekingAlphaParser.ts',
     shared: './src/shared.ts',
+    parser: './src/Parser.ts',
+    seekingAlphaParser: './src/Parsers/SeekingAlphaParser.ts',
+    investingParser: './src/Parsers/InvestingParser.ts',
   },
   mode: "production",
   module: {

@@ -1,6 +1,6 @@
 import shared from "./shared";
-import * as investingParser from "./Investing/InvestingParser"
-import * as seekingAlphaParser from "./SeekingAlpha/SeekingAlphaParser"
+import * as investingParser from "./Parsers/InvestingParser"
+import * as seekingAlphaParser from "./Parsers/SeekingAlphaParser"
 import { hostname } from "os";
 
 // To update the extension for a nes hostname:

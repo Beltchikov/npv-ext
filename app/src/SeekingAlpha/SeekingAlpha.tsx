@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect, useRef } from 'react';
 import shared from '../shared'
-import * as parser from './SeekingAlphaParser';
+import * as parser from '../Parsers/SeekingAlphaParser';
 
 const SeekingAlpha = () => {
     var dialog = document.createElement('dialog');
