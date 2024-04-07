@@ -15,12 +15,12 @@ import { hostname } from "os";
 
     if (shared.localHostOrInvesting()) {
         dataRow = investingParser.getDataRow();
-        context = "Investing";
+        context = "www.investing.com";
         console.log(window.location.hostname);
     }
     else if (shared.localHostOrSeekingAlpha()) {
         dataRow = seekingAlphaParser.getDataRow();
-        context = "SeekingAlpha";
+        context = "seekingalpha.com";
         console.log(window.location.hostname);
     }
     else {
