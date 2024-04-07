@@ -3,37 +3,29 @@ import * as investingParser from "./Investing/InvestingParser"
 import * as seekingAlphaParser from "./SeekingAlpha/SeekingAlphaParser"
 
 (async function starter() {
+    var dataRow = [];
+    var context = "Unknown";
+    
     if (shared.localHostOrInvesting()) {
-        var dataRow = investingParser.getDataRow();
-        if (console) console.log('dataRow investingParser : ' + dataRow);
-        await chrome.runtime.sendMessage({
-            target: 'background',
-            context: 'Investing',
-            type: 'dataRow',
-            data: dataRow,
-            sender: 'parser'
-        });
+        dataRow = investingParser.getDataRow();
+        context = "Investing";
+       
     }
     else if (shared.localHostOrSeekingAlpha()) {
-        var dataRow = seekingAlphaParser.getDataRow();
-        if (console) console.log('dataRow seekingAlphaParser : ' + dataRow);
-        await chrome.runtime.sendMessage({
-            target: 'background',
-            context: 'SeekingAlpha',
-            type: 'dataRow',
-            data: dataRow,
-            sender: 'parser'
-        });
+        dataRow = seekingAlphaParser.getDataRow();
+        context = "SeekingAlpha";
     }
     else {
-        await chrome.runtime.sendMessage({
-            target: 'background',
-            context: 'Unknown',
-            type: 'dataRow',
-            data: "NOT IMPLEMENTED",
-            sender: 'parser'
-        });
+        dataRow = ["NOT IMPLEMENTED!"];
     }
+
+    await chrome.runtime.sendMessage({
+        target: 'background',
+        context: context,
+        type: 'dataRow',
+        data: dataRow,
+        sender: 'parser'
+    });
 })();
 
 // Example DOM changes observer
