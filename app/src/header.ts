@@ -8,8 +8,8 @@
         data: "todo",
         sender: 'parser'
     })
-    .then((_r=>"Header message sent succcessfully."))
-    .catch(e => `Error sending header message. Reason: ${e}`);
+    .then((_r=>console.log("Header message sent succcessfully.")))
+    .catch(e => console.log(`Error sending header message. Reason: ${e}`));
 
 })();
 
