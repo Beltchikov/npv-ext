@@ -10,7 +10,10 @@ export function getDataRow(): Array<string> {
     var beta: string = getDataViaCommonParentCardItem('24M Beta');
 
     //return [symbol, sector, industry, eps, div, roe, beta];  // TODO evtl. for later
-    return ([eps, div, roe, beta]).toString().split(',');
+    //return ([eps, div, roe, beta]).toString().split(',');
+
+    var resultArray = ([eps, div, roe, beta]).map((e) => formatString(e, 2));
+    return resultArray;
 }
 
 export function divFrequency(): string {
@@ -21,6 +24,13 @@ export function getHeader(): string {
     return "EPS DIV ROE Beta Date";
 }
 
+function formatString(e: string, decimalPlaces: number): string {
+    var floatResult = parseFloat(e);
+    if (isNaN(floatResult)) {
+        return e;
+    }
+    return floatResult.toLocaleString('de', { minimumFractionDigits: decimalPlaces });
+}
 
 function getDataViaCommonParentCardItem(targetElementText: string): string {
     var result: string = '';
