@@ -8,7 +8,7 @@ function attachDialog() {
     const idCollector = 'collector';
     const idCloseButton = 'npvButtonClose';
     const idCopyButton = 'npvButtonCopy';
-    
+
     var rootElement: HTMLDivElement = shared.getElementByTagAndId('div', idCollector);
     const dialog = document.createElement('dialog');
     dialog.id = idDialog;
@@ -55,6 +55,14 @@ function addData(data: Array<Array<string>>) {
 
     var tableContainer: HTMLDivElement = shared.getElementByTagAndId('div', idTableContainer);
     var npvTable: HTMLTableElement = shared.getElementByTagAndIdOrCreate('table', idNpvTable);
+
+    // TODO header should com with the message
+    if (shared.localHostOrInvesting()) {
+        data.unshift(['Symbol', 'TA'])
+    }
+    else {
+        data.unshift(['EPS', 'DIV', 'ROE', 'Beta'])
+    }
 
     data.forEach((row, ri) => {
         var npvRow: HTMLTableRowElement = shared.getElementByTagAndIdOrCreate('tr', idNpvRow + ri);
