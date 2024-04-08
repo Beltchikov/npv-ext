@@ -1,5 +1,8 @@
 import shared from './shared';
 
+// TODO remove later
+import {divFrequency} from "./Parsers/SeekingAlphaParser"
+
 const idDialog = 'npvDialog';
 const idTableContainer = 'npvTableContainer';
 const idNpvTable = 'npvTable';
@@ -56,12 +59,13 @@ function addData(data: Array<Array<string>>) {
     var tableContainer: HTMLDivElement = shared.getElementByTagAndId('div', idTableContainer);
     var npvTable: HTMLTableElement = shared.getElementByTagAndIdOrCreate('table', idNpvTable);
 
-    // TODO header should com with the message
+    // TODO header and footer should come with the message
     if (shared.localHostOrInvesting()) {
         data.unshift(['Symbol', 'TA'])
     }
     else {
         data.unshift(['EPS', 'DIV', 'ROE', 'Beta'])
+        data.push([`Dividend Frequency: ${divFrequency()}`, '', '', ''])
     }
 
     data.forEach((row, ri) => {
