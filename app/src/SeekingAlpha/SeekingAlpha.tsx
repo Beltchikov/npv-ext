@@ -1,3 +1,5 @@
+// TODO remove file and directory
+
 import React from 'react';
 import { useEffect, useRef } from 'react';
 import shared from '../shared'
@@ -57,5 +59,5 @@ const SeekingAlpha = () => {
     )
 }
 
-export default SeekingAlpha
+//export default SeekingAlpha
 

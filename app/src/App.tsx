@@ -1,5 +1,4 @@
 import React from 'react';
-import SeekingAlpha from './SeekingAlpha/SeekingAlpha';
 import shared from './shared'
 
 function App() {
@@ -12,19 +11,7 @@ function App() {
   return (
     <>
       {
-        (() => {
-          if (shared.localHostOrInvesting()) {
-            return <></>
-          }
-          else if (shared.localHostOrSeekingAlpha()) {
-            return <SeekingAlpha></SeekingAlpha>
-          }
-          else {
-            return <>
-              {console.log(`Not implemented for ${window.location.href}`)}
-            </>
-          }
-        })()
+        (() => {return <></>})()
       }
     </>
   );
