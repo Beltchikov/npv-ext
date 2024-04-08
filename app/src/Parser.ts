@@ -6,6 +6,8 @@ import { parserMap } from "./Parsers/parserMap";
 
 (async function starter() {
     var dataRow = [];
+
+    console.log(window.location.hostname);
     
     var hostMapEntry = parserMap.filter((e) => e.hostname === window.location.hostname);
     if (hostMapEntry.length !== 1) 
