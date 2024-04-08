@@ -63,6 +63,9 @@ function addData(data: Array<Array<string>>) {
     if (shared.localHostOrInvesting()) {
         data.unshift(['Symbol', 'TA'])
     }
+    else if (shared.localHostOrTwitter()) {
+        data.unshift(['Message', 'User', 'Date'])
+    }
     else {
         data.unshift(['EPS', 'DIV', 'ROE', 'Beta'])
         data.push([`Dividend Frequency: ${divFrequency()}`, '', '', ''])

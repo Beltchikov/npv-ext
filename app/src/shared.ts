@@ -10,6 +10,11 @@ export const localHostOrInvesting = () => {
         || window.location.href.indexOf('investing.com') >= 0;
 }
 
+export const localHostOrTwitter = () => {
+    return window.location.href.indexOf('localhost') >= 0
+        || window.location.href.indexOf('twitter.com') >= 0;
+}
+
 export function dataFromHtmlViaCommonParent(
     innerHTML: string,
     targetElementName: string,
@@ -79,6 +84,7 @@ export function getElementByTagAndIdOrCreate(tag: string, id: string): any {
 export default {
     localHostOrSeekingAlpha,
     localHostOrInvesting,
+    localHostOrTwitter,
     dataFromHtmlViaCommonParent,
     dataFromHtmlViaParent,
     dataFromHtmlByTagAndTextContains: dataFromHtmlByTag,
