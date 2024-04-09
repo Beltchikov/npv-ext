@@ -15,40 +15,6 @@ const getTimeTags = (hoursAgo: number): any => {
     var timeout = 1000;
     var i = 0;
 
-    // while (i < 2) {
-    //     if (i == 0) {
-    //         const timeElements: Array<HTMLTimeElement> = shared.getElementsByTag('time');
-    //         if (timeElements.length === 0) throw new Error('No time elements found');
-    //         allTimeElements.concat(timeElements);
-
-    //         const lastElement: HTMLTimeElement = timeElements[timeElements.length - 1];
-    //         const earliestDate = new Date(lastElement.dateTime);
-    //         console.log('earliestDate');
-    //         console.log(earliestDate);
-
-    //         lastElement.scrollIntoView({ behavior: "smooth", block: "end", inline: "center" });
-
-    //     }
-    //     else {
-    //         setTimeout(() => {
-    //             const timeElements: Array<HTMLTimeElement> = shared.getElementsByTag('time');
-    //             if (timeElements.length === 0) throw new Error('No time elements found');
-    //             allTimeElements.concat(timeElements);
-
-    //             const lastElement: HTMLTimeElement = timeElements[timeElements.length - 1];
-    //             const earliestDate = new Date(lastElement.dateTime);
-    //             console.log('earliestDate');
-    //             console.log(earliestDate);
-
-    //             lastElement.scrollIntoView({ behavior: "smooth", block: "end", inline: "center" });
-    //         },
-    //             timeout);
-    //     }
-
-    //     i++;
-    // }
-
-    //////////////////////
     var intervalId = setInterval(() => {
         const timeElements: Array<HTMLTimeElement> = shared.getElementsByTag('time');
         if (timeElements.length === 0) throw new Error('No time elements found');
@@ -60,9 +26,7 @@ const getTimeTags = (hoursAgo: number): any => {
         console.log(earliestDate);
 
         lastElement.scrollIntoView({ behavior: "smooth", block: "end", inline: "center" });
-        
         i++;
-
         if(i== 4) clearInterval(intervalId);
 
     }, timeout);
