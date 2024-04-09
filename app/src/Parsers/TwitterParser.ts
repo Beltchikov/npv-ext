@@ -21,8 +21,9 @@ const getTimeTags = (hoursAgo: number): any => {
             allTimeElements.concat(timeElements);
 
             const lastElement: HTMLTimeElement = timeElements[timeElements.length - 1];
-            console.log('lastElement');
-            console.log(lastElement);
+            const earliestDate = new Date(lastElement.dateTime);
+            console.log('earliestDate');
+            console.log(earliestDate);
 
             lastElement.scrollIntoView({ behavior: "smooth", block: "end", inline: "center" });
 
@@ -34,9 +35,10 @@ const getTimeTags = (hoursAgo: number): any => {
             allTimeElements.concat(timeElements);
 
             const lastElement: HTMLTimeElement = timeElements[timeElements.length - 1];
-            console.log('lastElement');
-            console.log(lastElement);
-
+            const earliestDate = new Date(lastElement.dateTime);
+            console.log('earliestDate');
+            console.log(earliestDate);
+            
             lastElement.scrollIntoView({ behavior: "smooth", block: "end", inline: "center" });
         },
             timeout);
