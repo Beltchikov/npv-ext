@@ -14,7 +14,7 @@ const getTimeTags = (hoursAgo: number): any => {
     var allTimeElements: Array<HTMLTimeElement> = [];
     var timeout = 1000;
     var i = 0;
-    var maxTweetCount = 100;
+    var maxTweetCount = 1000;
 
     var intervalId = setInterval(() => {
         const timeElements: Array<HTMLTimeElement> = shared.getElementsByTag('time');
@@ -23,8 +23,7 @@ const getTimeTags = (hoursAgo: number): any => {
         
         const lastElement: HTMLTimeElement = timeElements[timeElements.length - 1];
         const earliestTimestamp = new Date(lastElement.dateTime);
-        console.log('earliestTimestamp');
-        console.log(earliestTimestamp);
+        console.log(buildExtractingDataMessage(hoursAgo, i, maxTweetCount, earliestTimestamp));
 
         lastElement.scrollIntoView({ behavior: "smooth", block: "end", inline: "center" });
         i++;
@@ -35,7 +34,7 @@ const getTimeTags = (hoursAgo: number): any => {
             if(earliestTimestamp <= timestampOfEarliestTweet) 
                 console.log(`24 HOURS PERIOD PROCESSED ${earliestTimestamp}`);
 
-            var datesOfTweets = allTimeElements.map((e: any) => new Date(e.dateTime));
+            var datesOfTweets = allTimeElements.map((e: any) => (new Date(e.dateTime)).toLocaleString('de'));
             console.log('datesOfTweets');
             console.log(datesOfTweets);
         
@@ -45,6 +44,13 @@ const getTimeTags = (hoursAgo: number): any => {
     }, timeout);
 
    
+}
+
+const buildExtractingDataMessage = (hoursAgo:number, iterationIdx: number, maxTweetCount:number, earliestTimestamp: Date)=>{
+    var msg = `Extracting data ${hoursAgo} back. `;
+    msg += `Scroll ${iterationIdx} of max. ${maxTweetCount}. `;
+    msg += `Last: ${earliestTimestamp.toLocaleString('de')}`;
+    return msg;
 }
 
 export function getHeader(): string {
