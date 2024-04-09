@@ -14,38 +14,58 @@ const getTimeTags = (hoursAgo: number): any => {
     var allTimeElements: Array<HTMLTimeElement> = [];
     var timeout = 1000;
     var i = 0;
-    while (i < 2) {
-        if (i == 0) {
-            const timeElements: Array<HTMLTimeElement> = shared.getElementsByTag('time');
-            if (timeElements.length === 0) throw new Error('No time elements found');
-            allTimeElements.concat(timeElements);
 
-            const lastElement: HTMLTimeElement = timeElements[timeElements.length - 1];
-            const earliestDate = new Date(lastElement.dateTime);
-            console.log('earliestDate');
-            console.log(earliestDate);
+    // while (i < 2) {
+    //     if (i == 0) {
+    //         const timeElements: Array<HTMLTimeElement> = shared.getElementsByTag('time');
+    //         if (timeElements.length === 0) throw new Error('No time elements found');
+    //         allTimeElements.concat(timeElements);
 
-            lastElement.scrollIntoView({ behavior: "smooth", block: "end", inline: "center" });
+    //         const lastElement: HTMLTimeElement = timeElements[timeElements.length - 1];
+    //         const earliestDate = new Date(lastElement.dateTime);
+    //         console.log('earliestDate');
+    //         console.log(earliestDate);
 
-        }
-        else {
-            setTimeout(() => {
-                const timeElements: Array<HTMLTimeElement> = shared.getElementsByTag('time');
-                if (timeElements.length === 0) throw new Error('No time elements found');
-                allTimeElements.concat(timeElements);
+    //         lastElement.scrollIntoView({ behavior: "smooth", block: "end", inline: "center" });
 
-                const lastElement: HTMLTimeElement = timeElements[timeElements.length - 1];
-                const earliestDate = new Date(lastElement.dateTime);
-                console.log('earliestDate');
-                console.log(earliestDate);
+    //     }
+    //     else {
+    //         setTimeout(() => {
+    //             const timeElements: Array<HTMLTimeElement> = shared.getElementsByTag('time');
+    //             if (timeElements.length === 0) throw new Error('No time elements found');
+    //             allTimeElements.concat(timeElements);
 
-                lastElement.scrollIntoView({ behavior: "smooth", block: "end", inline: "center" });
-                },
-                timeout);
-        }
+    //             const lastElement: HTMLTimeElement = timeElements[timeElements.length - 1];
+    //             const earliestDate = new Date(lastElement.dateTime);
+    //             console.log('earliestDate');
+    //             console.log(earliestDate);
 
+    //             lastElement.scrollIntoView({ behavior: "smooth", block: "end", inline: "center" });
+    //         },
+    //             timeout);
+    //     }
+
+    //     i++;
+    // }
+
+    //////////////////////
+    var intervalId = setInterval(() => {
+        const timeElements: Array<HTMLTimeElement> = shared.getElementsByTag('time');
+        if (timeElements.length === 0) throw new Error('No time elements found');
+        allTimeElements.concat(timeElements);
+
+        const lastElement: HTMLTimeElement = timeElements[timeElements.length - 1];
+        const earliestDate = new Date(lastElement.dateTime);
+        console.log('earliestDate');
+        console.log(earliestDate);
+
+        lastElement.scrollIntoView({ behavior: "smooth", block: "end", inline: "center" });
+        
         i++;
-    }
+
+        if(i== 3) clearInterval(intervalId);
+
+    }, timeout);
 
     var datesOfTweets = allTimeElements.map((e: any) => new Date(e.dateTime));
     console.log('datesOfTweets');
