@@ -81,6 +81,13 @@ export function getElementByTagAndIdOrCreate(tag: string, id: string): any {
     return element;
 }
 
+export function getElementsByTag(tag: string): any {
+    var elements = document.getElementsByTagName(tag)
+    console.log('elements');
+    console.log(elements);
+    return Array.from(elements);
+}
+
 export default {
     localHostOrSeekingAlpha,
     localHostOrInvesting,
@@ -89,5 +96,6 @@ export default {
     dataFromHtmlViaParent,
     dataFromHtmlByTagAndTextContains: dataFromHtmlByTag,
     getElementByTagAndId,
-    getElementByTagAndIdOrCreate
+    getElementByTagAndIdOrCreate,
+    getElementsByTag
 };
