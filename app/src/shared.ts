@@ -86,10 +86,7 @@ export function getElementByTagAndIdOrCreate(tag: string, id: string): any {
 }
 
 export function getElementsByTag(tag: string): any {
-    var elements = document.getElementsByTagName(tag)
-    console.log('elements');
-    console.log(elements);
-    return Array.from(elements);
+    return Array.from(document.getElementsByTagName(tag));
 }
 
 export default {
