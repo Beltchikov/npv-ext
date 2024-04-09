@@ -44,12 +44,6 @@ const getTimeTags = (hoursAgo: number): any => {
         i++;
     }
 
-
-
-    // var datesOfTweets = timeElements.map((e: any) => new Date(e.dateTime));
-    // console.log('datesOfTweets');
-    // console.log(datesOfTweets);
-
     var datesOfTweets = allTimeElements.map((e: any) => new Date(e.dateTime));
     console.log('datesOfTweets');
     console.log(datesOfTweets);
