@@ -28,20 +28,21 @@ const getTimeTags = (hoursAgo: number): any => {
             lastElement.scrollIntoView({ behavior: "smooth", block: "end", inline: "center" });
 
         }
-        else { }
-        setTimeout(() => {
-            const timeElements: Array<HTMLTimeElement> = shared.getElementsByTag('time');
-            if (timeElements.length === 0) throw new Error('No time elements found');
-            allTimeElements.concat(timeElements);
+        else {
+            setTimeout(() => {
+                const timeElements: Array<HTMLTimeElement> = shared.getElementsByTag('time');
+                if (timeElements.length === 0) throw new Error('No time elements found');
+                allTimeElements.concat(timeElements);
 
-            const lastElement: HTMLTimeElement = timeElements[timeElements.length - 1];
-            const earliestDate = new Date(lastElement.dateTime);
-            console.log('earliestDate');
-            console.log(earliestDate);
-            
-            lastElement.scrollIntoView({ behavior: "smooth", block: "end", inline: "center" });
-        },
-            timeout);
+                const lastElement: HTMLTimeElement = timeElements[timeElements.length - 1];
+                const earliestDate = new Date(lastElement.dateTime);
+                console.log('earliestDate');
+                console.log(earliestDate);
+
+                lastElement.scrollIntoView({ behavior: "smooth", block: "end", inline: "center" });
+                },
+                timeout);
+        }
 
         i++;
     }
