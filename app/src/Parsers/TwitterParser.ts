@@ -47,7 +47,7 @@ const getTimeTags = (hoursAgo: number): any => {
 }
 
 const buildExtractingDataMessage = (hoursAgo:number, iterationIdx: number, maxTweetCount:number, earliestTimestamp: Date)=>{
-    var msg = `Extracting data ${hoursAgo} back. `;
+    var msg = `Extracting data ${hoursAgo} hours back. `;
     msg += `Scroll ${iterationIdx} of max. ${maxTweetCount}. `;
     msg += `Last: ${earliestTimestamp.toLocaleString('de')}`;
     return msg;
