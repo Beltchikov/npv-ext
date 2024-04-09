@@ -63,7 +63,7 @@ const getTimeTags = (hoursAgo: number): any => {
         
         i++;
 
-        if(i== 3) clearInterval(intervalId);
+        if(i== 4) clearInterval(intervalId);
 
     }, timeout);
 
