@@ -11,30 +11,6 @@ export function getDataRow(): Array<string> {
 const getTimeTags = (hoursAgo: number): any => {
     var timeOfEarliestTweet = shared.addHoursToDate(new Date(Date.now()), -1 * hoursAgo)
 
-    // var timeElements: Array<HTMLTimeElement> = shared.getElementsByTag('time');
-    // console.log('timeElements');
-    // console.log(timeElements);
-
-    // if (timeElements.length === 0) throw new Error('No time elements found');
-    // var lastElement: HTMLTimeElement = timeElements[timeElements.length - 1];
-    // console.log('lastElement');
-    // console.log(lastElement);
-
-    // lastElement.scrollIntoView({ behavior: "smooth", block: "end", inline: "center" });
-    // //////////////////
-    // var timeElements: Array<HTMLTimeElement>;
-    // setTimeout(() => {
-    //     timeElements = shared.getElementsByTag('time');
-
-    //     if (timeElements.length === 0) throw new Error('No time elements found 2');
-    //     var lastElement2: HTMLTimeElement = timeElements[timeElements.length - 1];
-    //     console.log('lastElement2');
-    //     console.log(lastElement2);
-    // },
-    //     1000);
-
-    ////////////////////////////
-
     var allTimeElements: Array<HTMLTimeElement> = [];
     var timeout = 1000;
     var i = 0;
@@ -60,7 +36,7 @@ const getTimeTags = (hoursAgo: number): any => {
             const lastElement: HTMLTimeElement = timeElements[timeElements.length - 1];
             console.log('lastElement');
             console.log(lastElement);
-            
+
             lastElement.scrollIntoView({ behavior: "smooth", block: "end", inline: "center" });
         },
             timeout);
