@@ -18,7 +18,9 @@ const getTimeTags = (hoursAgo: number): any => {
     var intervalId = setInterval(() => {
         const timeElements: Array<HTMLTimeElement> = shared.getElementsByTag('time');
         if (timeElements.length === 0) throw new Error('No time elements found');
-        allTimeElements.concat(timeElements);
+        allTimeElements = allTimeElements.concat(timeElements);
+        console.log('allTimeElements');
+        console.log(allTimeElements);
 
         const lastElement: HTMLTimeElement = timeElements[timeElements.length - 1];
         const earliestDate = new Date(lastElement.dateTime);
@@ -27,15 +29,19 @@ const getTimeTags = (hoursAgo: number): any => {
 
         lastElement.scrollIntoView({ behavior: "smooth", block: "end", inline: "center" });
         i++;
-        if(i== 4) clearInterval(intervalId);
+        if(i== 10) {
+            clearInterval(intervalId);
+
+            var datesOfTweets = allTimeElements.map((e: any) => new Date(e.dateTime));
+            console.log('datesOfTweets');
+            console.log(datesOfTweets);
+        
+            return 'todo';
+        }
 
     }, timeout);
 
-    var datesOfTweets = allTimeElements.map((e: any) => new Date(e.dateTime));
-    console.log('datesOfTweets');
-    console.log(datesOfTweets);
-
-    return 'todo';
+   
 }
 
 export function getHeader(): string {
