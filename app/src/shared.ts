@@ -16,26 +16,7 @@ export const localHostOrTwitter = () => {
 }
 
 export function addHoursToDate(objDate:Date, intHours:number) {
-    
-    console.log('objDate');
-    console.log(objDate);
-    
-    var objDateInMilliseconds = objDate.getTime();
-
-    console.log('objDateInMilliseconds');
-    console.log(objDateInMilliseconds);
-
-    var millisecondsToAdd = intHours * 60 * 60 * 1000;
-    console.log('millisecondsToAdd');
-    console.log(millisecondsToAdd);
-
-    var targetMillliseconds = objDateInMilliseconds + millisecondsToAdd;
-    console.log('targetMillliseconds');
-    console.log(targetMillliseconds);
-    
-    var newDateObj = new Date(targetMillliseconds);
-
-    return newDateObj;
+    return new Date(objDate.getTime() + intHours * 60 * 60 * 1000);
 }
 
 export function dataFromHtmlViaCommonParent(
