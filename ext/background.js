@@ -1,7 +1,7 @@
 import { loadScripts } from './loader.js';
 
 // service worker
-var tabsWaitingForData = [];
+var tabsRequestedForData = [];
 
 // entry point
 chrome.action.onClicked.addListener(async (currentTab) => {
@@ -11,9 +11,9 @@ chrome.action.onClicked.addListener(async (currentTab) => {
   // query tabs
   chrome.tabs.query({ lastFocusedWindow: true })
     .then(tabs => {
-      tabsWaitingForData = [];
+      tabsRequestedForData = [];
       tabs.map((t) => {
-        tabsWaitingForData.push({ tabId: t.id, activeTab: t.active, data: undefined })
+        tabsRequestedForData.push({ tabId: t.id, activeTab: t.active, data: undefined })
       });
 
       // execute parser.js for every tab
@@ -29,6 +29,17 @@ chrome.action.onClicked.addListener(async (currentTab) => {
     .catch(e => console.log({ err: e.message }));
 });
 
+const buildMessageToDialog = (message, dataOfCummulatedMessages) => {
+  var messageToDialog = {
+    target: 'dialog',
+    type: message.type,
+    context: message.context,
+    data: dataOfCummulatedMessages,
+    sender: message.sender
+  };
+  return messageToDialog;
+}
+
 // message listener
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
@@ -39,29 +50,23 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     console.log("message.type === 'dataRow'");
     console.log(message);
 
-    tabsWaitingForData = tabsWaitingForData.map((t) => t.tabId === sender.tab.id ? { ...t, ...{ data: message.data } } : t);
-    var noDataObjects = tabsWaitingForData.filter((t) => t.data == undefined);
+    tabsRequestedForData = tabsRequestedForData.map((t) => t.tabId === sender.tab.id ? { ...t, ...{ data: message.data } } : t);
+    var tabsStillWaitingForData = tabsRequestedForData.filter((t) => t.data == undefined);
 
-    if (noDataObjects.length === 0) {
-      var activeTabData = tabsWaitingForData.filter((t) => t.activeTab)[0];
+    if (tabsStillWaitingForData.length === 0) {
+      var activeTabData = tabsRequestedForData.filter((t) => t.activeTab)[0];
 
       console.log(`Sending message to dialog on tab id ${activeTabData.tabId}`);
-      var data2dArray = tabsWaitingForData.map((e)=> e.data);
-      var messageToDialog = {
-        target: 'dialog',
-        type: message.type,
-        context: message.context,
-        data: data2dArray,
-        sender: message.sender
-      };
-      const response = await chrome.tabs.sendMessage(activeTabData.tabId,messageToDialog);
-      
+      var dataOfCummulatedMessages = tabsRequestedForData.map((e) => e.data);
+
+      var messageToDialog = buildMessageToDialog(message, dataOfCummulatedMessages);
+      const response = await chrome.tabs.sendMessage(activeTabData.tabId, messageToDialog);
+
       if (response) console.log(`Message to dialog on tab id ${activeTabData.tabId} successfully sent.`)
       else console.log(`Error sending message to dialog on tab id ${activeTabData.tabId}.`)
     }
   }
-  else if (message.type === 'header')
-  {
+  else if (message.type === 'header') {
     console.log(`Header receied:`);
     console.log(message);
   }
