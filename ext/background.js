@@ -29,13 +29,13 @@ chrome.action.onClicked.addListener(async (currentTab) => {
     .catch(e => console.log({ err: e.message }));
 });
 
-const buildMessageToDialog = (message, dataOfCummulatedMessages) => {
+const buildMessageToDialog = (context, cummulatedDataArray) => {
   var messageToDialog = {
     target: 'dialog',
-    type: message.type,
-    context: message.context,
-    data: dataOfCummulatedMessages,
-    sender: message.sender
+    type: 'cummulatedDataRows',
+    context: context,
+    data: cummulatedDataArray,
+    sender: 'background'
   };
   return messageToDialog;
 }
@@ -57,9 +57,9 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
       var activeTabData = tabsRequestedForData.filter((t) => t.activeTab)[0];
 
       console.log(`Sending message to dialog on tab id ${activeTabData.tabId}`);
-      var dataOfCummulatedMessages = tabsRequestedForData.map((e) => e.data);
+      var cummulatedDataArray = tabsRequestedForData.map((e) => e.data);
 
-      var messageToDialog = buildMessageToDialog(message, dataOfCummulatedMessages);
+      var messageToDialog = buildMessageToDialog(message.context, cummulatedDataArray);
       const response = await chrome.tabs.sendMessage(activeTabData.tabId, messageToDialog);
 
       if (response) console.log(`Message to dialog on tab id ${activeTabData.tabId} successfully sent.`)
