@@ -57,8 +57,9 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
       console.log(`Sending message to dialog on tab id ${activeTabData.tabId}`);
       var cummulatedDataArray = tabsRequestedForData.map((e) => e.data);
-      var messageToDialog = buildMessageToDialog(message.context, cummulatedDataArray);
-      const response = await chrome.tabs.sendMessage(activeTabData.tabId, messageToDialog);
+      const response = await chrome.tabs.sendMessage(
+        activeTabData.tabId,
+        buildMessageToDialog(message.context, cummulatedDataArray));
 
       if (response) console.log(`Message to dialog on tab id ${activeTabData.tabId} successfully sent.`)
       else console.log(`Error sending message to dialog on tab id ${activeTabData.tabId}.`)
