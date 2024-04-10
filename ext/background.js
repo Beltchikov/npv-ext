@@ -56,18 +56,31 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
     var tabsStillWaitingForData = tabsRequestedForData.filter((t) => t.dataTable == undefined);
 
+    console.log("tabsStillWaitingForData.length");
+    console.log(tabsStillWaitingForData);
+
     if (tabsStillWaitingForData.length === 0) {
-      var activeTabData = tabsRequestedForData.filter((t) => t.activeTab)[0];
+      var activeTabData = tabsRequestedForData.filter((t) => t.activeTab )[0];
 
       console.log(`Sending message to dialog on tab id ${activeTabData.tabId}`);
-      var cummulatedDataArray = tabsRequestedForData.map((e) => e.dataTable);
+      //var cummulatedDataArray = tabsRequestedForData.map((e) => e.dataTable);
+      var cummulatedDataArray = tabsRequestedForData.map((e) => {
+        const resultArray = [];
+        var dataTable = e.dataTable;
+        Array.from(dataTable).forEach(row => { resultArray.push(row) });
+        return resultArray;
+      });
+
+      console.log("cummulatedDataArray");
+      console.log(cummulatedDataArray);
+
       const response = await chrome.tabs.sendMessage(
         activeTabData.tabId,
         buildMessageToDialog(message.context, cummulatedDataArray));
 
       if (response) console.log(`Message to dialog on tab id ${activeTabData.tabId} successfully sent.`)
       else console.log(`Error sending message to dialog on tab id ${activeTabData.tabId}.`)
-    }
+    };
   }
   else if (message.type === 'header') {
     console.log(`Header receied:`);

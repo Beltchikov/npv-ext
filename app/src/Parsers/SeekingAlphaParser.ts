@@ -1,6 +1,6 @@
 import shared from "../shared";
 
-export function getDataRow(): Array<string> {
+export function getDataRow(): Array<Array<string>> {
     var symbol: string = getSymbol();
     var sector: string = getDataViaCommonParentCompanyProfileSector('Sector');
     var industry: string = getDataViaCommonParentCompanyProfileIndustry('Industry');
@@ -12,8 +12,9 @@ export function getDataRow(): Array<string> {
     //return [symbol, sector, industry, eps, div, roe, beta];  // TODO evtl. for later
     //return ([eps, div, roe, beta]).toString().split(',');
 
-    var resultArray = ([eps, div, roe, beta]).map((e) => formatString(e, 2));
-    return resultArray;
+    var resultRow = ([eps, div, roe, beta]).map((e) => formatString(e, 2));
+    return [
+        resultRow];
 }
 
 export function divFrequency(): string {

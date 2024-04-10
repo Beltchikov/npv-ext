@@ -1,7 +1,7 @@
 import shared from './shared';
 
 // TODO remove later
-import {divFrequency} from "./Parsers/SeekingAlphaParser"
+import { divFrequency } from "./Parsers/SeekingAlphaParser"
 
 const idDialog = 'npvDialog';
 const idTableContainer = 'npvTableContainer';
@@ -61,22 +61,73 @@ function addData(data: Array<Array<string>>) {
 
     // TODO header and footer should come with the message
     if (shared.localHostOrInvesting()) {
-        data.unshift(['Symbol', 'TA'])
+        data.unshift(Array.from(['Symbol', 'TA']));
     }
     else if (shared.localHostOrTwitter()) {
-        data.unshift(['Message', 'User', 'Date'])
+        data.unshift(['Message', 'User', 'Date']);
     }
     else {
-        data.unshift(['EPS', 'DIV', 'ROE', 'Beta'])
-        data.push([`Dividend Frequency: ${divFrequency()}`, '', '', ''])
+        data.unshift(['EPS', 'DIV', 'ROE', 'Beta']);
+        data.push([`Dividend Frequency: ${divFrequency()},,,`]);
     }
 
-    data.forEach((row, ri) => {
+    console.log('data');
+    console.log(data);
+
+    data.forEach((row: Array<string>, ri) => {
         var npvRow: HTMLTableRowElement = shared.getElementByTagAndIdOrCreate('tr', idNpvRow + ri);
+
+
+
         row.forEach((col, ci) => {
-            var npvCol: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + ci);
-            npvCol.innerHTML = col;
-            npvRow.appendChild(npvCol);
+            console.log('col');
+            console.log(col);
+            // console.log(Object.prototype.toString.call(col));
+
+            if (Object.prototype.toString.call(col) === '[object String]') {
+                console.log('object String');
+                
+                var npvCol: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + ci);
+                npvCol.innerHTML = col;
+
+                npvRow.appendChild(npvCol);
+
+            }
+            else if (Object.prototype.toString.call(col) === '[object Array]') {
+                console.log('object Array');
+
+                var colOfUnknownType = col as unknown;
+                ( colOfUnknownType as Array<string>).forEach((innerCol, ici) =>{
+                    
+                    var npvCol: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + ici);
+                    npvCol.innerHTML = innerCol;
+    
+                    npvRow.appendChild(npvCol);
+
+                });
+            }
+            else {
+                throw new Error('Unexpected!')
+            }
+
+
+            // var colArray = col.split(',');
+            // colArray.forEach((col2, ci2) => {
+            //     var npvCol: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + ci2);
+            //     npvCol.innerHTML = col2;
+
+
+
+            //     npvRow.appendChild(npvCol);
+
+            // });
+
+
+
+
+
+
+
         });
 
         npvTable.appendChild(npvRow);
@@ -90,6 +141,7 @@ function addData(data: Array<Array<string>>) {
         if (message.target !== 'dialog') return;
 
         console.log(`dialog.ts: message:${message} sender:${sender}`);
+        console.log(message);
 
         var dialogElement: HTMLDialogElement = Array.from(document.getElementsByTagName('dialog')).filter((e) => e.id === idDialog)[0];
         if (!dialogElement) {
