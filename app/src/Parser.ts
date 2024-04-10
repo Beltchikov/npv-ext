@@ -19,7 +19,7 @@ import { parserMap } from "./Parsers/parserMap";
     await chrome.runtime.sendMessage({
         target: 'background',
         context: window.location.hostname,
-        type: 'dataRow',
+        type: 'dataTable',
         dataTable: dataRow,
         sender: 'parser'
     });
