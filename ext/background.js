@@ -46,33 +46,20 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
   if (message.target !== 'background') return;
 
   if (message.type === 'dataTable') {
-    console.log("message.type === 'dataTable'");
-    console.log(message);
 
     tabsRequestedForData = tabsRequestedForData.map((t) => t.tabId === sender.tab.id ? { ...t, ...{ dataTable: message.dataTable } } : t);
-
-    console.log("tabsRequestedForData");
-    console.log(tabsRequestedForData);
-
+    
     var tabsStillWaitingForData = tabsRequestedForData.filter((t) => t.dataTable == undefined);
-
-    console.log("tabsStillWaitingForData.length");
-    console.log(tabsStillWaitingForData);
-
     if (tabsStillWaitingForData.length === 0) {
-      var activeTabData = tabsRequestedForData.filter((t) => t.activeTab )[0];
+      var activeTabData = tabsRequestedForData.filter((t) => t.activeTab)[0];
 
       console.log(`Sending message to dialog on tab id ${activeTabData.tabId}`);
-      //var cummulatedDataArray = tabsRequestedForData.map((e) => e.dataTable);
       var cummulatedDataArray = tabsRequestedForData.map((e) => {
         const resultArray = [];
         var dataTable = e.dataTable;
         Array.from(dataTable).forEach(row => { resultArray.push(row) });
         return resultArray;
       });
-
-      console.log("cummulatedDataArray");
-      console.log(cummulatedDataArray);
 
       const response = await chrome.tabs.sendMessage(
         activeTabData.tabId,
