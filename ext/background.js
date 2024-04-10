@@ -46,7 +46,6 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
   if (message.target !== 'background') return;
 
   if (message.type === 'dataRow') {
-
     console.log("message.type === 'dataRow'");
     console.log(message);
 
@@ -58,7 +57,6 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
       console.log(`Sending message to dialog on tab id ${activeTabData.tabId}`);
       var cummulatedDataArray = tabsRequestedForData.map((e) => e.data);
-
       var messageToDialog = buildMessageToDialog(message.context, cummulatedDataArray);
       const response = await chrome.tabs.sendMessage(activeTabData.tabId, messageToDialog);
 
