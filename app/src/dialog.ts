@@ -70,64 +70,31 @@ function addData(data: Array<Array<string>>) {
         data.unshift(['EPS', 'DIV', 'ROE', 'Beta']);
         data.push([`Dividend Frequency: ${divFrequency()},,,`]);
     }
-
-    console.log('data');
-    console.log(data);
+    /////////////////////////////////////
 
     data.forEach((row: Array<string>, ri) => {
         var npvRow: HTMLTableRowElement = shared.getElementByTagAndIdOrCreate('tr', idNpvRow + ri);
 
-
-
         row.forEach((col, ci) => {
-            console.log('col');
-            console.log(col);
-            // console.log(Object.prototype.toString.call(col));
 
+            // TODO refactor, keep commented code as example: casting via unknown, type check
             if (Object.prototype.toString.call(col) === '[object String]') {
-                console.log('object String');
-                
                 var npvCol: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + ci);
                 npvCol.innerHTML = col;
-
                 npvRow.appendChild(npvCol);
-
             }
             else if (Object.prototype.toString.call(col) === '[object Array]') {
-                console.log('object Array');
-
                 var colOfUnknownType = col as unknown;
-                ( colOfUnknownType as Array<string>).forEach((innerCol, ici) =>{
-                    
+                (colOfUnknownType as Array<string>).forEach((innerCol, ici) => {
                     var npvCol: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + ici);
                     npvCol.innerHTML = innerCol;
-    
                     npvRow.appendChild(npvCol);
-
                 });
             }
             else {
                 throw new Error('Unexpected!')
             }
-
-
-            // var colArray = col.split(',');
-            // colArray.forEach((col2, ci2) => {
-            //     var npvCol: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + ci2);
-            //     npvCol.innerHTML = col2;
-
-
-
-            //     npvRow.appendChild(npvCol);
-
-            // });
-
-
-
-
-
-
-
+            /////////////////////
         });
 
         npvTable.appendChild(npvRow);
@@ -151,8 +118,3 @@ function addData(data: Array<Array<string>>) {
         sendResponse(true);
     });
 })();
-
-
-
-
-
