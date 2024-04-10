@@ -95,7 +95,7 @@ function addData(data: Array<Array<string>>) {
         if (!dialogElement) {
             dialogElement = attachDialog();
         }
-        addData(message.data)
+        addData(message.dataTable)
         sendResponse(true);
     });
 })();

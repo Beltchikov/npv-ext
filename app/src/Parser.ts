@@ -20,7 +20,7 @@ import { parserMap } from "./Parsers/parserMap";
         target: 'background',
         context: window.location.hostname,
         type: 'dataRow',
-        data: dataRow,
+        dataTable: dataRow,
         sender: 'parser'
     });
 })();
