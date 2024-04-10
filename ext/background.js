@@ -35,6 +35,10 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
   if (message.target !== 'background') return;
 
   if (message.type === 'dataRow') {
+
+    console.log("message.type === 'dataRow'");
+    console.log(message);
+
     tabsWaitingForData = tabsWaitingForData.map((t) => t.tabId === sender.tab.id ? { ...t, ...{ data: message.data } } : t);
     var noDataObjects = tabsWaitingForData.filter((t) => t.data == undefined);
 
@@ -43,14 +47,15 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
       console.log(`Sending message to dialog on tab id ${activeTabData.tabId}`);
       var data2dArray = tabsWaitingForData.map((e)=> e.data);
-      const response = await chrome.tabs.sendMessage(activeTabData.tabId,
-        {
-          target: 'dialog',
-          type: message.type,
-          context: message.context,
-          data: data2dArray,
-          sender: message.sender
-        });
+      var messageToDialog = {
+        target: 'dialog',
+        type: message.type,
+        context: message.context,
+        data: data2dArray,
+        sender: message.sender
+      };
+      const response = await chrome.tabs.sendMessage(activeTabData.tabId,messageToDialog);
+      
       if (response) console.log(`Message to dialog on tab id ${activeTabData.tabId} successfully sent.`)
       else console.log(`Error sending message to dialog on tab id ${activeTabData.tabId}.`)
     }
