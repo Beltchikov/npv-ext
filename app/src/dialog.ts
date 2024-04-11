@@ -52,7 +52,7 @@ function attachDialog() {
     return dialog;
 }
 
-function addData(data: Array<Array<string>>) {
+function addData(dataTable: Array<Array<string>>) {
     const idNpvRow = 'npvRow';
     const idNpvCol = 'npvCol';
 
@@ -61,24 +61,54 @@ function addData(data: Array<Array<string>>) {
 
     // TODO header and footer should come with the message
     if (shared.localHostOrInvesting()) {
-        data.unshift(Array.from(['Symbol', 'TA']));
+        //dataTable.unshift(Array.from(['Symbol', 'TA']));
+        var headerRow: HTMLTableRowElement = shared.getElementByTagAndIdOrCreate('tr', idNpvRow + "H");
+
+        var headerCol1: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + "H" + 1);
+        headerCol1.innerHTML="Symbol";
+        var headerCol2: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + "H" + 2);
+        headerCol2.innerHTML="TA";
+        headerRow.appendChild(headerCol1);
+        headerRow.appendChild(headerCol2);
+
+        npvTable.appendChild(headerRow);
+
     }
     else if (shared.localHostOrTwitter()) {
-        data.unshift(['Message', 'User', 'Date']);
+        //dataTable.unshift(['Message', 'User', 'Date']);
+
+        var headerRow: HTMLTableRowElement = shared.getElementByTagAndIdOrCreate('tr', idNpvRow + "H");
+
+        var headerCol1: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + "H" + 1);
+        headerCol1.innerHTML="Message";
+        var headerCol2: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + "H" + 2);
+        headerCol2.innerHTML="User";
+        var headerCol3: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + "H" + 3);
+        headerCol3.innerHTML="Date";
+
+        headerRow.appendChild(headerCol1);
+        headerRow.appendChild(headerCol2);
+        headerRow.appendChild(headerCol3);
+
+        npvTable.appendChild(headerRow);
     }
     else {
-        data.unshift(['EPS', 'DIV', 'ROE', 'Beta']);
-        data.push([`Dividend Frequency: ${divFrequency()},,,`]);
+        dataTable.unshift(['EPS', 'DIV', 'ROE', 'Beta']);
+        dataTable.push([`Dividend Frequency: ${divFrequency()},,,`]);
     }
     /////////////////////////////////////
 
-    data.forEach((row: Array<string>, ri) => {
+    dataTable.forEach((row: Array<string>, ri) => {
         var npvRow: HTMLTableRowElement = shared.getElementByTagAndIdOrCreate('tr', idNpvRow + ri);
 
         row.forEach((col, ci) => {
 
             // TODO refactor, keep commented code as example: casting via unknown, type check
             if (Object.prototype.toString.call(col) === '[object String]') {
+
+                console.log('WRONG! [object String]');
+                console.log(col);
+
                 var npvCol: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + ci);
                 npvCol.innerHTML = col;
                 npvRow.appendChild(npvCol);

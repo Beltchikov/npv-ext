@@ -44,7 +44,7 @@ const buildMessageToDialog = (context, cummulatedDataArray) => {
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
   if (message.target !== 'background') return;
-
+ 
   if (message.type === 'dataTable') {
 
     tabsRequestedForData = tabsRequestedForData.map((t) => t.tabId === sender.tab.id ? { ...t, ...{ dataTable: message.dataTable } } : t);
@@ -57,9 +57,13 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
       var cummulatedDataArray = tabsRequestedForData.map((e) => {
         const resultArray = [];
         var dataTable = e.dataTable;
-        Array.from(dataTable).forEach(row => { resultArray.push(row) });
+        //Array.from(dataTable).forEach(row => { resultArray.push(row) });
+        dataTable.forEach(row => { resultArray.push(Array.from(row)) });
         return resultArray;
       });
+
+      console.log(`cummulatedDataArray`);
+      console.log(cummulatedDataArray);
 
       const response = await chrome.tabs.sendMessage(
         activeTabData.tabId,
