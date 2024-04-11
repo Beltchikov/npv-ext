@@ -5,6 +5,9 @@ export async function getDataRow(): Promise<Array<Array<string>>> {
 }
 
 const getTimeTagsAsync = async (hoursAgo: number): Promise<Array<Array<string>>> => {
+    
+    // TODO try catch and reject
+
     let promise = new Promise<Array<Array<string>>>((resolve, reject) => {
         var timestampOfEarliestTweet = shared.addHoursToDate(new Date(Date.now()), -1 * hoursAgo)
 
@@ -24,24 +27,20 @@ const getTimeTagsAsync = async (hoursAgo: number): Promise<Array<Array<string>>>
 
             lastElement.scrollIntoView({ behavior: "smooth", block: "end", inline: "center" });
             i++;
-            if (i == maxTweetCount || earliestTimestamp <= timestampOfEarliestTweet) {
+            if (i === maxTweetCount || earliestTimestamp <= timestampOfEarliestTweet) {
                 clearInterval(intervalId);
 
                 if (i === maxTweetCount) console.log(`LIMIT of ${maxTweetCount} reached`);
                 if (earliestTimestamp <= timestampOfEarliestTweet)
                     console.log(`24 HOURS PERIOD PROCESSED ${earliestTimestamp}`);
 
-                var datesOfTweets = allTimeElements.map((e: any) => (new Date(e.dateTime)).toLocaleString('de'));
+                var datesOfTweets = allTimeElements.map((e: any) => {
+                    var objDate = new Date(e.dateTime);
+                    return objDate.toLocaleDateString('de') + "T" +objDate.toLocaleTimeString('de')});
                 console.log('datesOfTweets');
                 console.log(datesOfTweets);
 
                 var allData:Array<Array<string>> = datesOfTweets.map<Array<string>>(d=>Array.from([d,"TODO","TODO2"]));
-                
-                // resolve([datesOfTweets,
-                //     Array.from({ length: datesOfTweets.length }, (v: string) => "TODO"),
-                //     Array.from({ length: datesOfTweets.length }, (v: string) => "TODO")
-                // ]);
-
                 resolve(allData);
             }
 
