@@ -1,5 +1,7 @@
 import * as cheerio from 'cheerio';
 
+// TODO 3 separate files
+
 export const localHostOrSeekingAlpha = () => {
     return window.location.href.indexOf('localhost') >= 0
         || window.location.href.indexOf('seekingalpha.com') >= 0;
@@ -15,9 +17,21 @@ export const localHostOrTwitter = () => {
         || window.location.href.indexOf('twitter.com') >= 0;
 }
 
+///////////////////////////////////////////////////////
+
 export function addHoursToDate(objDate:Date, intHours:number) {
     return new Date(objDate.getTime() + intHours * 60 * 60 * 1000);
 }
+
+export function getShape(matrix:Array<any>, dimensions:Array<number> = []):Array<number> {
+    // displays max value in case of jagged array
+    if (Array.isArray(matrix)) {
+      dimensions.push(matrix.length);
+      return getShape(matrix[0], dimensions);
+    } else return dimensions;
+  }
+
+//////////////////////////////////////////////////////
 
 export function dataFromHtmlViaCommonParent(
     innerHTML: string,
@@ -94,6 +108,7 @@ export default {
     localHostOrInvesting,
     localHostOrTwitter,
     addHoursToDate,
+    getShape,
     dataFromHtmlViaCommonParent,
     dataFromHtmlViaParent,
     dataFromHtmlByTagAndTextContains: dataFromHtmlByTag,

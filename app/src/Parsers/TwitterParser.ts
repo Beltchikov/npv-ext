@@ -4,15 +4,6 @@ export async function getDataRow(): Promise<Array<Array<string>>> {
     return await getTimeTagsAsync(24);
 }
 
-
-function getShape(matrix:Array<any>, dimensions:Array<number> = []):Array<number> {
-    // displays max value in case of jagged array
-    if (Array.isArray(matrix)) {
-      dimensions.push(matrix.length);
-      return getShape(matrix[0], dimensions);
-    } else return dimensions;
-  }
-
 const getTimeTagsAsync = async (hoursAgo: number): Promise<Array<Array<string>>> => {
 
     // TODO try catch and reject
@@ -52,9 +43,8 @@ const getTimeTagsAsync = async (hoursAgo: number): Promise<Array<Array<string>>>
 
                 var allData: Array<Array<string>> = datesOfTweets.map<Array<string>>(d => Array.from([d, "TODO", "TODO2"]));
 
-                let shape = getShape(allData)
                 console.log('shape cummulatedDataArray');
-                console.log(shape);
+                console.log(shared.getShape(allData));
 
                 resolve(allData);
             }
