@@ -1,4 +1,4 @@
 export default interface IParcer
 {
-    getDataRow(): Array<string>
+    getDataRowAsync(): Promise<Array<string>>
 }

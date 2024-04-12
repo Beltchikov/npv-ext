@@ -2,7 +2,20 @@ import shared from "../shared";
 import IParser from "./IParser";
 
 export class SeekingAlphaParser implements IParser{
-    getDataRow(): Array<string> {
+    
+    getDataRowAsync(): Promise<Array<string>> {
+        return new Promise((resolve, reject)=>{
+         try{
+         resolve(getDataRow());
+         }
+         catch(e)
+         {
+             reject(e);
+         }
+        });
+     }
+    
+    private getDataRow(): Array<string> {
         var symbol: string = getSymbol();
         var sector: string = getDataViaCommonParentCompanyProfileSector('Sector');
         var industry: string = getDataViaCommonParentCompanyProfileIndustry('Industry');

@@ -2,7 +2,20 @@ import shared from "../shared";
 import IParser from "./IParser";
 
 export class InvestingParser implements IParser{
-    getDataRow(): Array<string> {
+    
+    getDataRowAsync(): Promise<Array<string>> {
+       return new Promise((resolve, reject)=>{
+        try{
+        resolve(getDataRow());
+        }
+        catch(e)
+        {
+            reject(e);
+        }
+       });
+    }
+
+    private getDataRow(): Array<string> {
         const symbol = getSymbol();
         const taBefore = 'taBefore';
         const ta = getTa('TODO');
