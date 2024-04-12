@@ -79,7 +79,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     //   ? { ...tabDataAndPayload, ...{ dataTable: message.dataTable } }
     //   : tabDataAndPayload);
     tabsRequestedForData = tabsRequestedForData.map((tabDataAndPayload) => tabDataAndPayload.tabId === sender.tab.id
-      ? { ...tabDataAndPayload, ...{ dataTable: payloadFromMessage(message)}}
+      ? { ...tabDataAndPayload, ...{ dataTable: payloadFromMessage(message) } }
       : tabDataAndPayload);
 
 
@@ -99,7 +99,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
       console.log(`cummulatedDataArray`);
       console.log(cummulatedDataArray);
 
-      let shape = [cummulatedDataArray.length, cummulatedDataArray[0].length];
+      let shape = getShape(cummulatedDataArray)
       console.log('shape cummulatedDataArray');
       console.log(shape);
 
