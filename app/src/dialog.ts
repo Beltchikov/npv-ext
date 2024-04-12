@@ -1,8 +1,5 @@
 import shared from './shared';
 
-// TODO remove later
-import { divFrequency } from "./Parsers/SeekingAlphaParser"
-
 const idDialog = 'npvDialog';
 const idTableContainer = 'npvTableContainer';
 const idNpvTable = 'npvTable';
