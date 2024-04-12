@@ -16,7 +16,7 @@ import { parserMap } from "./Parsers/parserMap";
         throw new Error(`hostMapEntry is not proper defined for ${window.location.hostname}`);
 
     var parser = hostMapEntry[0].parser;
-    dataRow = await parser.getDataRow();
+    dataRow = await parser.getDataRowAsync();
 
     await chrome.runtime.sendMessage({
         target: 'background',

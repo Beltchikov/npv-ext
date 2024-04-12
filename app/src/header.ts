@@ -8,14 +8,16 @@ import { parserMap } from "./Parsers/parserMap";
         throw new Error(`hostMapEntry is not proper defined for ${window.location.hostname}`);
 
     var parser = hostMapEntry[0].parser;
-    var header = parser.getHeader();
+    
+    // TODO
+    //var header = parser.getHeader();
 
 
     chrome.runtime.sendMessage({
         target: 'background',
         context: window.location.hostname,
         type: 'header',
-        data: header,
+        data: "header", // TODO
         sender: 'parser'
     })
     .then((_r=>console.log("Header message sent succcessfully.")))
