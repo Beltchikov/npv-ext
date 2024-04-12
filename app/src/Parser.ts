@@ -1,8 +1,10 @@
 import { parserMap } from "./Parsers/parserMap";
 
 // To update the extension for a nes hostname:
-//  1. Write new parser
+//  1. Write new parser. 
 //  2. Update parserMap.ts
+
+// TODO Interface for Parser to ensure Array<string>
 
 (async function starter() {
     var dataRow:Array<string> = [];

@@ -50,6 +50,10 @@ const buildMessageToDialog = (context, cummulatedDataArray) => {
 }
 
 const payloadFromMessage = (message) => {
+  
+  // if shape.length===3
+  // 
+  
   return message.dataTable;
 }
 
