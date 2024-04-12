@@ -1,14 +1,14 @@
 import shared from "../shared";
 
-export async function getDataRow(): Promise<Array<Array<string>>> {
+export async function getDataRow(): Promise<Array<string>> {
     return await getTimeTagsAsync(24);
 }
 
-const getTimeTagsAsync = async (hoursAgo: number): Promise<Array<Array<string>>> => {
+const getTimeTagsAsync = async (hoursAgo: number): Promise<Array<string>> => {
 
     // TODO try catch and reject
 
-    let promise = new Promise<Array<Array<string>>>((resolve, reject) => {
+    let promise = new Promise<Array<string>>((resolve, reject) => {
         var timestampOfEarliestTweet = shared.addHoursToDate(new Date(Date.now()), -1 * hoursAgo)
 
         var allTimeElements: Array<HTMLTimeElement> = [];
@@ -41,7 +41,7 @@ const getTimeTagsAsync = async (hoursAgo: number): Promise<Array<Array<string>>>
                 console.log('datesOfTweets');
                 console.log(datesOfTweets);
 
-                var allData: Array<Array<string>> = datesOfTweets.map<Array<string>>(d => Array.from([d, "TODO", "TODO2"]));
+                var allData: Array<string> = datesOfTweets.map<string>(d => d + ",TODO,TODO2");
 
                 console.log('shape cummulatedDataArray');
                 console.log(shared.getShape(allData));

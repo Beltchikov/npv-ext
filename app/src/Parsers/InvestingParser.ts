@@ -1,6 +1,6 @@
 import shared from "../shared";
 
-export function getDataRow(): Array<Array<string>> {
+export function getDataRow(): Array<string> {
     const symbol = getSymbol();
     const taBefore = 'taBefore';
     const ta = getTa('TODO');
@@ -9,8 +9,7 @@ export function getDataRow(): Array<Array<string>> {
 
     //return ([symbol, taBefore, ta, earnBefore, earn]).toString().split(',');
     //return ([symbol, ta]).toString().split(',');
-    return [
-        [symbol, ta]];
+    return [symbol, ta];
 }
 
 export function getHeader(): string {

@@ -5,7 +5,7 @@ import { parserMap } from "./Parsers/parserMap";
 //  2. Update parserMap.ts
 
 (async function starter() {
-    var dataRow:Array<Array<string>> = [];
+    var dataRow:Array<string> = [];
 
     console.log(window.location.hostname);
     
