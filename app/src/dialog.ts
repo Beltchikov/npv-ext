@@ -101,26 +101,18 @@ function addData(dataTable: Array<Array<string>>) {
 
     console.log('shape dataTable');
     console.log(shared.getShape(dataTable));
-    
+
     dataTable.forEach((row: Array<string>, ri) => {
         console.log('shape row');
         console.log(shared.getShape(row));
-        
+
         var npvRow: HTMLTableRowElement = shared.getElementByTagAndIdOrCreate('tr', idNpvRow + ri);
 
-        row.forEach((col) => {
-            
-            let colOfUnknownType = col as unknown;
-            let colAsArray = colOfUnknownType as Array<string>;
+        row.forEach((col, ci) => {
 
-            console.log('shape colAsArray');
-            console.log(shared.getShape(colAsArray));
-    
-            colAsArray.forEach((innerCol, ici) => {
-                var npvCol: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + ici);
-                npvCol.innerHTML = innerCol;
-                npvRow.appendChild(npvCol);
-            });
+            let npvCol: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + ci);
+            npvCol.innerHTML = col;
+            npvRow.appendChild(npvCol);
 
         });
 
