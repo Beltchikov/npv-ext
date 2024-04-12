@@ -5,7 +5,7 @@ export async function getDataRow(): Promise<Array<Array<string>>> {
 }
 
 const getTimeTagsAsync = async (hoursAgo: number): Promise<Array<Array<string>>> => {
-    
+
     // TODO try catch and reject
 
     let promise = new Promise<Array<Array<string>>>((resolve, reject) => {
@@ -36,11 +36,17 @@ const getTimeTagsAsync = async (hoursAgo: number): Promise<Array<Array<string>>>
 
                 var datesOfTweets = allTimeElements.map((e: any) => {
                     var objDate = new Date(e.dateTime);
-                    return objDate.toLocaleDateString('de') + "T" +objDate.toLocaleTimeString('de')});
+                    return objDate.toLocaleDateString('de') + "T" + objDate.toLocaleTimeString('de')
+                });
                 console.log('datesOfTweets');
                 console.log(datesOfTweets);
 
-                var allData:Array<Array<string>> = datesOfTweets.map<Array<string>>(d=>Array.from([d,"TODO","TODO2"]));
+                var allData: Array<Array<string>> = datesOfTweets.map<Array<string>>(d => Array.from([d, "TODO", "TODO2"]));
+
+                let shape = [allData.length, allData[0].length];
+                console.log('shape allData');
+                console.log(shape);
+
                 resolve(allData);
             }
 

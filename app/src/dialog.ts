@@ -98,12 +98,15 @@ function addData(dataTable: Array<Array<string>>) {
     }
     /////////////////////////////////////
 
+
+
     dataTable.forEach((row: Array<string>, ri) => {
+
         var npvRow: HTMLTableRowElement = shared.getElementByTagAndIdOrCreate('tr', idNpvRow + ri);
 
         row.forEach((col) => {
 
-           var colOfUnknownType = col as unknown;
+            var colOfUnknownType = col as unknown;
             (colOfUnknownType as Array<string>).forEach((innerCol, ici) => {
                 var npvCol: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + ici);
                 npvCol.innerHTML = innerCol;
@@ -129,6 +132,7 @@ function addData(dataTable: Array<Array<string>>) {
         if (!dialogElement) {
             dialogElement = attachDialog();
         }
+        
         addData(message.dataTable)
         sendResponse(true);
     });

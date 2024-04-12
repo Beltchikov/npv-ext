@@ -1,6 +1,13 @@
 import { loadScripts } from './loader.js';
 
 // service worker
+class TabDataAndPayload {
+  constructor(tabId, activeTab, dataTable) {
+    this.tabId = tabId;
+    this.activeTab = activeTab;
+    this.dataTable = dataTable;
+  }
+}
 var tabsRequestedForData = [];
 
 // entry point
@@ -13,7 +20,9 @@ chrome.action.onClicked.addListener(async (currentTab) => {
     .then(tabs => {
       tabsRequestedForData = [];
       tabs.map((t) => {
-        tabsRequestedForData.push({ tabId: t.id, activeTab: t.active, dataTable: undefined })
+        // TODO introduce class
+        //tabsRequestedForData.push({ tabId: t.id, activeTab: t.active, dataTable: undefined })
+        tabsRequestedForData.push(new TabDataAndPayload(t.id, t.active, undefined));
       });
 
       // execute parser.js for every tab
@@ -40,15 +49,40 @@ const buildMessageToDialog = (context, cummulatedDataArray) => {
   return messageToDialog;
 }
 
+const payloadFromMessage = (message) => {
+  return message.dataTable;
+}
+
+function getShape(matrix, dimensions = []) {
+  // displays max value in case of jagged array
+  if (Array.isArray(matrix)) {
+    dimensions.push(matrix.length);
+    return getShape(matrix[0], dimensions);
+  } else return dimensions;
+}
+
 // message listener
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
   if (message.target !== 'background') return;
- 
+
   if (message.type === 'dataTable') {
 
-    tabsRequestedForData = tabsRequestedForData.map((t) => t.tabId === sender.tab.id ? { ...t, ...{ dataTable: message.dataTable } } : t);
-    
+    // let shape = [message.dataTable.length, message.dataTable[0].length];
+    // console.log('shape message.dataTable');
+    // console.log(shape);
+    let shape = getShape(message.dataTable)
+    console.log('shape message.dataTable');
+    console.log(shape);
+
+    // tabsRequestedForData = tabsRequestedForData.map((tabDataAndPayload) => tabDataAndPayload.tabId === sender.tab.id
+    //   ? { ...tabDataAndPayload, ...{ dataTable: message.dataTable } }
+    //   : tabDataAndPayload);
+    tabsRequestedForData = tabsRequestedForData.map((tabDataAndPayload) => tabDataAndPayload.tabId === sender.tab.id
+      ? { ...tabDataAndPayload, ...{ dataTable: payloadFromMessage(message)}}
+      : tabDataAndPayload);
+
+
     var tabsStillWaitingForData = tabsRequestedForData.filter((t) => t.dataTable == undefined);
     if (tabsStillWaitingForData.length === 0) {
       var activeTabData = tabsRequestedForData.filter((t) => t.activeTab)[0];
@@ -64,6 +98,10 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
       console.log(`cummulatedDataArray`);
       console.log(cummulatedDataArray);
+
+      let shape = [cummulatedDataArray.length, cummulatedDataArray[0].length];
+      console.log('shape cummulatedDataArray');
+      console.log(shape);
 
       const response = await chrome.tabs.sendMessage(
         activeTabData.tabId,
