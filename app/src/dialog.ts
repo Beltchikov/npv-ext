@@ -62,12 +62,12 @@ function addData(dataTable: Array<Array<string>>) {
     // TODO header and footer should come with the message
     if (shared.localHostOrInvesting()) {
         //dataTable.unshift(Array.from(['Symbol', 'TA']));
-        var headerRow: HTMLTableRowElement = shared.getElementByTagAndIdOrCreate('tr', idNpvRow + "H");
+        let headerRow: HTMLTableRowElement = shared.getElementByTagAndIdOrCreate('tr', idNpvRow + "H");
 
-        var headerCol1: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + "H" + 1);
-        headerCol1.innerHTML="Symbol";
-        var headerCol2: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + "H" + 2);
-        headerCol2.innerHTML="TA";
+        let headerCol1: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + "H" + 1);
+        headerCol1.innerHTML = "Symbol";
+        let headerCol2: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + "H" + 2);
+        headerCol2.innerHTML = "TA";
         headerRow.appendChild(headerCol1);
         headerRow.appendChild(headerCol2);
 
@@ -77,14 +77,14 @@ function addData(dataTable: Array<Array<string>>) {
     else if (shared.localHostOrTwitter()) {
         //dataTable.unshift(['Message', 'User', 'Date']);
 
-        var headerRow: HTMLTableRowElement = shared.getElementByTagAndIdOrCreate('tr', idNpvRow + "H");
+        let headerRow: HTMLTableRowElement = shared.getElementByTagAndIdOrCreate('tr', idNpvRow + "H");
 
-        var headerCol1: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + "H" + 1);
-        headerCol1.innerHTML="Message";
-        var headerCol2: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + "H" + 2);
-        headerCol2.innerHTML="User";
-        var headerCol3: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + "H" + 3);
-        headerCol3.innerHTML="Date";
+        let headerCol1: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + "H" + 1);
+        headerCol1.innerHTML = "Message";
+        let headerCol2: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + "H" + 2);
+        headerCol2.innerHTML = "User";
+        let headerCol3: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + "H" + 3);
+        headerCol3.innerHTML = "Date";
 
         headerRow.appendChild(headerCol1);
         headerRow.appendChild(headerCol2);
@@ -101,30 +101,15 @@ function addData(dataTable: Array<Array<string>>) {
     dataTable.forEach((row: Array<string>, ri) => {
         var npvRow: HTMLTableRowElement = shared.getElementByTagAndIdOrCreate('tr', idNpvRow + ri);
 
-        row.forEach((col, ci) => {
+        row.forEach((col) => {
 
-            // TODO refactor, keep commented code as example: casting via unknown, type check
-            if (Object.prototype.toString.call(col) === '[object String]') {
-
-                console.log('WRONG! [object String]');
-                console.log(col);
-
-                var npvCol: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + ci);
-                npvCol.innerHTML = col;
+           var colOfUnknownType = col as unknown;
+            (colOfUnknownType as Array<string>).forEach((innerCol, ici) => {
+                var npvCol: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + ici);
+                npvCol.innerHTML = innerCol;
                 npvRow.appendChild(npvCol);
-            }
-            else if (Object.prototype.toString.call(col) === '[object Array]') {
-                var colOfUnknownType = col as unknown;
-                (colOfUnknownType as Array<string>).forEach((innerCol, ici) => {
-                    var npvCol: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + ici);
-                    npvCol.innerHTML = innerCol;
-                    npvRow.appendChild(npvCol);
-                });
-            }
-            else {
-                throw new Error('Unexpected!')
-            }
-            /////////////////////
+            });
+
         });
 
         npvTable.appendChild(npvRow);

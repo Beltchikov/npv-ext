@@ -14,7 +14,7 @@ const getTimeTagsAsync = async (hoursAgo: number): Promise<Array<Array<string>>>
         var allTimeElements: Array<HTMLTimeElement> = [];
         var timeout = 1000;
         var i = 0;
-        var maxTweetCount = 20;
+        var maxTweetCount = 10;
 
         var intervalId = setInterval(() => {
             const timeElements: Array<HTMLTimeElement> = shared.getElementsByTag('time');
