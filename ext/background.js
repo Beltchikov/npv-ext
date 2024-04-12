@@ -68,13 +68,9 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
   if (message.type === 'dataTable') {
 
-    // let shape = [message.dataTable.length, message.dataTable[0].length];
-    // console.log('shape message.dataTable');
-    // console.log(shape);
-    let shape = getShape(message.dataTable)
-    console.log('shape message.dataTable');
-    console.log(shape);
-
+    console.log('data table from tab');
+    console.log(message.dataTable);
+    
     // tabsRequestedForData = tabsRequestedForData.map((tabDataAndPayload) => tabDataAndPayload.tabId === sender.tab.id
     //   ? { ...tabDataAndPayload, ...{ dataTable: message.dataTable } }
     //   : tabDataAndPayload);
@@ -82,19 +78,14 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
       ? { ...tabDataAndPayload, ...{ dataTable: payloadFromMessage(message) } }
       : tabDataAndPayload);
 
-
     var tabsStillWaitingForData = tabsRequestedForData.filter((t) => t.dataTable == undefined);
     if (tabsStillWaitingForData.length === 0) {
       var activeTabData = tabsRequestedForData.filter((t) => t.activeTab)[0];
 
-      console.log(`Sending message to dialog on tab id ${activeTabData.tabId}`);
-      var cummulatedDataArray = tabsRequestedForData.map((e) => {
-        const resultArray = [];
-        var dataTable = e.dataTable;
-        //Array.from(dataTable).forEach(row => { resultArray.push(row) });
-        dataTable.forEach(row => { resultArray.push(Array.from(row)) });
-        return resultArray;
-      });
+      console.log('tabsRequestedForData');
+      console.log(tabsRequestedForData);
+      
+      var cummulatedDataArray = tabsRequestedForData.map((t) => t.dataTable);
 
       console.log(`cummulatedDataArray`);
       console.log(cummulatedDataArray);
@@ -103,6 +94,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
       console.log('shape cummulatedDataArray');
       console.log(shape);
 
+      console.log(`Sending message to dialog on tab id ${activeTabData.tabId}`);
       const response = await chrome.tabs.sendMessage(
         activeTabData.tabId,
         buildMessageToDialog(message.context, cummulatedDataArray));
