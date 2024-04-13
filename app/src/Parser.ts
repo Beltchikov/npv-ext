@@ -7,8 +7,6 @@ import { parserMap } from "./Parsers/parserMap";
 // TODO Interface for Parser to ensure Array<string>
 
 (async function starter() {
-    var dataRow:Array<string> = [];
-
     console.log(window.location.hostname);
     
     var hostMapEntry = parserMap.filter((e) => e.hostname === window.location.hostname);
@@ -16,13 +14,13 @@ import { parserMap } from "./Parsers/parserMap";
         throw new Error(`hostMapEntry is not proper defined for ${window.location.hostname}`);
 
     var parser = hostMapEntry[0].parser;
-    dataRow = await parser.getDataRowAsync();
+    let tabData = await parser.getDataRowAsync();
 
     await chrome.runtime.sendMessage({
         target: 'background',
         context: window.location.hostname,
         type: 'dataTable',
-        dataTable: dataRow,
+        dataTable: tabData,
         sender: 'parser'
     });
 })();

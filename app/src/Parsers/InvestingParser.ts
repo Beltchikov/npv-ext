@@ -1,9 +1,10 @@
 import shared from "../shared";
 import IParser from "./IParser";
+import { TabData } from "./TabData";
 
 export class InvestingParser implements IParser{
     
-    getDataRowAsync(): Promise<Array<string>> {
+    getDataRowAsync(): Promise<TabData> {
        return new Promise((resolve, reject)=>{
         try{
         resolve(this.getDataRow());
@@ -15,7 +16,7 @@ export class InvestingParser implements IParser{
        });
     }
 
-    private getDataRow(): Array<string> {
+    private getDataRow(): TabData {
         const symbol = this.getSymbol();
         const taBefore = 'taBefore';
         const ta = this.getTa('TODO');
@@ -24,7 +25,7 @@ export class InvestingParser implements IParser{
     
         //return ([symbol, taBefore, ta, earnBefore, earn]).toString().split(',');
         //return ([symbol, ta]).toString().split(',');
-        return [symbol, ta];
+        return new TabData([[symbol, ta]]);
     }
 
     private getSymbol(): string {

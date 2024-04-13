@@ -1,17 +1,18 @@
 import shared from "../shared";
 import IParser from "./IParser";
+import { TabData } from "./TabData";
 
 export class TwitterParser implements IParser {
 
-    async getDataRowAsync(): Promise<Array<string>> {
+    async getDataRowAsync(): Promise<TabData> {
         return this.getTimeTagsAsync(24);
     }
 
-    getTimeTagsAsync(hoursAgo: number): Promise<Array<string>>{
+    getTimeTagsAsync(hoursAgo: number): Promise<TabData>{
 
         // TODO try catch and reject
     
-        let promise = new Promise<Array<string>>((resolve, reject) => {
+        let promise = new Promise<TabData>((resolve, reject) => {
             var timestampOfEarliestTweet = shared.addHoursToDate(new Date(Date.now()), -1 * hoursAgo)
     
             var allTimeElements: Array<HTMLTimeElement> = [];
@@ -44,12 +45,9 @@ export class TwitterParser implements IParser {
                     console.log('datesOfTweets');
                     console.log(datesOfTweets);
     
-                    var allData: Array<string> = datesOfTweets.map<string>(d => d + ",TODO,TODO2");
+                    var allData: string[][] = datesOfTweets.map<string[]>(d => [d, "TODO1", "TODO2"] );
     
-                    console.log('shape cummulatedDataArray');
-                    console.log(shared.getShape(allData));
-    
-                    resolve(allData);
+                    resolve(new TabData(allData));
                 }
     
             }, timeout);

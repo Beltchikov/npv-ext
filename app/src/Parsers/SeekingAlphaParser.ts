@@ -1,9 +1,10 @@
 import shared from "../shared";
 import IParser from "./IParser";
+import { TabData } from "./TabData";
 
 export class SeekingAlphaParser implements IParser{
     
-    getDataRowAsync(): Promise<Array<string>> {
+    getDataRowAsync(): Promise<TabData> {
         return new Promise((resolve, reject)=>{
          try{
          resolve(this.getDataRow());
@@ -15,7 +16,7 @@ export class SeekingAlphaParser implements IParser{
         });
      }
     
-    private getDataRow(): Array<string> {
+    private getDataRow(): TabData {
         var symbol: string = this.getSymbol();
         var sector: string = this.getDataViaCommonParentCompanyProfileSector('Sector');
         var industry: string = this.getDataViaCommonParentCompanyProfileIndustry('Industry');
@@ -28,7 +29,7 @@ export class SeekingAlphaParser implements IParser{
         //return ([eps, div, roe, beta]).toString().split(',');
     
         var resultRow = ([eps, div, roe, beta]).map((e) => this.formatString(e, 2));
-        return resultRow;
+        return new TabData([resultRow]);
     }
 
     private getDataViaCommonParentCardItem(targetElementText: string): string {

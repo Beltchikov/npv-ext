@@ -1,6 +1,6 @@
-//import {TabData} from "./TabData";
+import {TabData} from "./TabData";
 
 export default interface IParcer
 {
-    getDataRowAsync(): Promise<Array<string>>
+    getDataRowAsync(): Promise<TabData>
 }
