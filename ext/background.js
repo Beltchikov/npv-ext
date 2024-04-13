@@ -50,10 +50,10 @@ const buildMessageToDialog = (context, cummulatedDataArray) => {
 }
 
 const payloadFromMessage = (message) => {
-  
+
   // if shape.length===3
   // 
-  
+
   return message.dataTable;
 }
 
@@ -74,7 +74,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
     console.log('data table from tab');
     console.log(message.dataTable);
-    
+
     // tabsRequestedForData = tabsRequestedForData.map((tabDataAndPayload) => tabDataAndPayload.tabId === sender.tab.id
     //   ? { ...tabDataAndPayload, ...{ dataTable: message.dataTable } }
     //   : tabDataAndPayload);
@@ -88,8 +88,29 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
       console.log('tabsRequestedForData');
       console.log(tabsRequestedForData);
-      
-      var cummulatedDataArray = tabsRequestedForData.map((t) => t.dataTable);
+
+      //var cummulatedDataArray = tabsRequestedForData.map((t) => t.dataTable.rows);
+      let cummulatedDataRows = tabsRequestedForData.map(dt => dt.dataTable.rows);
+
+      var cummulatedDataArray = [[], []];
+      for (var i = 0; i < cummulatedDataRows.length; i++) {
+        let row = cummulatedDataRows[i];
+
+        console.log('row');
+        console.log(row);
+
+        let cells = [];
+        cells = row.map(r=>r.cells);
+
+        console.log('cells');
+        console.log(cells);
+
+        for (var ii = 0; ii < cells.length; ii++) {
+          let cell = cells[ii];
+          cummulatedDataArray[i][ii] = cell;
+        }
+      }
+
 
       console.log(`cummulatedDataArray`);
       console.log(cummulatedDataArray);
