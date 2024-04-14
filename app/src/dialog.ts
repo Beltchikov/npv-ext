@@ -1,3 +1,4 @@
+import { MessageToDialog } from './Dialog/MessageToDialog';
 import shared from './shared';
 
 const idCollector = 'collector';
@@ -11,17 +12,21 @@ const idCloseButton = 'npvButtonClose';
 const idCopyButton = 'npvButtonCopy';
 
 (function starter() {
-    chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-        if (message.target !== 'dialog') return;
+    chrome.runtime.onMessage.addListener(function (message1, sender, sendResponse) {
+        if (message1.target !== 'dialog') return;
 
-        doLogging(message, sender);
+        let messageTyped = message1 as MessageToDialog;
+        console.log(`messageTyped:`);
+        console.log(messageTyped);
+
+        doLogging(messageTyped, sender);
 
         var dialogElement: HTMLDialogElement = Array.from(document.getElementsByTagName('dialog')).filter((e) => e.id === idDialog)[0];
         if (!dialogElement) {
             dialogElement = attachDialog();
         }
 
-        addData(message.dataTable)
+        addData(messageTyped.dataTable)
         sendResponse(true);
     });
 })();
