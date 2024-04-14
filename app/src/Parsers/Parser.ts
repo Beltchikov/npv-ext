@@ -4,8 +4,6 @@ import { parserMap } from "./parserMap";
 //  1. Write new parser. 
 //  2. Update parserMap.ts
 
-// TODO Interface for Parser to ensure Array<string>
-
 (async function starter() {
     console.log(window.location.hostname);
     

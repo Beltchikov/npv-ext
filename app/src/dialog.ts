@@ -4,6 +4,22 @@ const idDialog = 'npvDialog';
 const idTableContainer = 'npvTableContainer';
 const idNpvTable = 'npvTable';
 
+(function starter() {
+    chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+        if (message.target !== 'dialog') return;
+
+        doLogging(message, sender);
+
+        var dialogElement: HTMLDialogElement = Array.from(document.getElementsByTagName('dialog')).filter((e) => e.id === idDialog)[0];
+        if (!dialogElement) {
+            dialogElement = attachDialog();
+        }
+
+        addData(message.dataTable)
+        sendResponse(true);
+    });
+})();
+
 function attachDialog() {
     const idCollector = 'collector';
     const idCloseButton = 'npvButtonClose';
@@ -116,19 +132,9 @@ function addData(dataTable: Array<Array<string>>) {
     tableContainer.appendChild(npvTable);
 }
 
-(function starter() {
-    chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-        if (message.target !== 'dialog') return;
-
-        console.log(`dialog.ts: message:${message} sender:${sender}`);
-        console.log(message);
-
-        var dialogElement: HTMLDialogElement = Array.from(document.getElementsByTagName('dialog')).filter((e) => e.id === idDialog)[0];
-        if (!dialogElement) {
-            dialogElement = attachDialog();
-        }
-
-        addData(message.dataTable)
-        sendResponse(true);
-    });
-})();
+function doLogging(message:any, sender:any) {
+    console.log(`message with target dialog received:`);
+    console.log(message);
+    console.log(`sender:`);
+    console.log(sender);
+}
