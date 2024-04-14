@@ -61,7 +61,7 @@ const payloadFromMessage = (message) => {
   let rows = message.dataTable.rows;
   //return rows;
 
-  let array2D = rows.map(r=>r.cells);
+  let array2D = rows.map(r => r.cells);
   return array2D
 }
 
@@ -79,46 +79,18 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
   if (message.target !== 'background') return;
 
   if (message.type === 'dataTable') {
+    console.log(`message of type dataTable received: ${message}`);
 
-    console.log('message');
-    console.log(message);
-
-    // tabsRequestedForData = tabsRequestedForData.map((tabDataAndPayload) => tabDataAndPayload.tabId === sender.tab.id
-    //   ? { ...tabDataAndPayload, ...{ dataTable: message.dataTable } }
-    //   : tabDataAndPayload);
     tabsRequested = tabsRequested.map((tabDataAndPayload) => tabDataAndPayload.tabId === sender.tab.id
       ? { ...tabDataAndPayload, ...{ dataTable: payloadFromMessage(message) } }
       : tabDataAndPayload);
-
     var tabsStillWaitingForData = tabsRequested.filter((t) => t.dataTable == undefined);
+
     if (tabsStillWaitingForData.length === 0) {
       var activeTabData = tabsRequested.filter((t) => t.activeTab)[0];
 
-      console.log('tabsRequested');
-      console.log(tabsRequested);
-
-      //var cummulatedDataArray = tabsRequestedForData.map((t) => t.dataTable.rows);
-      let cummulatedDataRows = tabsRequested.map(dt => dt.dataTable);
-      cummulatedDataRows = cummulatedDataRows.reduce((r, n) => r.concat(n));
-      
-      //cummulatedDataRows = cummulatedDataRows.rows;
-      console.log('cummulatedDataRows');
-      console.log(cummulatedDataRows);
-      console.log('shape cummulatedDataRows');
-      console.log(getShape(cummulatedDataRows));
-
-      // var cummulatedDataArray = [];
-      // for (var i = 0; i < cummulatedDataRows.length; i++) {
-      //   let row = cummulatedDataRows[i];
-      //   cummulatedDataArray.push(row.cells);
-      // }
-
-      let cummulatedDataArray= cummulatedDataRows;
-
-      console.log(`cummulatedDataArray`);
-      console.log(cummulatedDataArray);
-      console.log('shape cummulatedDataArray');
-      console.log(getShape(cummulatedDataArray));
+      let cummulatedDataArray = tabsRequested.map(dt => dt.dataTable);
+      cummulatedDataArray = cummulatedDataArray.reduce((r, n) => r.concat(n));
 
       console.log(`Sending message to dialog on tab id ${activeTabData.tabId}`);
       const response = await chrome.tabs.sendMessage(
