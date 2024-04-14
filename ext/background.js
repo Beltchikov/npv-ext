@@ -59,7 +59,8 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
   if (message.target !== 'background') return;
 
   if (message.type === 'dataTable') {
-    console.log(`message of type dataTable received: ${message}`);
+    console.log(`message of type dataTable received:`);
+    console.log(message);
 
     tabsRequested = tabsRequested.map((tabDataAndPayload) => tabDataAndPayload.tabId === sender.tab.id
       ? { ...tabDataAndPayload, ...{ dataTable: payloadFromMessage(message) } }
