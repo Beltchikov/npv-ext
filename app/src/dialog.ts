@@ -1,8 +1,12 @@
 import shared from './shared';
 
+const idCollector = 'collector';
+var dialog:HTMLDialogElement;
 const idDialog = 'npvDialog';
 const idTableContainer = 'npvTableContainer';
 const idNpvTable = 'npvTable';
+const idCloseButton = 'npvButtonClose';
+const idCopyButton = 'npvButtonCopy';
 
 (function starter() {
     chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
@@ -21,24 +25,9 @@ const idNpvTable = 'npvTable';
 })();
 
 function attachDialog() {
-    const idCollector = 'collector';
-    const idCloseButton = 'npvButtonClose';
-    const idCopyButton = 'npvButtonCopy';
-
     var rootElement: HTMLDivElement = shared.getElementByTagAndId('div', idCollector);
-    const dialog = document.createElement('dialog');
+    dialog = document.createElement('dialog');
     dialog.id = idDialog;
-
-    const closeModal = () => {
-        dialog.close();
-    }
-
-    function copyToClipboard(): void {
-        var element = document.getElementById(idNpvTable);
-        navigator.clipboard.writeText(element?.outerHTML === undefined
-            ? 'undefined'
-            : element?.outerHTML);
-    }
 
     // inner html
     var innerHtml = `<h1>NPV</h1>
@@ -63,6 +52,17 @@ function attachDialog() {
     // show
     dialog.showModal();
     return dialog;
+}
+
+const closeModal = () => {
+    dialog.close();
+}
+
+function copyToClipboard(): void {
+    var element = document.getElementById(idNpvTable);
+    navigator.clipboard.writeText(element?.outerHTML === undefined
+        ? 'undefined'
+        : element?.outerHTML);
 }
 
 function addData(dataTable: Array<Array<string>>) {
@@ -132,7 +132,7 @@ function addData(dataTable: Array<Array<string>>) {
     tableContainer.appendChild(npvTable);
 }
 
-function doLogging(message:any, sender:any) {
+function doLogging(message: any, sender: any) {
     console.log(`message with target dialog received:`);
     console.log(message);
     console.log(`sender:`);
