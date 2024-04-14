@@ -1,7 +1,7 @@
 import shared from './shared';
 
 const idCollector = 'collector';
-var dialog:HTMLDialogElement;
+var dialog: HTMLDialogElement;
 const idDialog = 'npvDialog';
 const idTableContainer = 'npvTableContainer';
 const idNpvTable = 'npvTable';
@@ -26,21 +26,10 @@ const idCopyButton = 'npvButtonCopy';
 
 function attachDialog() {
     var rootElement: HTMLDivElement = shared.getElementByTagAndId('div', idCollector);
+    
     dialog = document.createElement('dialog');
     dialog.id = idDialog;
-
-    // inner html
-    var innerHtml = `<h1>NPV</h1>
-    <hr />
-    <hr id="dataStart" />
-    <div id=${idTableContainer}>`;
-
-    innerHtml += `</div>
-    <hr id="dataEnd" />
-    <button id=${idCloseButton} type="reset">Close</button>&nbsp;&nbsp;
-    <button id=${idCopyButton}>Copy</button>&nbsp;&nbsp;`
-
-    dialog.innerHTML = innerHtml;
+    dialog.innerHTML = innerHtmlOfDialog();
     rootElement.appendChild(dialog);
 
     // add functions
@@ -138,3 +127,18 @@ function doLogging(message: any, sender: any) {
     console.log(`sender:`);
     console.log(sender);
 }
+
+function innerHtmlOfDialog(): string {
+    var innerHtml = `<h1>NPV</h1>
+    <hr />
+    <hr id="dataStart" />
+    <div id=${idTableContainer}>`;
+
+    innerHtml += `</div>
+    <hr id="dataEnd" />
+    <button id=${idCloseButton} type="reset">Close</button>&nbsp;&nbsp;
+    <button id=${idCopyButton}>Copy</button>&nbsp;&nbsp;`
+
+    return innerHtml;
+}
+
