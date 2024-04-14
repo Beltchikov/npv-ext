@@ -43,17 +43,6 @@ function attachDialog() {
     return dialog;
 }
 
-const closeModal = () => {
-    dialog.close();
-}
-
-function copyToClipboard(): void {
-    var element = document.getElementById(idNpvTable);
-    navigator.clipboard.writeText(element?.outerHTML === undefined
-        ? 'undefined'
-        : element?.outerHTML);
-}
-
 function addData(dataTable: Array<Array<string>>) {
     const idNpvRow = 'npvRow';
     const idNpvCol = 'npvCol';
@@ -119,6 +108,17 @@ function addData(dataTable: Array<Array<string>>) {
     });
 
     tableContainer.appendChild(npvTable);
+}
+
+const closeModal = () => {
+    dialog.close();
+}
+
+function copyToClipboard(): void {
+    var element = document.getElementById(idNpvTable);
+    navigator.clipboard.writeText(element?.outerHTML === undefined
+        ? 'undefined'
+        : element?.outerHTML);
 }
 
 function doLogging(message: any, sender: any) {
