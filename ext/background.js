@@ -8,7 +8,7 @@ class TabDataAndPayload {
     this.dataTable = dataTable;
   }
 }
-var tabsRequestedForData = [];
+var tabsRequested = [];
 
 // entry point
 chrome.action.onClicked.addListener(async (currentTab) => {
@@ -18,11 +18,11 @@ chrome.action.onClicked.addListener(async (currentTab) => {
   // query tabs
   chrome.tabs.query({ lastFocusedWindow: true })
     .then(tabs => {
-      tabsRequestedForData = [];
+      tabsRequested = [];
       tabs.map((t) => {
         // TODO introduce class
         //tabsRequestedForData.push({ tabId: t.id, activeTab: t.active, dataTable: undefined })
-        tabsRequestedForData.push(new TabDataAndPayload(t.id, t.active, undefined));
+        tabsRequested.push(new TabDataAndPayload(t.id, t.active, undefined));
       });
 
       // execute parser.js for every tab
@@ -78,19 +78,19 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     // tabsRequestedForData = tabsRequestedForData.map((tabDataAndPayload) => tabDataAndPayload.tabId === sender.tab.id
     //   ? { ...tabDataAndPayload, ...{ dataTable: message.dataTable } }
     //   : tabDataAndPayload);
-    tabsRequestedForData = tabsRequestedForData.map((tabDataAndPayload) => tabDataAndPayload.tabId === sender.tab.id
+    tabsRequested = tabsRequested.map((tabDataAndPayload) => tabDataAndPayload.tabId === sender.tab.id
       ? { ...tabDataAndPayload, ...{ dataTable: payloadFromMessage(message) } }
       : tabDataAndPayload);
 
-    var tabsStillWaitingForData = tabsRequestedForData.filter((t) => t.dataTable == undefined);
+    var tabsStillWaitingForData = tabsRequested.filter((t) => t.dataTable == undefined);
     if (tabsStillWaitingForData.length === 0) {
-      var activeTabData = tabsRequestedForData.filter((t) => t.activeTab)[0];
+      var activeTabData = tabsRequested.filter((t) => t.activeTab)[0];
 
-      console.log('tabsRequestedForData');
-      console.log(tabsRequestedForData);
+      console.log('tabsRequested');
+      console.log(tabsRequested);
 
       //var cummulatedDataArray = tabsRequestedForData.map((t) => t.dataTable.rows);
-      let cummulatedDataRows = tabsRequestedForData.map(dt => dt.dataTable);
+      let cummulatedDataRows = tabsRequested.map(dt => dt.dataTable);
       cummulatedDataRows = cummulatedDataRows.reduce((r, n) => r.rows.concat(n).rows);
       cummulatedDataRows = cummulatedDataRows.rows;
       console.log('cummulatedDataRows');
