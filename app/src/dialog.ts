@@ -12,13 +12,10 @@ const idCloseButton = 'npvButtonClose';
 const idCopyButton = 'npvButtonCopy';
 
 (function starter() {
-    chrome.runtime.onMessage.addListener(function (message1, sender, sendResponse) {
-        if (message1.target !== 'dialog') return;
+    chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+        if (message.target !== 'dialog') return;
 
-        let messageTyped = message1 as MessageToDialog;
-        console.log(`messageTyped:`);
-        console.log(messageTyped);
-
+        let messageTyped = message as MessageToDialog;
         doLogging(messageTyped, sender);
 
         var dialogElement: HTMLDialogElement = Array.from(document.getElementsByTagName('dialog')).filter((e) => e.id === idDialog)[0];
