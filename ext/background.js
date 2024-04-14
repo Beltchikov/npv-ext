@@ -1,11 +1,21 @@
 import { loadScripts } from './loader.js';
 
 // service worker
+// class DataTable {
+//   constructor(payload, header, footer) {
+//     this.payload = payload;
+//     this.header = header;
+//     this.footer = footer;
+//   }
+// }
+
 class TabDataAndPayload {
-  constructor(tabId, activeTab, dataTable) {
+  constructor(tabId, activeTab, dataTable, header, footer) {
     this.tabId = tabId;
     this.activeTab = activeTab;
     this.dataTable = dataTable;
+    this.header = header;
+    this.footer = footer;
   }
 }
 var tabsRequested = [];
@@ -22,7 +32,7 @@ chrome.action.onClicked.addListener(async (currentTab) => {
       tabs.map((t) => {
         // TODO introduce class
         //tabsRequestedForData.push({ tabId: t.id, activeTab: t.active, dataTable: undefined })
-        tabsRequested.push(new TabDataAndPayload(t.id, t.active, undefined));
+        tabsRequested.push(new TabDataAndPayload(t.id, t.active, undefined, ["H1","H2"], "FOOTER"));
       });
 
       // execute parser.js for every tab
@@ -55,9 +65,15 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     if (tabsStillWaitingForData.length === 0) {
       var activeTabData = tabsRequested.filter((t) => t.activeTab)[0];
 
+      console.log('tabsRequested');
+      console.log(tabsRequested);
+
       let cummulatedDataArray = tabsRequested
         .map(dt => dt.dataTable)
         .reduce((r, n) => r.concat(n));
+
+      console.log('cummulatedDataArray');
+      console.log(cummulatedDataArray);
 
       console.log(`Sending message to dialog on tab id ${activeTabData.tabId}`);
       const response = await chrome.tabs.sendMessage(
@@ -84,9 +100,9 @@ const buildMessageToDialog = (context, cummulatedDataArray) => {
     target: 'dialog',
     type: 'cummulatedDataRows',
     context: context,
-    header:["Symbol", "TA"],
+    header: ["Symbol", "TA"],
     dataTable: cummulatedDataArray,
-    footer:"I am a footer",
+    footer: "I am a footer",
     sender: 'background'
   };
   return messageToDialog;
@@ -94,6 +110,7 @@ const buildMessageToDialog = (context, cummulatedDataArray) => {
 
 const payloadFromMessage = (message) => {
   return message.dataTable.rows.map(r => r.cells);
+  //return new DataTable(message.dataTable.rows.map(r => r.cells), ["H1", "H2"], "FOOTER");
 }
 
 // Example Promise.all
