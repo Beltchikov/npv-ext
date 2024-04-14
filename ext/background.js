@@ -38,23 +38,6 @@ chrome.action.onClicked.addListener(async (currentTab) => {
     .catch(e => console.log({ err: e.message }));
 });
 
-const buildMessageToDialog = (context, cummulatedDataArray) => {
-  var messageToDialog = {
-    target: 'dialog',
-    type: 'cummulatedDataRows',
-    context: context,
-    header:"I am a header",
-    dataTable: cummulatedDataArray,
-    footer:"I am a footer",
-    sender: 'background'
-  };
-  return messageToDialog;
-}
-
-const payloadFromMessage = (message) => {
-  return message.dataTable.rows.map(r => r.cells);
-}
-
 // message listener
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
@@ -95,6 +78,23 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
   sendResponse(true);
 });
+
+const buildMessageToDialog = (context, cummulatedDataArray) => {
+  var messageToDialog = {
+    target: 'dialog',
+    type: 'cummulatedDataRows',
+    context: context,
+    header:"I am a header",
+    dataTable: cummulatedDataArray,
+    footer:"I am a footer",
+    sender: 'background'
+  };
+  return messageToDialog;
+}
+
+const payloadFromMessage = (message) => {
+  return message.dataTable.rows.map(r => r.cells);
+}
 
 // Example Promise.all
 // if (message === 'get-tabs-info') {
