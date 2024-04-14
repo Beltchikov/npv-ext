@@ -1,21 +1,12 @@
 import { loadScripts } from './loader.js';
 
 // service worker
-// class DataTable {
-//   constructor(payload, header, footer) {
-//     this.payload = payload;
-//     this.header = header;
-//     this.footer = footer;
-//   }
-// }
 
 class TabDataAndPayload {
-  constructor(tabId, activeTab, dataTable, header, footer) {
+  constructor(tabId, activeTab, dataTable) {
     this.tabId = tabId;
     this.activeTab = activeTab;
     this.dataTable = dataTable;
-    this.header = header;
-    this.footer = footer;
   }
 }
 var tabsRequested = [];
@@ -29,11 +20,7 @@ chrome.action.onClicked.addListener(async (currentTab) => {
   chrome.tabs.query({ lastFocusedWindow: true })
     .then(tabs => {
       tabsRequested = [];
-      tabs.map((t) => {
-        // TODO introduce class
-        //tabsRequestedForData.push({ tabId: t.id, activeTab: t.active, dataTable: undefined })
-        tabsRequested.push(new TabDataAndPayload(t.id, t.active, undefined, ["H1","H2"], "FOOTER"));
-      });
+      tabs.map(t => tabsRequested.push(new TabDataAndPayload(t.id, t.active, undefined)));
 
       // execute parser.js for every tab
       for (var i = 0; i < tabs.length; i++) {
