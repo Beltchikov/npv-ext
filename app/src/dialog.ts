@@ -90,7 +90,7 @@ function addData(dataTable: Array<Array<string>>) {
     /////////////////////////////////////
 
 
-    console.log('shape dataTable');
+    console.log('shape dataTable:');
     console.log(shared.getShape(dataTable));
 
     dataTable.forEach((row: Array<string>, ri) => {
