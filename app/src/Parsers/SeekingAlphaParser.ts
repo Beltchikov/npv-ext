@@ -29,7 +29,9 @@ export class SeekingAlphaParser implements IParser{
         //return ([eps, div, roe, beta]).toString().split(',');
     
         var resultRow = ([eps, div, roe, beta]).map((e) => this.formatString(e, 2));
-        return new TabData([resultRow]);
+        let header = ["EPS","DIV","ROE","Beta"]
+        let footer = "SeekingAlpha Footer";
+        return new TabData([resultRow], header, footer);
     }
 
     private getDataViaCommonParentCardItem(targetElementText: string): string {

@@ -25,7 +25,9 @@ export class InvestingParser implements IParser{
     
         //return ([symbol, taBefore, ta, earnBefore, earn]).toString().split(',');
         //return ([symbol, ta]).toString().split(',');
-        return new TabData([[symbol, ta]]);
+        let header = ["Symbol","TA"]
+        let footer = "SeekingAlpha Footer";
+        return new TabData([[symbol, ta]], header, footer);
     }
 
     private getSymbol(): string {
