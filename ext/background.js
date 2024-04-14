@@ -50,27 +50,7 @@ const buildMessageToDialog = (context, cummulatedDataArray) => {
 }
 
 const payloadFromMessage = (message) => {
-
-  // if shape.length===3
-  // 
-
-  console.log('message.dataTable');
-  console.log(message.dataTable);
-
-  //return message.dataTable;
-  let rows = message.dataTable.rows;
-  //return rows;
-
-  let array2D = rows.map(r => r.cells);
-  return array2D
-}
-
-function getShape(matrix, dimensions = []) {
-  // displays max value in case of jagged array
-  if (Array.isArray(matrix)) {
-    dimensions.push(matrix.length);
-    return getShape(matrix[0], dimensions);
-  } else return dimensions;
+  return message.dataTable.rows.map(r => r.cells);
 }
 
 // message listener
@@ -141,4 +121,14 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 //     })
 //     .catch(e => sendResponse({ err: e.message }));
 //   return true;
+// }
+
+// Example Shape of multidimensional array
+
+// function getShape(matrix, dimensions = []) {
+//   // displays max value in case of jagged array
+//   if (Array.isArray(matrix)) {
+//     dimensions.push(matrix.length);
+//     return getShape(matrix[0], dimensions);
+//   } else return dimensions;
 // }
