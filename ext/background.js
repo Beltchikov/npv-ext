@@ -43,7 +43,9 @@ const buildMessageToDialog = (context, cummulatedDataArray) => {
     target: 'dialog',
     type: 'cummulatedDataRows',
     context: context,
+    header:"I am a header",
     dataTable: cummulatedDataArray,
+    footer:"I am a footer",
     sender: 'background'
   };
   return messageToDialog;
