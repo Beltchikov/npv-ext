@@ -6,6 +6,7 @@ var dialog: HTMLDialogElement;
 const idDialog = 'npvDialog';
 const idHeaderContainer = 'npvHeaderContainer';
 const idTableContainer = 'npvTableContainer';
+const idNpvHeaderTable = 'npvHeaderTable';
 const idNpvTable = 'npvTable';
 const idFooterContainer = 'npvFooterContainer';
 const idCloseButton = 'npvButtonClose';
@@ -24,13 +25,14 @@ const idCopyButton = 'npvButtonCopy';
         }
 
         addData(messageTyped.dataTable)
+        addHeader(messageTyped.header)
         sendResponse(true);
     });
 })();
 
 function attachDialog() {
     var rootElement: HTMLDivElement = shared.getElementByTagAndId('div', idCollector);
-    
+
     dialog = document.createElement('dialog');
     dialog.id = idDialog;
     dialog.innerHTML = innerHtmlOfDialog();
@@ -112,6 +114,30 @@ function addData(dataTable: Array<Array<string>>) {
     });
 
     tableContainer.appendChild(npvTable);
+}
+
+function addHeader(headerArray: Array<string>) {
+    const idNpvHeader = 'npvHeader';
+    const idNpvCol = 'npvCol';
+
+    var headerContainer: HTMLDivElement = shared.getElementByTagAndId('div', idHeaderContainer);
+    var npvHeaderTable: HTMLTableElement = shared.getElementByTagAndIdOrCreate('table', idNpvHeaderTable);
+
+    console.log('shape headerArray:');
+    console.log(shared.getShape(headerArray));
+
+    var npvHeaderRow: HTMLTableRowElement = shared.getElementByTagAndIdOrCreate('tr', idNpvHeader);
+
+    headerArray.forEach((col, ci) => {
+
+        let npvCol: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvHeader + idNpvCol + ci);
+        npvCol.innerHTML = col;
+        npvHeaderRow.appendChild(npvCol);
+
+    });
+
+    npvHeaderTable.appendChild(npvHeaderRow);
+    headerContainer.appendChild(npvHeaderTable);
 }
 
 const closeModal = () => {

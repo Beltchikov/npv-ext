@@ -84,7 +84,7 @@ const buildMessageToDialog = (context, cummulatedDataArray) => {
     target: 'dialog',
     type: 'cummulatedDataRows',
     context: context,
-    header:"I am a header",
+    header:["Symbol", "TA"],
     dataTable: cummulatedDataArray,
     footer:"I am a footer",
     sender: 'background'
