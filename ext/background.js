@@ -54,7 +54,15 @@ const payloadFromMessage = (message) => {
   // if shape.length===3
   // 
 
-  return message.dataTable;
+  console.log('message.dataTable');
+  console.log(message.dataTable);
+
+  //return message.dataTable;
+  let rows = message.dataTable.rows;
+  //return rows;
+
+  let array2D = rows.map(r=>r.cells);
+  return array2D
 }
 
 function getShape(matrix, dimensions = []) {
@@ -72,8 +80,8 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
   if (message.type === 'dataTable') {
 
-    console.log('data table from tab');
-    console.log(message.dataTable);
+    console.log('message');
+    console.log(message);
 
     // tabsRequestedForData = tabsRequestedForData.map((tabDataAndPayload) => tabDataAndPayload.tabId === sender.tab.id
     //   ? { ...tabDataAndPayload, ...{ dataTable: message.dataTable } }
@@ -91,16 +99,21 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
       //var cummulatedDataArray = tabsRequestedForData.map((t) => t.dataTable.rows);
       let cummulatedDataRows = tabsRequested.map(dt => dt.dataTable);
-      cummulatedDataRows = cummulatedDataRows.reduce((r, n) => r.rows.concat(n).rows);
-      cummulatedDataRows = cummulatedDataRows.rows;
+      cummulatedDataRows = cummulatedDataRows.reduce((r, n) => r.concat(n));
+      
+      //cummulatedDataRows = cummulatedDataRows.rows;
       console.log('cummulatedDataRows');
       console.log(cummulatedDataRows);
+      console.log('shape cummulatedDataRows');
+      console.log(getShape(cummulatedDataRows));
 
-      var cummulatedDataArray = [];
-      for (var i = 0; i < cummulatedDataRows.length; i++) {
-        let row = cummulatedDataRows[i];
-        cummulatedDataArray.push(row.cells);
-      }
+      // var cummulatedDataArray = [];
+      // for (var i = 0; i < cummulatedDataRows.length; i++) {
+      //   let row = cummulatedDataRows[i];
+      //   cummulatedDataArray.push(row.cells);
+      // }
+
+      let cummulatedDataArray= cummulatedDataRows;
 
       console.log(`cummulatedDataArray`);
       console.log(cummulatedDataArray);
