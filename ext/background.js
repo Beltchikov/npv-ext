@@ -89,8 +89,9 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     if (tabsStillWaitingForData.length === 0) {
       var activeTabData = tabsRequested.filter((t) => t.activeTab)[0];
 
-      let cummulatedDataArray = tabsRequested.map(dt => dt.dataTable);
-      cummulatedDataArray = cummulatedDataArray.reduce((r, n) => r.concat(n));
+      let cummulatedDataArray = tabsRequested
+        .map(dt => dt.dataTable)
+        .reduce((r, n) => r.concat(n));
 
       console.log(`Sending message to dialog on tab id ${activeTabData.tabId}`);
       const response = await chrome.tabs.sendMessage(
