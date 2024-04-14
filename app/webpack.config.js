@@ -6,7 +6,7 @@ module.exports = {
     dialog: './src/dialog.ts',
     header: './src/header.ts',
     shared: './src/shared.ts',
-    parser: './src/Parser.ts',
+    parser: './src/Parsers/Parser.ts',
     seekingAlphaParser: './src/Parsers/SeekingAlphaParser.ts',
     investingParser: './src/Parsers/InvestingParser.ts',
   },

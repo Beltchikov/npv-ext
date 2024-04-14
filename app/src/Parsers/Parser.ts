@@ -1,4 +1,4 @@
-import { parserMap } from "./Parsers/parserMap";
+import { parserMap } from "./parserMap";
 
 // To update the extension for a nes hostname:
 //  1. Write new parser. 
