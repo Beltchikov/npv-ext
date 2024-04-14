@@ -1,5 +1,5 @@
-import { MessageToDialog } from './Dialog/MessageToDialog';
-import shared from './shared';
+import { MessageToDialog } from './MessageToDialog';
+import shared from '../shared';
 
 const idCollector = 'collector';
 var dialog: HTMLDialogElement;

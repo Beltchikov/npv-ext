@@ -3,7 +3,7 @@ const path = require("path");
 module.exports = {
   entry: {
     content: './src/index.tsx',
-    dialog: './src/dialog.ts',
+    dialog: './src/Dialog/dialog.ts',
     header: './src/header.ts',
     shared: './src/shared.ts',
     parser: './src/Parsers/Parser.ts',
