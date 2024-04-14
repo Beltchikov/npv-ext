@@ -90,25 +90,33 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
       console.log(tabsRequestedForData);
 
       //var cummulatedDataArray = tabsRequestedForData.map((t) => t.dataTable.rows);
-      let cummulatedDataRows = tabsRequestedForData.map(dt => dt.dataTable.rows);
+      let cummulatedDataRows = tabsRequestedForData.map(dt => dt.dataTable);
+      cummulatedDataRows = cummulatedDataRows.reduce((r,n)=>r.rows.concat(n).rows);
+      cummulatedDataRows = cummulatedDataRows.rows;
+      console.log('cummulatedDataRows');
+      console.log(cummulatedDataRows);
 
-      var cummulatedDataArray = [[], []];
+      var cummulatedDataArray = [];
       for (var i = 0; i < cummulatedDataRows.length; i++) {
         let row = cummulatedDataRows[i];
 
         console.log('row');
         console.log(row);
 
-        let cells = [];
-        cells = row.map(r=>r.cells);
+        // let cells = [];
+        // cells = row.map(r => r.cells);
 
-        console.log('cells');
-        console.log(cells);
+        // console.log('cells');
+        // console.log(cells);
 
-        for (var ii = 0; ii < cells.length; ii++) {
-          let cell = cells[ii];
-          cummulatedDataArray[i][ii] = cell;
-        }
+        console.log(`cummulatedDataArray0`);
+        console.log(cummulatedDataArray);
+
+        cummulatedDataArray.push(row.cells);
+        // for (var ii = 0; ii < cells.length; ii++) {
+        //   let cell = cells[ii];
+        //   cummulatedDataArray.push()
+        // }
       }
 
 
