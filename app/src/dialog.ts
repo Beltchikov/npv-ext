@@ -3,8 +3,10 @@ import shared from './shared';
 const idCollector = 'collector';
 var dialog: HTMLDialogElement;
 const idDialog = 'npvDialog';
+const idHeaderContainer = 'npvHeaderContainer';
 const idTableContainer = 'npvTableContainer';
 const idNpvTable = 'npvTable';
+const idFooterContainer = 'npvFooterContainer';
 const idCloseButton = 'npvButtonClose';
 const idCopyButton = 'npvButtonCopy';
 
@@ -131,11 +133,14 @@ function doLogging(message: any, sender: any) {
 function innerHtmlOfDialog(): string {
     var innerHtml = `<h1>NPV</h1>
     <hr />
+    <div id=${idHeaderContainer}></div>
     <hr id="dataStart" />
     <div id=${idTableContainer}>`;
 
     innerHtml += `</div>
     <hr id="dataEnd" />
+    <div id=${idFooterContainer}></div>
+    <hr />
     <button id=${idCloseButton} type="reset">Close</button>&nbsp;&nbsp;
     <button id=${idCopyButton}>Copy</button>&nbsp;&nbsp;`
 
