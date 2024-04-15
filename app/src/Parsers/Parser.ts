@@ -17,7 +17,7 @@ import { parserMap } from "./parserMap";
     await chrome.runtime.sendMessage({
         target: 'background',
         context: window.location.hostname,
-        type: 'dataTable',
+        type: 'tabData',
         dataTable: tabData,
         sender: 'parser'
     });
