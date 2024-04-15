@@ -28,12 +28,13 @@ export class TwitterParser implements IParser {
                 let parentsNo13 = timeElements.map(t => t?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement
                     ?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement
                     ?.parentElement?.parentElement?.parentElement)
-                
-                let tweetTextDivs = parentsNo13.map(p=>p?.querySelector("div[data-testid='tweetText"))
-                let tweetTextSpans = tweetTextDivs.map(p=>p?.querySelector("span"))
-                
+
+                let tweetTextDivs = parentsNo13.map(p => p?.querySelector("div[data-testid='tweetText"))
+                let tweetTextSpans = tweetTextDivs.map(p => p?.querySelector("span"))
+
                 console.log("tweetTextSpans");
                 tweetTextSpans.forEach(p => console.log(p?.innerHTML))
+                //
 
                 allTimeElements = allTimeElements.concat(timeElements);
 
@@ -51,17 +52,16 @@ export class TwitterParser implements IParser {
                         console.log(`24 HOURS PERIOD PROCESSED ${earliestTimestamp}`);
 
                     var datesOfTweets = allTimeElements.map((e: any) => {
-                        var objDate = new Date(e.dateTime);
-                        return objDate.toLocaleDateString('de') + "T" + objDate.toLocaleTimeString('de')
+                        let objDate = new Date(e.dateTime);
+                        let strDate = objDate.toLocaleDateString('de') + "T" + objDate.toLocaleTimeString('de');
+                        return [strDate, "User", "Text"]
                     });
                     console.log('datesOfTweets');
                     console.log(datesOfTweets);
 
-                    let allData: string[][] = datesOfTweets.map<string[]>(d => [d, "TODO1", "TODO2"]);
                     let header = ["Time", "User", "Text"]
                     let footer = "";
-
-                    resolve(new TabData(allData, header, footer));
+                    resolve(new TabData(datesOfTweets, header, footer));
                 }
 
             }, timeout);
