@@ -25,11 +25,14 @@ export class TwitterParser implements IParser {
                 if (timeElements.length === 0) throw new Error('No time elements found');
 
                 //
-                var commonParents = timeElements.map(t => t?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement
+                let parentsNo13 = timeElements.map(t => t?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement
                     ?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement
                     ?.parentElement?.parentElement?.parentElement)
-                console.log("commonParents");
-                commonParents.forEach(p => console.log(p?.innerHTML))
+                
+                let tweetTextDivs = parentsNo13.map(p=>p?.querySelector("div[data-testid='tweetText"))
+                
+                console.log("tweetTextDivs");
+                tweetTextDivs.forEach(p => console.log(p?.innerHTML))
 
                 allTimeElements = allTimeElements.concat(timeElements);
 
