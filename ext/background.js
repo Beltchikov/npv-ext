@@ -3,10 +3,10 @@ import { loadScripts } from './loader.js';
 // service worker
 
 class TabDataAndPayload {
-  constructor(tabId, activeTab, dataTable) {
+  constructor(tabId, activeTab, tabData) {
     this.tabId = tabId;
     this.activeTab = activeTab;
-    this.dataTable = dataTable;
+    this.tabData = tabData;
   }
 }
 var tabsRequested = [];
@@ -45,9 +45,9 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     console.log(message);
 
     tabsRequested = tabsRequested.map((tabDataAndPayload) => tabDataAndPayload.tabId === sender.tab.id
-      ? { ...tabDataAndPayload, ...{ dataTable: payloadFromMessage(message) } }
+      ? { ...tabDataAndPayload, ...{ tabData: payloadFromMessage(message) } }
       : tabDataAndPayload);
-    var tabsStillWaitingForData = tabsRequested.filter((t) => t.dataTable == undefined);
+    var tabsStillWaitingForData = tabsRequested.filter((t) => t.tabData == undefined);
 
     if (tabsStillWaitingForData.length === 0) {
       var activeTabData = tabsRequested.filter((t) => t.activeTab)[0];
@@ -56,7 +56,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
       console.log(tabsRequested);
 
       let cummulatedDataArray = tabsRequested
-        .map(dt => dt.dataTable)
+        .map(dt => dt.tabData)
         .reduce((r, n) => r.concat(n));
 
       console.log('cummulatedDataArray');
@@ -87,17 +87,16 @@ const buildMessageToDialog = (message, cummulatedDataArray) => {
     target: 'dialog',
     type: 'cummulatedDataRows',
     context: message.context,
-    header: message.dataTable.header,
+    header: message.tabData.header,
     dataTable: cummulatedDataArray,
-    footer: message.dataTable.footer,
+    footer: message.tabData.footer,
     sender: 'background'
   };
   return messageToDialog;
 }
 
 const payloadFromMessage = (message) => {
-  return message.dataTable.rows.map(r => r.cells);
-  //return new DataTable(message.dataTable.rows.map(r => r.cells), ["H1", "H2"], "FOOTER");
+  return message.tabData.rows.map(r => r.cells);
 }
 
 // Example Promise.all

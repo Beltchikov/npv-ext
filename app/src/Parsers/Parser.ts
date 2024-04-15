@@ -18,7 +18,7 @@ import { parserMap } from "./parserMap";
         target: 'background',
         context: window.location.hostname,
         type: 'tabData',
-        dataTable: tabData,
+        tabData: tabData,
         sender: 'parser'
     });
 })();
