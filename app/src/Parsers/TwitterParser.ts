@@ -29,9 +29,10 @@ export class TwitterParser implements IParser {
                     ?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement
                     ?.parentElement?.parentElement?.parentElement)
 
-                let tweetTextDivs = parentsNo13.map(p => p?.querySelector("div[data-testid='tweetText"))
-                let tweetTextSpans = tweetTextDivs.map(p => p?.querySelector("span"))
-
+                let tweetTextSpans = parentsNo13
+                    .map(p => p?.querySelector("div[data-testid='tweetText"))
+                    .map(p => p?.querySelector("span"));
+                
                 console.log("tweetTextSpans");
                 tweetTextSpans.forEach(p => console.log(p?.innerHTML))
                 //
