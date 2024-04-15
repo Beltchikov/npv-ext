@@ -33,7 +33,7 @@ export class TwitterParser implements IParser {
 
                     if (i === this.maxTweetCount) console.log(`LIMIT of ${this.maxTweetCount} reached`);
                     if (earliestTimestamp <= timestampOfEarliestTweet)
-                        console.log(`24 HOURS PERIOD PROCESSED ${earliestTimestamp}`);
+                        console.log(`${hoursAgo} HOURS PERIOD PROCESSED ${earliestTimestamp}`);
 
                     var datesOfTweets = allTimeElements.map((t: any) => {
                         let objDate = new Date(t.dateTime);
