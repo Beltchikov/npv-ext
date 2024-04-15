@@ -30,9 +30,10 @@ export class TwitterParser implements IParser {
                     ?.parentElement?.parentElement?.parentElement)
                 
                 let tweetTextDivs = parentsNo13.map(p=>p?.querySelector("div[data-testid='tweetText"))
+                let tweetTextSpans = tweetTextDivs.map(p=>p?.querySelector("span"))
                 
-                console.log("tweetTextDivs");
-                tweetTextDivs.forEach(p => console.log(p?.innerHTML))
+                console.log("tweetTextSpans");
+                tweetTextSpans.forEach(p => console.log(p?.innerHTML))
 
                 allTimeElements = allTimeElements.concat(timeElements);
 
