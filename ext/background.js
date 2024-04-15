@@ -65,18 +65,14 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
       console.log(`Sending message to dialog on tab id ${activeTabData.tabId}`);
       const response = await chrome.tabs.sendMessage(
         activeTabData.tabId,
-        buildMessageToDialog(message, cummulatedDataArray ));
+        buildMessageToDialog(message, cummulatedDataArray));
 
       if (response) console.log(`Message to dialog on tab id ${activeTabData.tabId} successfully sent.`)
       else console.log(`Error sending message to dialog on tab id ${activeTabData.tabId}.`)
     };
   }
-  else if (message.type === 'header') {
-    console.log(`Header receied:`);
-    console.log(message);
-  }
   else {
-    console.log(`Not implemented for message type ${message.type}`);
+    throw new Error(`Not implemented for message type ${message.type}`);
   }
 
   sendResponse(true);

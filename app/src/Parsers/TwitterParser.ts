@@ -3,52 +3,35 @@ import IParser from "./IParser";
 import { TabData } from "./TabData";
 
 export class TwitterParser implements IParser {
+    maxTweetCount = 1000;
+    timeout = 1000;
 
     async getTabDataAsync(): Promise<TabData> {
         return this.getTimeTagsAsync(24);
     }
 
     getTimeTagsAsync(hoursAgo: number): Promise<TabData> {
-
-        // TODO try catch and reject
-
-        let promise = new Promise<TabData>((resolve, reject) => {
+        return new Promise<TabData>((resolve, reject) => {
             var timestampOfEarliestTweet = shared.addHoursToDate(new Date(Date.now()), -1 * hoursAgo)
 
             var allTimeElements: Array<HTMLTimeElement> = [];
-            var timeout = 1000;
             var i = 0;
-            var maxTweetCount = 10;
 
             var intervalId = setInterval(() => {
                 const timeElements: Array<HTMLTimeElement> = shared.getElementsByTag('time');
                 if (timeElements.length === 0) throw new Error('No time elements found');
 
-                //
-                let parentsNo13 = timeElements.map(t => t?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement
-                    ?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement
-                    ?.parentElement?.parentElement?.parentElement)
-
-                let tweetTextSpans = parentsNo13
-                    .map(p => p?.querySelector("div[data-testid='tweetText"))
-                    .map(p => p?.querySelector("span"));
-                
-                console.log("tweetTextSpans");
-                tweetTextSpans.forEach(p => console.log(p?.innerHTML))
-                //
-
                 allTimeElements = allTimeElements.concat(timeElements);
-
                 const lastElement: HTMLTimeElement = timeElements[timeElements.length - 1];
                 const earliestTimestamp = new Date(lastElement.dateTime);
-                console.log(this.buildExtractingDataMessage(hoursAgo, i, maxTweetCount, earliestTimestamp));
+                console.log(this.buildExtractingDataMessage(hoursAgo, i, this.maxTweetCount, earliestTimestamp));
 
                 lastElement.scrollIntoView({ behavior: "smooth", block: "end", inline: "center" });
                 i++;
-                if (i === maxTweetCount || earliestTimestamp <= timestampOfEarliestTweet) {
+                if (i === this.maxTweetCount || earliestTimestamp <= timestampOfEarliestTweet) {
                     clearInterval(intervalId);
 
-                    if (i === maxTweetCount) console.log(`LIMIT of ${maxTweetCount} reached`);
+                    if (i === this.maxTweetCount) console.log(`LIMIT of ${this.maxTweetCount} reached`);
                     if (earliestTimestamp <= timestampOfEarliestTweet)
                         console.log(`24 HOURS PERIOD PROCESSED ${earliestTimestamp}`);
 
@@ -56,27 +39,26 @@ export class TwitterParser implements IParser {
                         let objDate = new Date(t.dateTime);
                         let strDate = objDate.toLocaleDateString('de') + "T" + objDate.toLocaleTimeString('de');
 
-                        let parentsNo13=t?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement
-                        ?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement
-                        ?.parentElement?.parentElement?.parentElement;
+                        let parentsNo13 = t?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement
+                            ?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement
+                            ?.parentElement?.parentElement?.parentElement;
 
                         let divTweetText = parentsNo13.querySelector("div[data-testid='tweetText");
                         let spanTweetText = divTweetText.querySelector("span");
 
-                        return [strDate, "User", spanTweetText.innerHTML]
+                        return [strDate, this.getUser(), spanTweetText.innerHTML]
                     });
-                    console.log('datesOfTweets');
-                    console.log(datesOfTweets);
 
                     let header = ["Time", "User", "Text"]
                     let footer = "";
-                    resolve(new TabData(datesOfTweets, header, footer));
+                    try {
+                        resolve(new TabData(datesOfTweets, header, footer));
+                    }
+                    catch (e) {reject(e);}
                 }
 
-            }, timeout);
+            }, this.timeout);
         });
-
-        return promise;
     }
 
     private buildExtractingDataMessage = (hoursAgo: number, iterationIdx: number, maxTweetCount: number, earliestTimestamp: Date) => {
@@ -90,6 +72,10 @@ export class TwitterParser implements IParser {
         return "Message User Time";
     }
 
+    private getUser(): string {
+        let url = window.location.href;
+        return "@" + url.substring(url.lastIndexOf('/') + 1)
+    }
 }
 
 

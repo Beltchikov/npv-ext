@@ -4,7 +4,6 @@ module.exports = {
   entry: {
     content: './src/index.tsx',
     dialog: './src/Dialog/dialog.ts',
-    header: './src/header.ts',
     shared: './src/shared.ts',
     parser: './src/Parsers/Parser.ts',
     seekingAlphaParser: './src/Parsers/SeekingAlphaParser.ts',
