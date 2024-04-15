@@ -56,46 +56,6 @@ function addData(dataTable: Array<Array<string>>) {
     var tableContainer: HTMLDivElement = shared.getElementByTagAndId('div', idTableContainer);
     var npvTable: HTMLTableElement = shared.getElementByTagAndIdOrCreate('table', idNpvTable);
 
-    // // TODO header and footer should come with the message
-    // if (shared.localHostOrInvesting()) {
-    //     //dataTable.unshift(Array.from(['Symbol', 'TA']));
-    //     let headerRow: HTMLTableRowElement = shared.getElementByTagAndIdOrCreate('tr', idNpvRow + "H");
-
-    //     let headerCol1: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + "H" + 1);
-    //     headerCol1.innerHTML = "Symbol";
-    //     let headerCol2: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + "H" + 2);
-    //     headerCol2.innerHTML = "TA";
-    //     headerRow.appendChild(headerCol1);
-    //     headerRow.appendChild(headerCol2);
-
-    //     npvTable.appendChild(headerRow);
-
-    // }
-    // else if (shared.localHostOrTwitter()) {
-    //     //dataTable.unshift(['Message', 'User', 'Date']);
-
-    //     let headerRow: HTMLTableRowElement = shared.getElementByTagAndIdOrCreate('tr', idNpvRow + "H");
-
-    //     let headerCol1: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + "H" + 1);
-    //     headerCol1.innerHTML = "Message";
-    //     let headerCol2: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + "H" + 2);
-    //     headerCol2.innerHTML = "User";
-    //     let headerCol3: HTMLTableCellElement = shared.getElementByTagAndIdOrCreate('td', idNpvRow + idNpvCol + "H" + 3);
-    //     headerCol3.innerHTML = "Date";
-
-    //     headerRow.appendChild(headerCol1);
-    //     headerRow.appendChild(headerCol2);
-    //     headerRow.appendChild(headerCol3);
-
-    //     npvTable.appendChild(headerRow);
-    // }
-    // else {
-    //     dataTable.unshift(['EPS', 'DIV', 'ROE', 'Beta']);
-    //     dataTable.push([`Dividend Frequency: ${divFrequency()},,,`]);
-    // }
-    /////////////////////////////////////
-
-
     console.log('shape dataTable:');
     console.log(shared.getShape(dataTable));
 
