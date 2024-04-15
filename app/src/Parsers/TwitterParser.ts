@@ -4,7 +4,7 @@ import { TabData } from "./TabData";
 
 export class TwitterParser implements IParser {
 
-    async getDataRowAsync(): Promise<TabData> {
+    async getTabDataAsync(): Promise<TabData> {
         return this.getTimeTagsAsync(24);
     }
 

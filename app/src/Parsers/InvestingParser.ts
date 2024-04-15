@@ -4,7 +4,7 @@ import { TabData } from "./TabData";
 
 export class InvestingParser implements IParser{
     
-    getDataRowAsync(): Promise<TabData> {
+    getTabDataAsync(): Promise<TabData> {
        return new Promise((resolve, reject)=>{
         try{
         resolve(this.getDataRow());
