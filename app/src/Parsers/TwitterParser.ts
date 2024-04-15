@@ -52,10 +52,18 @@ export class TwitterParser implements IParser {
                     if (earliestTimestamp <= timestampOfEarliestTweet)
                         console.log(`24 HOURS PERIOD PROCESSED ${earliestTimestamp}`);
 
-                    var datesOfTweets = allTimeElements.map((e: any) => {
-                        let objDate = new Date(e.dateTime);
+                    var datesOfTweets = allTimeElements.map((t: any) => {
+                        let objDate = new Date(t.dateTime);
                         let strDate = objDate.toLocaleDateString('de') + "T" + objDate.toLocaleTimeString('de');
-                        return [strDate, "User", "Text"]
+
+                        let parentsNo13=t?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement
+                        ?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement
+                        ?.parentElement?.parentElement?.parentElement;
+
+                        let divTweetText = parentsNo13.querySelector("div[data-testid='tweetText");
+                        let spanTweetText = divTweetText.querySelector("span");
+
+                        return [strDate, "User", spanTweetText.innerHTML]
                     });
                     console.log('datesOfTweets');
                     console.log(datesOfTweets);
