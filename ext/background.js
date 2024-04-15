@@ -65,7 +65,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
       console.log(`Sending message to dialog on tab id ${activeTabData.tabId}`);
       const response = await chrome.tabs.sendMessage(
         activeTabData.tabId,
-        buildMessageToDialog(message.context, cummulatedDataArray));
+        buildMessageToDialog(message, cummulatedDataArray ));
 
       if (response) console.log(`Message to dialog on tab id ${activeTabData.tabId} successfully sent.`)
       else console.log(`Error sending message to dialog on tab id ${activeTabData.tabId}.`)
@@ -82,14 +82,14 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
   sendResponse(true);
 });
 
-const buildMessageToDialog = (context, cummulatedDataArray) => {
+const buildMessageToDialog = (message, cummulatedDataArray) => {
   var messageToDialog = {
     target: 'dialog',
     type: 'cummulatedDataRows',
-    context: context,
-    header: ["Symbol", "TA"],
+    context: message.context,
+    header: message.dataTable.header,
     dataTable: cummulatedDataArray,
-    footer: "I am a footer",
+    footer: message.dataTable.footer,
     sender: 'background'
   };
   return messageToDialog;
