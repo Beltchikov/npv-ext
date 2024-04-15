@@ -26,7 +26,7 @@ export class InvestingParser implements IParser{
         //return ([symbol, taBefore, ta, earnBefore, earn]).toString().split(',');
         //return ([symbol, ta]).toString().split(',');
         let header = ["Symbol","TA"]
-        let footer = "Investing Footer";
+        let footer = "";
         return new TabData([[symbol, ta]], header, footer);
     }
 

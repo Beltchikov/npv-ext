@@ -26,6 +26,7 @@ const idCopyButton = 'npvButtonCopy';
 
         addData(messageTyped.dataTable)
         addHeader(messageTyped.header)
+        addFooter(messageTyped.footer)
         sendResponse(true);
     });
 })();
@@ -98,6 +99,15 @@ function addHeader(headerArray: Array<string>) {
 
     npvHeaderTable.appendChild(npvHeaderRow);
     headerContainer.appendChild(npvHeaderTable);
+}
+
+function addFooter(footer: string) {
+    const idNpvFooter = 'npvFooter';
+
+    var footerContainer: HTMLDivElement = shared.getElementByTagAndId('div', idFooterContainer);
+    var npvFooter: HTMLDivElement = shared.getElementByTagAndIdOrCreate('div', idNpvFooter);
+    npvFooter.innerHTML = footer;
+    footerContainer.appendChild(npvFooter);
 }
 
 const closeModal = () => {

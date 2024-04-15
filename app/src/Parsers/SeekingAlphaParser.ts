@@ -30,7 +30,7 @@ export class SeekingAlphaParser implements IParser{
     
         var resultRow = ([eps, div, roe, beta]).map((e) => this.formatString(e, 2));
         let header = ["EPS","DIV","ROE","Beta"]
-        let footer = "SeekingAlpha Footer";
+        let footer = `Div Frequency: ${this.divFrequency()}`;
         return new TabData([resultRow], header, footer);
     }
 

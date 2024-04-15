@@ -47,7 +47,7 @@ export class TwitterParser implements IParser {
     
                     let allData: string[][] = datesOfTweets.map<string[]>(d => [d, "TODO1", "TODO2"] );
                     let header = ["Time","User","Text"]
-                    let footer = "Twitter Footer";
+                    let footer = "";
     
                     resolve(new TabData(allData, header, footer));
                 }
