@@ -13,10 +13,9 @@ export class TwitterParser implements IParser {
     getTimeTagsAsync(hoursAgo: number): Promise<TabData> {
         return new Promise<TabData>((resolve, reject) => {
             var timestampOfEarliestTweet = shared.addHoursToDate(new Date(Date.now()), -1 * hoursAgo)
-
+            
             var allTimeElements: Array<HTMLTimeElement> = [];
             var i = 0;
-
             var intervalId = setInterval(() => {
                 const timeElements: Array<HTMLTimeElement> = shared.getElementsByTag('time');
                 if (timeElements.length === 0) throw new Error('No time elements found');
@@ -54,7 +53,7 @@ export class TwitterParser implements IParser {
                     try {
                         resolve(new TabData(datesOfTweets, header, footer));
                     }
-                    catch (e) {reject(e);}
+                    catch (e) { reject(e); }
                 }
 
             }, this.timeout);
