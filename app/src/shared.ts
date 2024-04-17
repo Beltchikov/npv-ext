@@ -19,17 +19,23 @@ export const localHostOrTwitter = () => {
 
 ///////////////////////////////////////////////////////
 
-export function addHoursToDate(objDate:Date, intHours:number) {
+export function addHoursToDate(objDate: Date, intHours: number) {
     return new Date(objDate.getTime() + intHours * 60 * 60 * 1000);
 }
 
-export function getShape(matrix:Array<any>, dimensions:Array<number> = []):Array<number> {
+export function getShape(matrix: Array<any>, dimensions: Array<number> = []): Array<number> {
     // displays max value in case of jagged array
     if (Array.isArray(matrix)) {
-      dimensions.push(matrix.length);
-      return getShape(matrix[0], dimensions);
+        dimensions.push(matrix.length);
+        return getShape(matrix[0], dimensions);
     } else return dimensions;
-  }
+}
+
+export function getAttributeSafe<T, R>(obj: T, selector: (o: T) => R, errorMessage: string) {
+    let attributeValue = selector(obj);
+    if (!attributeValue) throw Error(errorMessage);
+    else return attributeValue
+}
 
 //////////////////////////////////////////////////////
 
@@ -109,6 +115,7 @@ export default {
     localHostOrTwitter,
     addHoursToDate,
     getShape,
+    getAttributeSafe,
     dataFromHtmlViaCommonParent,
     dataFromHtmlViaParent,
     dataFromHtmlByTagAndTextContains: dataFromHtmlByTag,

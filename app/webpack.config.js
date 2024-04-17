@@ -2,6 +2,7 @@ const path = require("path");
 
 module.exports = {
   entry: {
+    background: './src/background.ts',
     content: './src/index.tsx',
     dialog: './src/Dialog/dialog.ts',
     shared: './src/shared.ts',

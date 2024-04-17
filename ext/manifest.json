@@ -8,7 +8,7 @@
   "permissions": ["tabs", "tabGroups", "activeTab", "scripting","storage"],
   "host_permissions": ["<all_urls>"],
   "background": {
-    "service_worker": "background.js",
+    "service_worker": "background.bundle.js",
     "type": "module"
   }
 }
