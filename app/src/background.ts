@@ -16,8 +16,6 @@ class TabDataAndPayload {
 var tabsRequested:Array<TabDataAndPayload> = [];
 
 chrome.action.onClicked.addListener(async (currentTab) => {
-    //console.log('background.ts');
-
     loadScripts(currentTab);
 
     // query tabs
@@ -25,28 +23,20 @@ chrome.action.onClicked.addListener(async (currentTab) => {
   .then(tabs => {
     tabsRequested = new Array<TabDataAndPayload>();
     tabs.map(t => {
-    //     let tId = t?.id;
-    //   if(!tId) throw Error('Unexpected" tId is undefined');
-      let tId = shared.getAttributeSafe(t, (t)=>t.id, 'Unexpected" tabId is undefined');
-        return tabsRequested.push(new TabDataAndPayload(tId, t.active, undefined))
-    });
+        let tId = shared.getAttributeSafe(t, (t)=>t.id, 'Unexpected" tabId is undefined');
+        return tabsRequested.push(new TabDataAndPayload(tId, t.active, undefined))});
 
     // execute parser.js for every tab
     for (var i = 0; i < tabs.length; i++) {
-    //   let tabId = tabs[i]?.id;
-    //   if(!tabId) throw Error('Unexpected" tabId is undefined');
-      let tabId = shared.getAttributeSafe(tabs[i], (t)=>t.id, 'Unexpected" tabId is undefined')
-
+        let tabId = shared.getAttributeSafe(tabs[i], (t)=>t.id, 'Unexpected" tabId is undefined')
       
       chrome.scripting
         .executeScript({
           target: { tabId: tabId },
-          files: ['parser.bundle.js']
-        });
+          files: ['parser.bundle.js']});
     }
   })
   .catch(e => console.log({ err: e.message }));
-
 
 });
 
@@ -58,10 +48,10 @@ chrome.runtime.onMessage.addListener(async (messageFromParser, sender, sendRespo
     if (messageFromParser.type === 'tabData') {
       console.log(`message of type tabData received:`);
       console.log(messageFromParser);
-  
-    //   let senderTabId = sender?.tab?.id;
-    //   if(!senderTabId) throw Error('Unexpected" senderTabId is undefined');
-      let senderTabId = shared.getAttributeSafe(sender, (s)=>s.tab?.id, 'Unexpected" senderTabId is undefined')
+        let senderTabId = shared.getAttributeSafe(
+            sender, 
+            s=>s.tab?.id, 
+            'Unexpected" senderTabId is undefined')
 
       tabsRequested = tabsRequested.map((tabDataAndPayload) => tabDataAndPayload.tabId === senderTabId
         ? { ...tabDataAndPayload, ...{ tabData: payloadFromMessage(messageFromParser) } }
