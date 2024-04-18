@@ -1,7 +1,6 @@
 import shared from "../../shared";
 import { IStrategy } from "../IStrategy";
-import { TabDataAndPayload } from "./tabDataAndPayload";
-
+import { TabDataAndPayload } from "./TabDataAndPayload";
 
 export class ParserStrategy implements IStrategy
 {

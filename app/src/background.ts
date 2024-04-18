@@ -2,6 +2,7 @@ import { loadScripts } from './loader';
 import * as shared from "./shared"
 import { NetBmsStrategy } from './Strategies/NetBms/NetBmsStrategy';
 import { ParserStrategy } from './Strategies/Parser/ParserStrategy';
+import { StrategyContext } from './Strategies/StrategyContext';
 
 const strategyMap = [
     { hostname: "www.investing.com", strategy: new ParserStrategy() },
