@@ -28,33 +28,9 @@ class ParserStrategy implements IStrategy
     tabsRequested:Array<TabDataAndPayload> = [];
     
     addClickListener() {
-        chrome.action.onClicked.addListener(async (currentTab) => {
-            loadScripts(currentTab);
         
-            // query tabs
-          chrome.tabs.query({ lastFocusedWindow: true })
-          .then(tabs => {
-            this.tabsRequested = new Array<TabDataAndPayload>();
-            tabs.map(t => {
-                let tId = shared.getAttributeSafe(t, (t)=>t.id, 'Unexpected" tabId is undefined');
-                return this.tabsRequested.push(new TabDataAndPayload(tId, t.active, undefined))});
-        
-            // execute parser.js for every tab
-            for (var i = 0; i < tabs.length; i++) {
-                let tabId = shared.getAttributeSafe(tabs[i], (t)=>t.id, 'Unexpected" tabId is undefined')
-              
-              chrome.scripting
-                .executeScript({
-                  target: { tabId: tabId },
-                  files: ['parser.bundle.js']});
-            }
-          })
-          .catch(e => console.log({ err: e.message }));
-        
-        });
     }
     addMessageListener(): void {
-        // message listener
     chrome.runtime.onMessage.addListener(async (messageFromParser, sender, sendResponse) => {
 
         if (messageFromParser.target !== 'background') return;
@@ -100,6 +76,32 @@ class ParserStrategy implements IStrategy
             else console.log(`Error sending message to dialog on tab id ${activeTabData.tabId}.`)
         };
         }
+        else if (messageFromParser.type === 'strategyEntry') {
+            //chrome.action.onClicked.addListener(async (currentTab) => {
+                //loadScripts(currentTab);
+            
+                // query tabs
+              chrome.tabs.query({ lastFocusedWindow: true })
+              .then(tabs => {
+                this.tabsRequested = new Array<TabDataAndPayload>();
+                tabs.map(t => {
+                    let tId = shared.getAttributeSafe(t, (t)=>t.id, 'Unexpected" tabId is undefined');
+                    return this.tabsRequested.push(new TabDataAndPayload(tId, t.active, undefined))});
+            
+                // execute parser.js for every tab
+                for (var i = 0; i < tabs.length; i++) {
+                    let tabId = shared.getAttributeSafe(tabs[i], (t)=>t.id, 'Unexpected" tabId is undefined')
+                  
+                  chrome.scripting
+                    .executeScript({
+                      target: { tabId: tabId },
+                      files: ['parser.bundle.js']});
+                }
+              })
+              .catch(e => console.log({ err: e.message }));
+            
+           // });
+        }
         else {
         throw new Error(`Not implemented for message type ${messageFromParser.type}`);
         }
@@ -136,6 +138,8 @@ class NetBmsStrategy implements IStrategy
     }
 }
 
+
+
 const strategyMap = [
     { hostname: "www.investing.com", strategy: new ParserStrategy() },
     { hostname: "seekingalpha.com", strategy: new ParserStrategy() },
@@ -143,42 +147,76 @@ const strategyMap = [
 ];
 
 ////////////////////
-// 
 let hostname = "UNKNOWN";
 function tempListener(currentTab:chrome.tabs.Tab)
-    {
-        let regExp = new RegExp(/(?:\/{2})(\w+\.{1}\w+)/);
-        let url = currentTab.url;
-        
-        if(url){
-            var regExpArr = regExp.exec(url);
-            if(regExpArr) hostname = regExpArr[1];}
-            console.log('hostname')
-            console.log(hostname)
+{
+    loadScripts(currentTab);
     
-            let hasListener =chrome.action.onClicked.hasListener(tempListener);
-            if(hasListener) console.log('temporary click listener added.')
-        
-            if(hasListener){
-                console.log('removing temporary listener')
-                chrome.action.onClicked.removeListener(tempListener);
-        
-                let hasListener =chrome.action.onClicked.hasListener(tempListener);
-                if(!hasListener) console.log('temporary click listener removed.')
-                else console.log('error while removing temporary click listener.')
+    let regExp = new RegExp(/(?:\/{2})(\w+\.{1}\w+)/);
+    var url = shared.getAttributeSafe(currentTab, t=>t.url, "Unexpected. currentTab.url is undefined");
+    var regExpArr = regExp.exec(url);
+    if(regExpArr) hostname = regExpArr[1];
+    console.log('hostname')
+    console.log(hostname)
 
-                var strategyMapEntry = strategyMap.filter((e) => e.hostname === hostname);
-                if (strategyMapEntry.length !== 1) 
-                    throw new Error(`strategyMapEntry is not proper defined for ${hostname}`);
-                let strategy  = strategyMapEntry[0].strategy;
+    let hasListener =chrome.action.onClicked.hasListener(tempListener);
+    if(hasListener) console.log('temporary click listener added.')
+
+    if(hasListener){
+        console.log('removing temporary listener')
+        chrome.action.onClicked.removeListener(tempListener);
+
+        let hasListener =chrome.action.onClicked.hasListener(tempListener);
+        if(!hasListener) console.log('temporary click listener removed.')
+        else console.log('error while removing temporary click listener.')
+
+        // TODO send message type strategyEntry
         
-                let context = new StrategyContext();
-                context.setStrategy(strategy);
-                context.execute();
-        }
+
+        var tabId = shared.getAttributeSafe(currentTab, t=>t.id, "Unexpected. tab.id is undefined");
+        console.log(`Sending message to message broker`);
+        var messageToBroker = {
+            target: 'broker',
+            type: 'strategyEntry',
+            context: "clickListener",
+            sender: 'background'
+            };
+        chrome.tabs.sendMessage(tabId, messageToBroker)
+        .then(r => `send message to broker returned ${r}`)
+        .catch(e=> console.log(e.message));
+
+        var strategyMapEntry = strategyMap.filter((e) => e.hostname === hostname);
+        if (strategyMapEntry.length !== 1) 
+            throw new Error(`strategyMapEntry is not proper defined for ${hostname}`);
+        let strategy  = strategyMapEntry[0].strategy;
+
+        let context = new StrategyContext();
+        context.setStrategy(strategy);
+        context.execute();
+
     }
+}
 
 chrome.action.onClicked.addListener(tempListener);
+// chrome.runtime.onMessage.addListener(async (messageFromParser, sender, sendResponse) => {
+//     if (messageFromParser.target !== 'background') return;
+    
+//     if (messageFromParser.type === 'hostname') {
+//         console.log(`message of type hostname received:`);
+//         console.log(hostname);
+
+//     var strategyMapEntry = strategyMap.filter((e) => e.hostname === hostname);
+//     if (strategyMapEntry.length !== 1) 
+//         throw new Error(`strategyMapEntry is not proper defined for ${hostname}`);
+//     let strategy  = strategyMapEntry[0].strategy;
+
+//     let context = new StrategyContext();
+//     context.setStrategy(strategy);
+//     context.execute();
+
+//     }
+// });
+
 ////////////////////////
 
 

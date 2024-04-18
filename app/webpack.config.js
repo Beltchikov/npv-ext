@@ -4,6 +4,7 @@ module.exports = {
   entry: {
     background: './src/background.ts',
     content: './src/index.tsx',
+    messageBroker: './src/messageBroker.ts',
     dialog: './src/Dialog/dialog.ts',
     shared: './src/shared.ts',
     parser: './src/Parsers/Parser.ts',
