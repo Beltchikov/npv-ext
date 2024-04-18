@@ -61,14 +61,14 @@ export class TabDataHandler {
 
             if (response) {
                 console.log(`Message to dialog on tab id ${activeTabData.tabId} successfully sent.`);
-                return tabsRequested;
+                return new Array<TabDataAndPayload>();
             } else {
                 console.log(`Error sending message to dialog on tab id ${activeTabData.tabId}.`);
-                return tabsRequested;
+                return new Array<TabDataAndPayload>();
             }
         };
 
-        return tabsRequested;
+        return new Array<TabDataAndPayload>();
     }
 
     #logMessage(message: any) {

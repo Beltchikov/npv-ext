@@ -11,6 +11,7 @@ const strategyMap = [
 ];
 
 let hostname = "TO BE RETRIEVED";
+
 chrome.action.onClicked.addListener(tempListener);
 
 function tempListener(currentTab:chrome.tabs.Tab)
@@ -28,16 +29,14 @@ function tempListener(currentTab:chrome.tabs.Tab)
     if(hasListener) console.log('temporary click listener added.')
 
     if(hasListener){
-        console.log('removing temporary listener')
-        chrome.action.onClicked.removeListener(tempListener);
+        // console.log('removing temporary listener')
+        // chrome.action.onClicked.removeListener(tempListener);
 
-        let hasListener =chrome.action.onClicked.hasListener(tempListener);
-        if(!hasListener) console.log('temporary click listener removed.')
-        else console.log('error while removing temporary click listener.')
+        // let hasListener =chrome.action.onClicked.hasListener(tempListener);
+        // if(!hasListener) console.log('temporary click listener removed.')
+        // else console.log('error while removing temporary click listener.')
 
-        // TODO send message type strategyEntry
-        
-
+        // send message type strategyEntry
         var tabId = shared.getAttributeSafe(currentTab, t=>t.id, "Unexpected. tab.id is undefined");
         console.log(`Sending message to message broker`);
         var messageToBroker = {
@@ -58,6 +57,9 @@ function tempListener(currentTab:chrome.tabs.Tab)
         let context = new StrategyContext();
         context.setStrategy(strategy);
         context.execute();
+
+        //
+        //chrome.action.onClicked.addListener(tempListener);
 
     }
 }
