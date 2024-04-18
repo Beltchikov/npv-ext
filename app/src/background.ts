@@ -2,34 +2,25 @@ import { loadScripts } from './loader';
 import * as shared from "./shared"
 import { TabDataAndPayload } from './tabDataAndPayload';
 
-interface IStrategy
-{
-    addClickListener():void;
+interface IStrategy {
     addMessageListener():void;
 }
 
-class StrategyContext
-{
+class StrategyContext {
     private strategy!: IStrategy;
     
     setStrategy(strategy: IStrategy) {
         this.strategy = strategy;
     }
     execute() {
-        this.strategy.addClickListener();
         this.strategy.addMessageListener();
     }
-
 }
-
 
 class ParserStrategy implements IStrategy
 {
     tabsRequested:Array<TabDataAndPayload> = [];
     
-    addClickListener() {
-        
-    }
     addMessageListener(): void {
     chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
@@ -130,9 +121,6 @@ class ParserStrategy implements IStrategy
 
 class NetBmsStrategy implements IStrategy
 {
-    addClickListener() {
-        throw new Error('Method not implemented.');
-    }
     addMessageListener(): void {
         throw new Error('Method not implemented.');
     }
