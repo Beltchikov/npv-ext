@@ -22,43 +22,11 @@ export class ParserStrategy implements IStrategy {
       if (!messageEntry) throw new Error(`Unexpected. messageEntry is undefined.`);
       let messageHandler = messageEntry.handler;
 
-      // messageHandler.handle(message, sender, this.tabsRequested)
-      // .then(r=> {
-      //   let rTyped = r as Array<TabDataAndPayload>;
-      //   if(rTyped) this.tabsRequested = rTyped;
-      //   sendResponse(r)})
-      // .catch(e=>{
-      //   console.log(e.message);
-      //   return false;
-      // })
-
       this.tabsRequested = await messageHandler.handle(message, sender, this.tabsRequested);
       console.log('this.tabsRequested');
       console.log(this.tabsRequested);
 
-      ///////////////////
-      // if (message.type === 'tabData') {
-
-      // }
-      // else if (message.type === 'strategyEntry') {
-
-      // }
-      // else {
-      //   throw new Error(`Not implemented for message type ${message.type}`);
-      // }
-      /////////////////////
-
       sendResponse(true);
     });
   }
-
-  // get tabsRequested(): Array<TabDataAndPayload> {
-  //   return this.#tabsRequested;
-  // }
-
-  // set tabsRequested(newValue: Array<TabDataAndPayload>) {
-  //   this.#tabsRequested = newValue;
-  // }
-
-
 }
