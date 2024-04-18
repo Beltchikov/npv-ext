@@ -31,20 +31,20 @@ class ParserStrategy implements IStrategy
         
     }
     addMessageListener(): void {
-    chrome.runtime.onMessage.addListener(async (messageFromParser, sender, sendResponse) => {
+    chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
-        if (messageFromParser.target !== 'background') return;
+        if (message.target !== 'background') return;
     
-        if (messageFromParser.type === 'tabData') {
-        console.log(`message of type tabData received:`);
-        console.log(messageFromParser);
+        if (message.type === 'tabData') {
+            this.logMessage(message);
+   
             let senderTabId = shared.getAttributeSafe(
                 sender, 
                 s=>s.tab?.id, 
                 'Unexpected" senderTabId is undefined')
 
                 this.tabsRequested = this.tabsRequested.map((tabDataAndPayload) => tabDataAndPayload.tabId === senderTabId
-            ? { ...tabDataAndPayload, ...{ tabData: this.payloadFromMessage(messageFromParser) } }
+            ? { ...tabDataAndPayload, ...{ tabData: this.payloadFromMessage(message) } }
             : tabDataAndPayload);
         var tabsStillWaitingForData = this.tabsRequested.filter((t) => t.tabData === undefined);
     
@@ -70,18 +70,15 @@ class ParserStrategy implements IStrategy
             console.log(`Sending message to dialog on tab id ${activeTabData.tabId}`);
             const response = await chrome.tabs.sendMessage(
             activeTabData.tabId,
-            this.buildMessageToDialog(messageFromParser, cummulatedDataArray));
+            this.buildMessageToDialog(message, cummulatedDataArray));
     
             if (response) console.log(`Message to dialog on tab id ${activeTabData.tabId} successfully sent.`)
             else console.log(`Error sending message to dialog on tab id ${activeTabData.tabId}.`)
         };
         }
-        else if (messageFromParser.type === 'strategyEntry') {
-            //chrome.action.onClicked.addListener(async (currentTab) => {
-                //loadScripts(currentTab);
-            
-                // query tabs
-              chrome.tabs.query({ lastFocusedWindow: true })
+        else if (message.type === 'strategyEntry') {
+            this.logMessage(message);
+            chrome.tabs.query({ lastFocusedWindow: true })
               .then(tabs => {
                 this.tabsRequested = new Array<TabDataAndPayload>();
                 tabs.map(t => {
@@ -99,11 +96,9 @@ class ParserStrategy implements IStrategy
                 }
               })
               .catch(e => console.log({ err: e.message }));
-            
-           // });
         }
         else {
-        throw new Error(`Not implemented for message type ${messageFromParser.type}`);
+        throw new Error(`Not implemented for message type ${message.type}`);
         }
     
         sendResponse(true);
@@ -126,6 +121,11 @@ class ParserStrategy implements IStrategy
       private payloadFromMessage = (message:any) => {
         return message.tabData.rows.map((r: { cells: any; }) => r.cells);
       }
+
+      private logMessage(message: any) {
+        console.log(`message of type ${message.type} received:`);
+        console.log(message);
+    }
 }
 
 class NetBmsStrategy implements IStrategy
@@ -198,6 +198,8 @@ function tempListener(currentTab:chrome.tabs.Tab)
 }
 
 chrome.action.onClicked.addListener(tempListener);
+
+
 // chrome.runtime.onMessage.addListener(async (messageFromParser, sender, sendResponse) => {
 //     if (messageFromParser.target !== 'background') return;
     
