@@ -15,10 +15,10 @@ const idCopyButton = 'npvButtonCopy';
 (function starter() {
     chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         if (message.target !== 'dialog') return;
+        shared.logMessageAndObject(`dialog.ts: message with target dialog received:`, message);
 
         let messageTyped = message as MessageToDialog;
-        doLogging(messageTyped, sender);
-
+        
         var dialogElement: HTMLDialogElement = Array.from(document.getElementsByTagName('dialog')).filter((e) => e.id === idDialog)[0];
         if (!dialogElement) {
             dialogElement = attachDialog();
@@ -27,6 +27,11 @@ const idCopyButton = 'npvButtonCopy';
         addData(messageTyped.dataTable)
         addHeader(messageTyped.header)
         addFooter(messageTyped.footer)
+
+        shared.logMessageAndObject(`dialog.ts: addFooter executed. dialogElement:`, dialogElement);
+        dialogElement.show();
+
+
         sendResponse(true);
     });
 })();
@@ -119,13 +124,6 @@ function copyToClipboard(): void {
     navigator.clipboard.writeText(element?.outerHTML === undefined
         ? 'undefined'
         : element?.outerHTML);
-}
-
-function doLogging(message: any, sender: any) {
-    console.log(`message with target dialog received:`);
-    console.log(message);
-    console.log(`sender:`);
-    console.log(sender);
 }
 
 function innerHtmlOfDialog(): string {

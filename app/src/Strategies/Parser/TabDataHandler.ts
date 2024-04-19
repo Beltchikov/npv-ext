@@ -3,7 +3,8 @@ import { TabDataAndPayload } from "./TabDataAndPayload";
 
 export class TabDataHandler {
     async handle(message: any, sender: any, tabsRequested: Array<TabDataAndPayload>): Promise<Array<TabDataAndPayload>> {
-        this.#logMessage(message);
+        console.log(`TabDataHandler: message received:`);
+        console.log(message);
 
         let senderTabId = shared.getAttributeSafe(
             sender,
@@ -69,11 +70,6 @@ export class TabDataHandler {
         };
 
         return new Array<TabDataAndPayload>();
-    }
-
-    #logMessage(message: any) {
-        console.log(`message of type ${message.type} received:`);
-        console.log(message);
     }
 
     #payloadFromMessage = (message: any) => {

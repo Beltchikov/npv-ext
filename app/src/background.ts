@@ -15,9 +15,23 @@ let hostname = "TO BE RETRIEVED";
 
 chrome.action.onClicked.addListener(tempListener);
 
-function tempListener(currentTab:chrome.tabs.Tab)
+async function tempListener(currentTab:chrome.tabs.Tab)
 {
-    loadScripts(currentTab);
+     // start react app
+     var tabId = shared.getAttributeSafe(currentTab, t=>t.id, "Unexpected. tab.id is undefined");
+     await chrome.scripting.executeScript({
+        target: { tabId: tabId },
+        files: ['content.bundle.js']
+    });
+
+    // load content scripts
+    let scriptsLoadedObj =  await chrome.storage.session.get(["scriptsLoaded"]);
+    console.log("Value is " + scriptsLoadedObj.scriptsLoaded);
+    if(!scriptsLoadedObj?.scriptsLoaded)
+    {
+        if(await loadScripts(currentTab))  
+            await chrome.storage.session.set({ scriptsLoaded: true });
+    }
     
     let regExp = new RegExp(/(?:\/{2})(\w+\.{1}\w+)/);
     var url = shared.getAttributeSafe(currentTab, t=>t.url, "Unexpected. currentTab.url is undefined");
@@ -38,7 +52,6 @@ function tempListener(currentTab:chrome.tabs.Tab)
         // else console.log('error while removing temporary click listener.')
 
         // send message type strategyEntry
-        var tabId = shared.getAttributeSafe(currentTab, t=>t.id, "Unexpected. tab.id is undefined");
         console.log(`Sending message to message broker`);
         var messageToBroker = {
             target: 'broker',

@@ -37,6 +37,12 @@ export function getAttributeSafe<T, R>(obj: T, selector: (o: T) => R, errorMessa
     else return attributeValue
 }
 
+export function logMessageAndObject(message: string, obj: any) {
+    console.log(message);
+    console.log(obj);
+
+}
+
 //////////////////////////////////////////////////////
 
 export function dataFromHtmlViaCommonParent(
@@ -116,6 +122,7 @@ export default {
     addHoursToDate,
     getShape,
     getAttributeSafe,
+    logMessageAndObject,
     dataFromHtmlViaCommonParent,
     dataFromHtmlViaParent,
     dataFromHtmlByTagAndTextContains: dataFromHtmlByTag,

@@ -5,6 +5,7 @@ import { parserMap } from "./parserMap";
 //  2. Update parserMap.ts
 
 (async function starter() {
+    console.log('Parser.ts executed. Hostname:');
     console.log(window.location.hostname);
     
     var hostMapEntry = parserMap.filter((e) => e.hostname === window.location.hostname);

@@ -1,25 +1,24 @@
-export function loadScripts(currentTab:chrome.tabs.Tab) {
+import shared from "./shared";
+
+export async function loadScripts(currentTab: chrome.tabs.Tab): Promise<boolean> {
     let currentTabId = currentTab?.id;
-    if(!currentTabId) throw Error('Unexpected" currentTabId is undefined');
+    if (!currentTabId) throw Error('Unexpected" currentTabId is undefined');
 
-    // start react app
-    chrome.scripting.executeScript({
-        target: { tabId: currentTabId },
-        files: ['content.bundle.js']
-    }).then(_r => console.log('React app npv-ext-app in file content.bundle.js started successfullly.'))
-    .catch(e => `Error starting react app npv-ext-app in file content.bundle.js. Reason: ${e}`);
-
-    // execute messageBroker.bundle.js
-    chrome.scripting.executeScript({
+    let resultBroker = chrome.scripting.executeScript({
         target: { tabId: currentTabId },
         files: ['messageBroker.bundle.js']
-    }).then(_r => console.log('Script messageBroker.bundle.js executed'))
-        .catch(e => `Error executing script messageBroker.bundle.js. Reason: ${e}`);
+    });
 
-    // execute dialog.bundle.js
-    chrome.scripting.executeScript({
+    let resultDialog = chrome.scripting.executeScript({
         target: { tabId: currentTabId },
         files: ['dialog.bundle.js']
-    }).then(_r => console.log('Script dialog.bundle.js executed'))
-        .catch(e => `Error executing script dialog.bundle.js. Reason: ${e}`);
+    });
+
+    var promises = [ resultBroker, resultDialog];
+    return await Promise.all(promises)
+        .then(_values => true)
+        .catch(e => {
+            shared.logMessageAndObject(`loader.ts: error while loading scripts:`, e);
+            return false;
+        });
 }
