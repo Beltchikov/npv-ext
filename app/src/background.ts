@@ -7,7 +7,8 @@ import { StrategyContext } from './Strategies/StrategyContext';
 const strategyMap = [
     { hostname: "www.investing.com", strategy: new ParserStrategy() },
     { hostname: "seekingalpha.com", strategy: new ParserStrategy() },
-    { hostname: "twitter.com", strategy: new NetBmsStrategy() },
+    { hostname: "twitter.com", strategy: new ParserStrategy() },
+    { hostname: "openai.com", strategy: new NetBmsStrategy() },    
 ];
 
 let hostname = "TO BE RETRIEVED";
