@@ -4,7 +4,7 @@ import { TabData } from "./TabData";
 
 export class TwitterParser implements IParser {
     hoursAgo =24
-    maxScrollCount = 100;
+    maxScrollCount = 1000
     timeout = 1000;
 
     async getTabDataAsync(): Promise<TabData> {
@@ -28,7 +28,7 @@ export class TwitterParser implements IParser {
 
                 lastElement.scrollIntoView({ behavior: "smooth", block: "end", inline: "center" });
                 i++;
-                if (i === this.maxScrollCount || earliestTimestamp <= timestampOfEarliestTweet) {
+                if (i >= this.maxScrollCount || earliestTimestamp <= timestampOfEarliestTweet) {
                     clearInterval(intervalId);
 
                     if (i === this.maxScrollCount) console.log(`LIMIT of ${this.maxScrollCount} scrolls reached`);
@@ -66,10 +66,6 @@ export class TwitterParser implements IParser {
         msg += `Scroll ${iterationIdx} of max. ${maxTweetCount}. `;
         msg += `Last: ${earliestTimestamp.toLocaleString('de')}`;
         return msg;
-    }
-
-    private getHeader(): string {
-        return "Message User Time";
     }
 
     private getUser(): string {

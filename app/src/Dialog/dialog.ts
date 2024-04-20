@@ -18,7 +18,7 @@ const idCopyButton = 'npvButtonCopy';
         shared.logMessageAndObject(`dialog.ts: message with target dialog received:`, message);
 
         let messageTyped = message as MessageToDialog;
-        
+
         var dialogElement: HTMLDialogElement = Array.from(document.getElementsByTagName('dialog')).filter((e) => e.id === idDialog)[0];
         if (!dialogElement) {
             dialogElement = attachDialog();
@@ -29,15 +29,12 @@ const idCopyButton = 'npvButtonCopy';
         addFooter(messageTyped.footer)
 
         shared.logMessageAndObject(`dialog.ts: addFooter executed. dialogElement:`, dialogElement);
-        dialogElement.show();
-
-
         sendResponse(true);
     });
 })();
 
 function attachDialog() {
-    var rootElement: HTMLDivElement = shared.getElementByTagAndId('div', idCollector);
+    var rootElement: HTMLDivElement = shared.getElementByTagAndIdOrCreate('div', idCollector);
 
     dialog = document.createElement('dialog');
     dialog.id = idDialog;
@@ -45,9 +42,9 @@ function attachDialog() {
     rootElement.appendChild(dialog);
 
     // add functions
-    var closeButtonElement: HTMLButtonElement = shared.getElementByTagAndId('button', idCloseButton);
+    var closeButtonElement: HTMLButtonElement = shared.getElementByTagAndIdOrCreate('button', idCloseButton);
     closeButtonElement.onclick = closeModal;
-    var copyButtonElement: HTMLButtonElement = shared.getElementByTagAndId('button', idCopyButton);
+    var copyButtonElement: HTMLButtonElement = shared.getElementByTagAndIdOrCreate('button', idCopyButton);
     copyButtonElement.onclick = copyToClipboard;
 
     // show
@@ -59,7 +56,7 @@ function addData(dataTable: Array<Array<string>>) {
     const idNpvRow = 'npvRow';
     const idNpvCol = 'npvCol';
 
-    var tableContainer: HTMLDivElement = shared.getElementByTagAndId('div', idTableContainer);
+    var tableContainer: HTMLDivElement = shared.getElementByTagAndIdOrCreate('div', idTableContainer);
     var npvTable: HTMLTableElement = shared.getElementByTagAndIdOrCreate('table', idNpvTable);
 
     console.log('shape dataTable:');
@@ -86,7 +83,7 @@ function addHeader(headerArray: Array<string>) {
     const idNpvHeader = 'npvHeader';
     const idNpvCol = 'npvCol';
 
-    var headerContainer: HTMLDivElement = shared.getElementByTagAndId('div', idHeaderContainer);
+    var headerContainer: HTMLDivElement = shared.getElementByTagAndIdOrCreate('div', idHeaderContainer);
     var npvHeaderTable: HTMLTableElement = shared.getElementByTagAndIdOrCreate('table', idNpvHeaderTable);
 
     console.log('shape headerArray:');
@@ -109,7 +106,7 @@ function addHeader(headerArray: Array<string>) {
 function addFooter(footer: string) {
     const idNpvFooter = 'npvFooter';
 
-    var footerContainer: HTMLDivElement = shared.getElementByTagAndId('div', idFooterContainer);
+    var footerContainer: HTMLDivElement = shared.getElementByTagAndIdOrCreate('div', idFooterContainer);
     var npvFooter: HTMLDivElement = shared.getElementByTagAndIdOrCreate('div', idNpvFooter);
     npvFooter.innerHTML = footer;
     footerContainer.appendChild(npvFooter);
