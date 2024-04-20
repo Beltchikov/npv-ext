@@ -3,11 +3,12 @@ import IParser from "./IParser";
 import { TabData } from "./TabData";
 
 export class TwitterParser implements IParser {
-    maxTweetCount = 1000;
+    hoursAgo =24
+    maxScrollCount = 100;
     timeout = 1000;
 
     async getTabDataAsync(): Promise<TabData> {
-        return this.getTimeTagsAsync(24);
+        return this.getTimeTagsAsync(this.hoursAgo);
     }
 
     getTimeTagsAsync(hoursAgo: number): Promise<TabData> {
@@ -23,14 +24,14 @@ export class TwitterParser implements IParser {
                 allTimeElements = allTimeElements.concat(timeElements);
                 const lastElement: HTMLTimeElement = timeElements[timeElements.length - 1];
                 const earliestTimestamp = new Date(lastElement.dateTime);
-                console.log(this.buildExtractingDataMessage(hoursAgo, i, this.maxTweetCount, earliestTimestamp));
+                console.log(this.buildExtractingDataMessage(hoursAgo, i, this.maxScrollCount, earliestTimestamp));
 
                 lastElement.scrollIntoView({ behavior: "smooth", block: "end", inline: "center" });
                 i++;
-                if (i === this.maxTweetCount || earliestTimestamp <= timestampOfEarliestTweet) {
+                if (i === this.maxScrollCount || earliestTimestamp <= timestampOfEarliestTweet) {
                     clearInterval(intervalId);
 
-                    if (i === this.maxTweetCount) console.log(`LIMIT of ${this.maxTweetCount} reached`);
+                    if (i === this.maxScrollCount) console.log(`LIMIT of ${this.maxScrollCount} scrolls reached`);
                     if (earliestTimestamp <= timestampOfEarliestTweet)
                         console.log(`${hoursAgo} HOURS PERIOD PROCESSED ${earliestTimestamp}`);
 
