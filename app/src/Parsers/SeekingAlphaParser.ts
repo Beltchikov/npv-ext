@@ -28,8 +28,8 @@ export class SeekingAlphaParser implements IParser{
         //return [symbol, sector, industry, eps, div, roe, beta];  // TODO evtl. for later
         //return ([eps, div, roe, beta]).toString().split(',');
     
-        var resultRow = ([eps, div, roe, beta]).map((e) => this.formatString(e, 2));
-        let header = ["EPS","DIV","ROE","Beta"]
+        var resultRow = ([symbol, eps, div, roe, beta]).map((e) => this.formatString(e, 2));
+        let header = ["Symbol","EPS","DIV","ROE","Beta"]
         let footer = `Div Frequency: ${this.divFrequency()}`;
         return new TabData([resultRow], header, footer);
     }
