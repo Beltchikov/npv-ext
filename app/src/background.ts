@@ -1,6 +1,6 @@
 import { loadScripts } from './loader';
 import * as shared from "./shared"
-import { TabDataAndPayload } from './Strategies/Parser/TabDataAndPayload';
+import { TabDataAndPayload } from './Parsers/TabDataAndPayload';
 
 var tabsRequested: Array<TabDataAndPayload> = [];
 
