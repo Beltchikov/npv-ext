@@ -43,10 +43,15 @@ export class TwitterParser implements IParser {
                             ?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement
                             ?.parentElement?.parentElement?.parentElement;
 
+                        let spanTweetTextInnerHtml : any 
+                        try{
                         let divTweetText = parentsNo13.querySelector("div[data-testid='tweetText");
                         let spanTweetText = divTweetText.querySelector("span");
+                        spanTweetTextInnerHtml = spanTweetText.innerHTML;
+                        }
+                        catch{spanTweetTextInnerHtml = "NO DATA"}
 
-                        return [strDate, this.getUser(), spanTweetText.innerHTML]
+                        return [strDate, this.getUser(), spanTweetTextInnerHtml]
                     });
 
                     let header = ["Time", "User", "Text"]
