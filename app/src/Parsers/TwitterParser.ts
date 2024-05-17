@@ -3,7 +3,7 @@ import IParser from "./IParser";
 import { TabData } from "./TabData";
 
 export class TwitterParser implements IParser {
-    hoursAgo =21
+    hoursAgo = 21
     maxScrollCount = 1000
     timeout = 1000;
 
@@ -14,7 +14,7 @@ export class TwitterParser implements IParser {
     getTimeTagsAsync(hoursAgo: number): Promise<TabData> {
         return new Promise<TabData>((resolve, reject) => {
             var timestampOfEarliestTweet = shared.addHoursToDate(new Date(Date.now()), -1 * hoursAgo)
-            
+
             var allTimeElements: Array<HTMLTimeElement> = [];
             var i = 0;
             var intervalId = setInterval(() => {
@@ -43,13 +43,13 @@ export class TwitterParser implements IParser {
                             ?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement
                             ?.parentElement?.parentElement?.parentElement;
 
-                        let spanTweetTextInnerHtml : any 
-                        try{
-                        let divTweetText = parentsNo13.querySelector("div[data-testid='tweetText");
-                        let spanTweetText = divTweetText.querySelector("span");
-                        spanTweetTextInnerHtml = spanTweetText.innerHTML;
+                        let spanTweetTextInnerHtml: any
+                        try {
+                            let divTweetText = parentsNo13.querySelector("div[data-testid='tweetText");
+                            let spanTweetText = divTweetText.querySelector("span");
+                            spanTweetTextInnerHtml = spanTweetText.innerHTML;
                         }
-                        catch{spanTweetTextInnerHtml = "NO DATA"}
+                        catch { spanTweetTextInnerHtml = "NO DATA" }
 
                         return [strDate, this.getUser(), spanTweetTextInnerHtml]
                     });
