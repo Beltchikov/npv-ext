@@ -3,7 +3,7 @@ import IParser from "./IParser";
 import { TabData } from "./TabData";
 
 export class TwitterParser implements IParser {
-    hoursAgo = 21
+    hoursAgo = 17
     maxScrollCount = 1000
     timeout = 1000;
 
