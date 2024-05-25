@@ -2,7 +2,11 @@ import shared from "../shared";
 import IParser from "./IParser";
 import { TabData } from "./TabData";
 
+const TARGET_ELEMENT_NOT_FOUND = 'target element not found';
+
 export class SeekingAlphaParser implements IParser{
+    
+    
     
     getTabDataAsync(): Promise<TabData> {
         return new Promise((resolve, reject)=>{
@@ -91,7 +95,7 @@ export class SeekingAlphaParser implements IParser{
     
     private getDividendsAsString(targetElementText: string): string {
         var div = this.getDataViaCommonParentCardItem(targetElementText);
-        if (div === 'target element not found') {
+        if (div === TARGET_ELEMENT_NOT_FOUND) {
             return '0';
         }
         return div;
@@ -99,8 +103,24 @@ export class SeekingAlphaParser implements IParser{
     }
 
     private getDividends(targetElementText: string): number {
-        var divAsString = this.getDividendsAsString(targetElementText);
-        return parseFloat(divAsString);
+        var lastAnnouncedDividendsAsString = this.getDividendsAsString(targetElementText);
+        var lastAnnouncedDividends = parseFloat(lastAnnouncedDividendsAsString);
+        var dividendFrequency = this.divFrequency();
+        var annualDiv: number = this.CalculateAnnualDividends(lastAnnouncedDividends, dividendFrequency);
+
+        return annualDiv;
+    }
+    CalculateAnnualDividends(lastAnnouncedDividends: number, dividendFrequency: string): number {
+        var dividendFrequencyUpper = dividendFrequency.toUpperCase();
+        switch(dividendFrequencyUpper)
+        {
+            case 'MONTHLY': return lastAnnouncedDividends*12;
+            case 'QUARTERLY': return lastAnnouncedDividends*4;
+            case 'SEMIANNUAL': return lastAnnouncedDividends*2;
+            case 'ANNUAL': return lastAnnouncedDividends;
+            case TARGET_ELEMENT_NOT_FOUND: return 0;
+            default: throw new Error(`Not implemented for dividend frequency ${dividendFrequency}`);
+        }
     }
     
     private getRoe(targetElementText: string): string {
