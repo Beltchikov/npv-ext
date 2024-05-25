@@ -2,8 +2,6 @@ import shared from "../shared";
 import IParser from "./IParser";
 import { TabData } from "./TabData";
 
-const TARGET_ELEMENT_NOT_FOUND = 'target element not found';
-
 export class SeekingAlphaParser implements IParser{
     
     
@@ -95,7 +93,7 @@ export class SeekingAlphaParser implements IParser{
     
     private getDividendsAsString(targetElementText: string): string {
         var div = this.getDataViaCommonParentCardItem(targetElementText);
-        if (div === TARGET_ELEMENT_NOT_FOUND) {
+        if (div === 'target element not found') {
             return '0';
         }
         return div;
@@ -112,13 +110,14 @@ export class SeekingAlphaParser implements IParser{
     }
     CalculateAnnualDividends(lastAnnouncedDividends: number, dividendFrequency: string): number {
         var dividendFrequencyUpper = dividendFrequency.toUpperCase();
+
         switch(dividendFrequencyUpper)
         {
             case 'MONTHLY': return lastAnnouncedDividends*12;
             case 'QUARTERLY': return lastAnnouncedDividends*4;
             case 'SEMIANNUAL': return lastAnnouncedDividends*2;
             case 'ANNUAL': return lastAnnouncedDividends;
-            case TARGET_ELEMENT_NOT_FOUND: return 0;
+            case 'TARGET ELEMENT NOT FOUND': return 0;
             default: throw new Error(`Not implemented for dividend frequency ${dividendFrequency}`);
         }
     }
