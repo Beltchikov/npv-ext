@@ -21,7 +21,7 @@ export class SeekingAlphaParser implements IParser{
         var sector: string = this.getDataViaCommonParentCompanyProfileSector('Sector');
         var industry: string = this.getDataViaCommonParentCompanyProfileIndustry('Industry');
         var eps: string = this.getDataViaCommonParentCardItem('EPS (FWD)');
-        var div: string = this.getDividends('Latest Announced Dividend');
+        var div: string = this.getDividends('Latest Announced Dividend').toString();
         var roe: string = this.getRoe('Return on Equity');
         var beta: string = this.getDataViaCommonParentCardItem('24M Beta');
         var divFrequency: string = this.divFrequency();
@@ -89,13 +89,18 @@ export class SeekingAlphaParser implements IParser{
         return result.replace(',', '').replace('$', '');
     }
     
-    private getDividends(targetElementText: string): string {
+    private getDividendsAsString(targetElementText: string): string {
         var div = this.getDataViaCommonParentCardItem(targetElementText);
         if (div === 'target element not found') {
             return '0';
         }
         return div;
     
+    }
+
+    private getDividends(targetElementText: string): number {
+        var divAsString = this.getDividendsAsString(targetElementText);
+        return parseFloat(divAsString);
     }
     
     private getRoe(targetElementText: string): string {
