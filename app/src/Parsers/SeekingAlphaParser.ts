@@ -24,12 +24,13 @@ export class SeekingAlphaParser implements IParser{
         var div: string = this.getDividends('Latest Announced Dividend');
         var roe: string = this.getRoe('Return on Equity');
         var beta: string = this.getDataViaCommonParentCardItem('24M Beta');
+        var divFrequency: string = `Div Frequency: ${this.divFrequency()}`;
     
         //return [symbol, sector, industry, eps, div, roe, beta];  // TODO evtl. for later
         //return ([eps, div, roe, beta]).toString().split(',');
     
-        var resultRow = ([symbol, eps, div, roe, beta]).map((e) => this.formatString(e, 2));
-        let header = ["Symbol","EPS","DIV","ROE","Beta"]
+        var resultRow = ([symbol, eps, div, roe, beta, divFrequency]).map((e) => this.formatString(e, 2));
+        let header = ["Symbol","EPS","DIV","ROE","Beta", "DivFreq"]
         let footer = `Div Frequency: ${this.divFrequency()}`;
         return new TabData([resultRow], header, footer);
     }
