@@ -118,6 +118,7 @@ export class SeekingAlphaParser implements IParser{
             case 'SEMIANNUAL': return lastAnnouncedDividends*2;
             case 'ANNUAL': return lastAnnouncedDividends;
             case 'TARGET ELEMENT NOT FOUND': return 0;
+            case 'NONE': return 0;
             default: throw new Error(`Not implemented for dividend frequency ${dividendFrequency}`);
         }
     }
