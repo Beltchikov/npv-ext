@@ -5,9 +5,8 @@ import { parserMap } from "./parserMap";
 //  2. Update parserMap.ts
 
 (async function starter() {
-    console.log('NPV: Parser.ts executed. Hostname:');
-    console.log(window.location.hostname);
-    
+    console.log(`NPV: Parser.ts executed. Hostname: ${window.location.hostname}`);
+
     var hostMapEntry = parserMap.filter((e) => e.hostname === window.location.hostname);
     if (hostMapEntry.length !== 1) 
         throw new Error(`hostMapEntry is not proper defined for ${window.location.hostname}`);
