@@ -6,6 +6,7 @@ import { parserMap } from "./parserMap";
 
 (async function starter() {
     console.log(`NPV: Parser.ts executed. Hostname: ${window.location.hostname}`);
+    console.log(`Location: ${window.location}`);
 
     var hostMapEntry = parserMap.filter((e) => e.hostname === window.location.hostname);
     if (hostMapEntry.length !== 1) 
